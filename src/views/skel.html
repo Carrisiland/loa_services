@@ -1,0 +1,17 @@
+{# vim: set ts=2 sw=2 et tw=120 ft=htmldjango: #}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+
+  <body>
+    <main>
+      {% block body %}{% endblock %}
+    </main>
+    <script src="dustjs-linkedin/dust-full.min.js"></script>
+    <script src="js/fetch.js"></script>
+  </body>
+</html>
