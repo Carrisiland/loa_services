@@ -29,9 +29,18 @@ main {
 
   max-width: 20%;
   font-size: 3em;
-  background: -webkit-linear-gradient(left, #439541 0%, #70F3EE 30%, #EA3354 60%);
-  background: -o-linear-gradient(left, #439541 0%, #70F3EE 10%, #EA3354 20%);
-  background: -moz-linear-gradient(left, #439541 0%, #70F3EE 10%, #EA3354 20%);
+  background: -webkit-linear-gradient(left, #439541 0%, #70F3EE 30%, #EA3354 70%);
+  background: -o-linear-gradient(left, #439541 0%, #70F3EE 30%, #EA3354 70%);
+  background: -moz-linear-gradient(left, #439541 0%, #70F3EE 30%, #EA3354 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.ui.top.secondary.stackable.main.menu.following.bar.light {
+  background-color: rgb(27, 28, 29);
+}
+
+
+#mainContent {
+  
 }
