@@ -1,22 +1,41 @@
 // vim: set ts=2 sw=2 et tw=80:
 
 const mongoose = require('mongoose');
-const crypto = require('crypto');
+const bcrypt = require('bcrypt-nodejs');
 
-const UserSchema = new Schema({
+const userSchema = mongoose.Schema({
   email: String,
-  hash: String,
-  salt: String,
+  password: String,
+  facebook: {
+    id: String,
+    token: String,
+    name: String,
+    email: String
+  },
+  twitter: {
+    id: String,
+    token: String,
+    displayName: String,
+    username: String
+  },
+  google: {
+    id: String,
+    token: String,
+    email: String,
+    name: String
+  }
 });
 
-UserSchema.methods.setPassword = function(password) {
-  this.salt = crypto.randomBytes(16).toString('hex');
-  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+// methods ======================
+// generating a hash
+userSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
-UserSchema.methods.validatePassword = function(password) {
-  const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-  return this.hash === hash;
+// checking if password is valid
+userSchema.methods.validPassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
 };
 
-mongoose.model('User', UserSchema);
+// create the model for users and expose it to our app
+module.exports = mongoose.model('User', userSchema);

@@ -8,15 +8,20 @@ const methodOverride = require('method-override');
 const nunjucks = require('nunjucks');
 const session = require('express-session');
 const cors = require('cors');
-const flash = require('express-flash');
-
+const flash = require('express-flash-messages');
+const passport = require('passport');
 const mongoose = require('mongoose');
+
+require('./models/user.js');
+require('./config/passport');
+
 mongoose.connect('mongodb://localhost/vimtok', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 const app = express();
+const secret = 'luciano-malusa-in-pensione';
 
 //configure app
 app.use(logger('dev'));
@@ -31,11 +36,13 @@ app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.static('public'));
 app.use(session({
-  secret: 'luciano-malusa-in-pensione',
-  cookie: { maxAge: 60000 },
+  secret: secret,
   resave: false,
   saveUninitialized: false
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 // Initialize routers here
 const routers = require('./routes/routers');

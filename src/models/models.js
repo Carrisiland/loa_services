@@ -15,5 +15,3 @@ const postSchema = new mongoose.Schema({
 
 const Favorite = mongoose.model('Favorite', schema);
 
-
-
