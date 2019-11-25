@@ -3,7 +3,69 @@
 {% extends "skel.html" %}
 
 {% block title %}Vimtok{% endblock %}
-{% block body %}
-<h1>Vimtok</h1>
-{% endblock %}
+{% block rootbody %}
+<div class="ui inverted vertical masthead center aligned segment">
+  <div class="ui container myTop">
+    <div class="ui large secondary inverted pointing menu">
+      <a  href="./mainPage.html" class="active item">Home</a>
+      <div class="right item">
+        <div style="margin-right: 2vw;">
+          <a href="./login.html"class="ui inverted button"> Log in</a>
+        </div>
+        <a href="./signUP.html" class="ui inverted button">Sign Up</a>
+      </div>
+    </div>
+  </div>
 
+  <div class="ui text container bigTop">
+    <h1 class="ui inverted header" style= "font-size: 11.2em;
+                                                background: -webkit-linear-gradient(left, #439541, #70F3EE , #EA3354);
+                                                background: -o-linear-gradient(right, #439541, #70F3EE , #EA3354);
+                                                background: -moz-linear-gradient(right, #439541, #70F3EE , #EA3354);
+                                                background: linear-gradient(to right, #439541, #70F3EE , #EA3354);
+                                                -webkit-background-clip: text;
+                                                -webkit-text-fill-color: transparent;">
+      VimTok
+    </h1>
+    <h2 style= "font-size: 3em; margin-top: -2vh;"> Share only the best moments</h2>
+    <br>
+    <a href="./signUP.html" style="color: white;" class="ui huge primary button myTop"> Get Started <i class="right arrow icon"></i></a>
+  </div>
+</div>
+
+<div class="ui vertical stripe segment">
+  <div class="ui middle aligned stackable grid container">
+    <div class="row">
+      <div class="eight wide column">
+        <h3 class="ui header" style="font-size: 2.1em;">We Help People share their best moments</h3>
+        <p style="font-size: 1.5em;">We can give your company superpowers to do things that they never thought possible. Let us delight your customers and empower your needs...through pure data analytics.</p>
+        <h3 class="ui header" style="font-size: 2.1em;">Register for Free and Join the  Community</h3>
+        <p style="font-size: 1.5em;">Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.</p>
+      </div>
+      <div class="six wide right floated column">
+        <img src="../public/img/logo.png" class="ui large image">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="ui vertical stripe quote segment">
+  <div class="ui equal width stackable internally celled grid">
+    <div class="center aligned row">
+      <div class="column">
+        <h3 style="font-size: 1.8em;">"A breath of Fresh Air"</h3>
+        <p style="font-size: 1.35em;">
+        <img src="../public/img/steve_jobs.jpg" class="ui avatar bordered image"> <b> Steve Jobs </b>
+        </p>
+      </div>
+      <div class="column">
+        <h3 style="font-size: 1.8em;">"The best thing after my Pickup Truck"</h3>
+        <p style="font-size: 1.35em;">
+        <img src="../public/img/elon_musk.jpg" class="ui avatar image"> <b>Elon Musk</b> Tesla Chief Executive Officer
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

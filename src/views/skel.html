@@ -1,30 +1,86 @@
 {# vim: set ts=2 sw=2 et tw=120 ft=htmldjango: #}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
   <head>
-    <meta charset="utf-8">
-    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css"
+                           href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+    <title>{% block title %}{% endblock %} - Vimtok</title>
+    <link rel="stylesheet" type="text/css" href="/project.css">
   </head>
 
   <body>
-    {% set messages = getMessages() %}
-    {% if messages.success %}
-      {{ messages.success }}
-    {% endif %}
-    {% if messages.info %}
-      {{ messages.info }}
-    {% endif %}
-    {% if messages.warn %}
-      {{ messages.warn }}
-    {% endif %}
-    {% if messages.error %}
-      {{ messages.error }}
-    {% endif %}
-    <main>
+    {% block rootbody %}
+    {% block header %}
+    <div class="ui inverted header segment">
+      <div class="ui large secondary inverted pointing menu">
+        <a href="/" class="active item">Home</a>
+        <div class="right item">
+          <div style="margin-right: 2vw;">
+            <a href="/auth/login" class="ui inverted button"> Log in</a>
+          </div>
+          <a href="/auth/signup" class="ui inverted button">Sign Up</a>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+
+    <main class="ui container">
+      {% set messages = getMessages() %}
+      {% if messages.success %}
+      <div class="ui positive message">
+        {{ messages.success }}
+      </div>
+      {% endif %}
+      {% if messages.info %}
+      <div class="ui info message">
+        {{ messages.info }}
+      </div>
+      {% endif %}
+      {% if messages.warn %}
+      <div class="ui warning message">
+        {{ messages.warn }}
+      </div>
+      {% endif %}
+      {% if messages.error %}
+      <div class="ui error message">
+        {{ messages.error }}
+      </div>
+      {% endif %}
       {% block body %}{% endblock %}
     </main>
-    <script src="dustjs-linkedin/dust-full.min.js"></script>
+    {% endblock %}
+
+    <div class="ui inverted vertical footer segment">
+      <div class="ui container">
+        <div class="ui stackable inverted divided equal height stackable grid">
+          <div class="two wide column">
+            <h4 class="ui inverted header">About</h4>
+            <div class="ui inverted link list">
+              <a href="#" class="item">Authors</a>
+              <a href="#" class="item">Contact Us</a>
+              <a href="https://www.usi.ch/it" class="item">USI</a>
+            </div>
+          </div>
+          <div class="three wide column">
+            <h4 class="ui inverted header">Technologies</h4>
+            <div class="ui inverted link list">
+              <a href="https://semantic-ui.com/" class="item">SemanticUI</a>
+              <a href="https://mozilla.github.io/nunjucks/" class="item">Nunjucks</a>
+              <a href="http://www.passportjs.org/" class="item">PassportJS</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
     <script src="js/fetch.js"></script>
   </body>
 </html>
