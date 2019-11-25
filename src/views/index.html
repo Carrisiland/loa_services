@@ -6,15 +6,7 @@
 {% block rootbody %}
 <div class="ui inverted vertical masthead center aligned segment">
   <div class="ui container myTop">
-    <div class="ui large secondary inverted pointing menu">
-      <a  href="./mainPage.html" class="active item">Home</a>
-      <div class="right item">
-        <div style="margin-right: 2vw;">
-          <a href="./login.html"class="ui inverted button"> Log in</a>
-        </div>
-        <a href="./signUP.html" class="ui inverted button">Sign Up</a>
-      </div>
-    </div>
+    {% include "header.html" %}
   </div>
 
   <div class="ui text container bigTop">
