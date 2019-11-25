@@ -22,3 +22,16 @@ main {
 .footer {
   flex-shrink: 0;
 }
+
+.vimtok {
+  margin: 0;
+  padding: 0;
+
+  max-width: 20%;
+  font-size: 3em;
+  background: -webkit-linear-gradient(left, #439541 0%, #70F3EE 30%, #EA3354 60%);
+  background: -o-linear-gradient(left, #439541 0%, #70F3EE 10%, #EA3354 20%);
+  background: -moz-linear-gradient(left, #439541 0%, #70F3EE 10%, #EA3354 20%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

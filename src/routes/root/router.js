@@ -9,5 +9,9 @@ router.get('/', (req, res) => {
   res.render('index.html');
 });
 
+router.get('/gallery', (req, res) => {
+  res.render('gallery.html');
+});
+
 /** router for /root */
 module.exports = router;

@@ -27,4 +27,3 @@ router.post('/signup', passport.authenticate('local-signup', {
 }));
 
 module.exports = router;
-
