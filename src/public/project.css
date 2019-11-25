@@ -6,8 +6,8 @@
   margin-bottom: 10vh;
 }
 
-html, body {
-  height: 100%;
+body {
+  min-height: 100vh;
 }
 
 body {
@@ -15,7 +15,7 @@ body {
   flex-direction: column;
 }
 
-main {
+.rootbody {
   flex: 1 0 auto;
 }
 
@@ -38,9 +38,20 @@ main {
 
 .ui.top.secondary.stackable.main.menu.following.bar.light {
   background-color: rgb(27, 28, 29);
+  height: 7vh;
+  /* padding-bottom: 2vh; */
+  padding-top: 0.7vh;
+
+}
+
+#my {
+  margin-bottom: 3vh;
 }
 
 
 #mainContent {
-  
+  height: 90%;
+  padding-left: 4vw;
+  padding-right: 4vw;
+
 }
