@@ -14,17 +14,7 @@
   <body>
     {% block rootbody %}
     {% block header %}
-    <div class="ui inverted header segment">
-      <div class="ui large secondary inverted pointing menu">
-        <a href="/" class="active item">Home</a>
-        <div class="right item">
-          <div style="margin-right: 2vw;">
-            <a href="/auth/login" class="ui inverted button"> Log in</a>
-          </div>
-          <a href="/auth/signup" class="ui inverted button">Sign Up</a>
-        </div>
-      </div>
-    </div>
+      {% include "header.html" %}
     {% endblock %}
 
     <main class="ui container">
