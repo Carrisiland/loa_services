@@ -17,25 +17,25 @@ passport.deserializeUser(function(id, done) {
 });
 
 passport.use('local-signup', new LocalStrategy({
-  usernameField: 'email',
+  usernameField: 'username',
   passwordField: 'password',
   passReqToCallback: true // allows us to pass back the entire request to the
-                          // callback
-}, (req, email, password, done) => {
+  // callback
+}, (req, username, password, done) => {
   process.nextTick(() => {
-    User.findOne({ email }, (err, user) => {
+    User.findOne({ username }, (err, user) => {
       // if there are any errors, return the error
       if (err) {
         return done(err);
       }
 
       if (user) {
-        return done(null, false, req.flash('error',
-          'That email is already taken.'));
+        req.flash('error', 'That username is already taken.');
+        return done(null, false);
       } else {
         const newUser = new User();
 
-        newUser.email = email;
+        newUser.username = username;
         newUser.password = newUser.generateHash(password);
 
         newUser.save((err) => {
@@ -51,23 +51,21 @@ passport.use('local-signup', new LocalStrategy({
 }));
 
 passport.use('local-login', new LocalStrategy({
-  usernameField: 'email',
+  usernameField: 'username',
   passwordField: 'password',
   passReqToCallback: true // allows us to pass back the entire request to the
-                          // callback
-}, async (req, email, password, done) => {
+  // callback
+}, async (req, username, password, done) => {
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
 
-      console.log('a');
     if (!user) {
-      console.log('b');
-      return done(null, false, req.flash('error', 'No user found.'));
+      req.flash('error', 'No user found.');
+      return done(null, false);
     } else if (!user.validPassword(password)) {
-      console.log('c');
-      return done(null, false, req.flash('error', 'Wrong password.'));
+      req.flash('error', 'Wrong password.');
+      return done(null, false);
     } else {
-      console.log('d');
       return done(null, user);
     }
   } catch (e) {

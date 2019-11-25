@@ -9,10 +9,9 @@ router.get('/login', (req, res) => {
 
 // process the login form
 router.post('/login', passport.authenticate('local-login', {
-  successRedirect: '/', // redirect to the secure profile section
-  failureRedirect: '/auth/login', // redirect back to the signup page if there is an
-                             // error
-  failureFlash: true // allow flash messages
+  successRedirect: '/',
+  failureRedirect: '/auth/login',
+  failureFlash: 'Invalid username or password'
 }));
 
 router.get('/signup', (req, res) => {
@@ -20,10 +19,9 @@ router.get('/signup', (req, res) => {
 });
 
 router.post('/signup', passport.authenticate('local-signup', {
-  successRedirect: '/profile', // redirect to the secure profile section
-  failureRedirect: '/auth/signup', // redirect back to the signup page if there is an
-                              // error
-  failureFlash: true // allow flash messages
+  successRedirect: '/',
+  failureRedirect: '/auth/signup',
+  failureFlash: true
 }));
 
 module.exports = router;
