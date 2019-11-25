@@ -13,5 +13,9 @@ router.get('/gallery', (req, res) => {
   res.render('gallery.html');
 });
 
+router.get('/newVideoForm', (req, res) => {
+  res.render('newVideoForm.html');
+});
+
 /** router for /root */
 module.exports = router;

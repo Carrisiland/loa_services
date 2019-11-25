@@ -36,6 +36,10 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* a.ui.inverted.button {
+  margin-left: 1vw;
+} */
+
 .ui.top.secondary.stackable.main.menu.following.bar.light {
   background-color: rgb(27, 28, 29);
   height: 7vh;
@@ -53,5 +57,9 @@ body {
   height: 90%;
   padding-left: 4vw;
   padding-right: 4vw;
+}
 
+.ui.large.form.new {
+  margin-left: 30vw;
+  margin-right: 30vw;
 }
