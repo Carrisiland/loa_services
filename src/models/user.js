@@ -30,14 +30,15 @@ const userSchema = mongoose.Schema({
 
 userSchema.statics.validateSignup = function() {
   return [
-    check('username').isAlphanumeric()
-      .withMessage('Username not valid'),
-    check('password').isAlphanumeric().isLength({ min: 8 })
-      .withMessage('Password not valid'),
-    check('password2').isAlphanumeric().isLength({ min: 8 })
-      .withMessage('Password not valid'),
-    check('email').isEmail()
-      .withMessage('Email not valid'),
+    check('username', 'The username should be 3 to 50 alphanumeric characters')
+      .isAlphanumeric()
+      .isLength({ min: 3, max: 50 }),
+    check('password', 'The password should be 8 to 50 alphanumeric characters')
+      .isAlphanumeric()
+      .isLength({ min: 8, max: 50 }),
+    check('email', 'The email should be a valid email')
+      .isLength({ max: 100 })
+      .isEmail(),
   ];
 };
 

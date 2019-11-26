@@ -17,19 +17,18 @@
         <a href="/newVideoForm" class="ui inverted button" style='margin-right: 2vw;'> New Video</a>
         <a href="/gallery" class="ui inverted button" style='margin-right: 2vw;'>Gallery</a>
         {% if user %}
-        <a href="#" class="ui inverted button">Logout</a>
+        <a href="/auth/logout" class="ui inverted button">Logout</a>
         {% endif %}
      </div>
     </div>
   </div>
-  <div id='profileCard'>
-      <div class="ui card" >
-      <a class="image" href="#">
-        <img src="/img/elon_musk.jpg">
-      <div class="content">
-        <a class="header" href="#">Elon Musk</a>
-      </div>
-    </div>
+  <div class="ui text container bigTop">
+    <h1 class="ui inverted header">
+      @ {{ user.username }}
+    </h1>
+    <h2 style="font-size: 3em; margin-top: -2vh;"> Share only the best moments</h2>
+    <br>
+    <a href="/auth/signup" style="color: white;" class="ui huge primary button myTop"> Get Started <i class="right arrow icon"></i></a>
   </div>
 
   <div id='menus'>
