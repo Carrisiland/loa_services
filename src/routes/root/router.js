@@ -6,7 +6,11 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('index.html');
+  if (req.user) {
+    res.redirect('/auth/profile');
+  } else {
+    res.render('index.html');
+  }
 });
 
 router.get('/gallery', (req, res) => {
