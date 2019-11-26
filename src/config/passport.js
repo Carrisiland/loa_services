@@ -3,6 +3,7 @@
 const LocalStrategy = require('passport-local');
 const passport = require('passport');
 const User = require('../models/user');
+const { validationResult } = require('express-validator');
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -15,11 +16,20 @@ passport.deserializeUser(function(id, done) {
 });
 
 passport.use('local-signup', new LocalStrategy({
-  usernameField: 'username',
-  passwordField: 'password',
-  passReqToCallback: true // allows us to pass back the entire request to the
-  // callback
+  passReqToCallback: true
 }, (req, username, password, done) => {
+
+  const val = validationResult(req);
+  if (!val.isEmpty()) {
+    req.flash('error', val.array().map(m => m.msg).join('<br>'));
+    return done(null, false);
+  }
+
+  if (req.body.password != req.body.password2) {
+    req.flash('error', 'Passwords do not match');
+    return done(null, false);
+  }
+
   process.nextTick(() => {
     User.findOne({ username }, (err, user) => {
       // if there are any errors, return the error
@@ -48,14 +58,18 @@ passport.use('local-signup', new LocalStrategy({
   });
 }));
 
-passport.use(new LocalStrategy(async (username, password, done) => {
+passport.use(new LocalStrategy({
+  passReqToCallback: true,
+}, async (req, username, password, done) => {
   try {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return done(null, false, { message: 'User does not exist' });
+      req.flash('error', 'User does not exist');
+      return done(null, false);
     } else if (!user.validPassword(password)) {
-      return done(null, false, { message: 'The password is wrong' });
+      req.flash('error', 'The password is wrong');
+      return done(null, false);
     } else {
       return done(null, user);
     }
