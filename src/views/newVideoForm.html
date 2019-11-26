@@ -63,48 +63,34 @@
       },
       start: {
         identifier: 'start',
-        rules: [
-          {
-            type: 'empty',
-            type: 'regExp',
+        rules: [{ type: 'regExp',
             value: /([0-9])([0-9]):([0-9])([0-9])/,
-            prompt : 'Please enter a valid timestamp',
-          }
-        ]
+            prompt : 'Please enter a valid timestamp',}]
       },
       end: {
         identifier: 'end',
         rules: [
-          {
-            type   : 'empty',
-            type: 'regExp',
+          {type: 'regExp',
             value: /([0-9])([0-9]):([0-9])([0-9])/,
-            prompt : 'Please eneter a valid timestamp'
-          }
-        ]
+            prompt : 'Please eneter a valid timestamp',}]
       },
       title: {
         identifier: 'title',
         rules: [
-          {
-            type   : 'empty',
+          {type   : 'empty',
+          prompt : 'Please enter a title'
+        },
+        {
             type   : 'maxLength[20]',
-            prompt : 'Please enter a title shorter than 20 characters'
-          }
-        ]
+            prompt : 'Please enter a title shorter than 20 characters'}]
       },
       visibility: {
         identifier: 'visibility',
         rules: [
-          {
-            type   : 'empty',
-            prompt : 'Please choose a visibility'
-          }
-        ]
+          {type   : 'empty',
+            prompt : 'Please choose a visibility'}]
     },
   }
   });
 </script>
 {% endblock %}
-COPY TO CLIPBOARD	 SELECT ALL
-© FreeFormatter.com - FREEFORMATTER is a d/b/a of 10174785 Canada Inc. - Copyright Notice - Privacy Statement - Terms of Use

@@ -1,6 +1,6 @@
 {# vim: set ts=2 sw=2 et tw=120 ft=htmldjango: #}
 {% extends "skel.html" %}
-{% block title %}Feed{% endblock %}
+{% block title %}Profile{% endblock %}
 {% block rootbody %}
 <div id="my">
   <div class="ui top secondary stackable main menu following bar light">
@@ -14,9 +14,26 @@
         <a href="/newVideoForm" class="ui inverted button" style='margin-right: 2vw;'> New Video</a>
         <a href="/gallery" class="ui inverted button" style='margin-right: 2vw;'>Gallery</a>
         {% if user %}
-        <a href="/profile/123" class="ui inverted button">Profile</a>
+        <a href="#" class="ui inverted button">Logout</a>
         {% endif %}
       </div>
+    </div>
+  </div>
+  <div id='profileCard'>
+    <div class="ui card" >
+      <a class="image" href="#">
+        <img src="/img/elon_musk.jpg">
+        <div class="content">
+      <a class="header" href="#">Elon Musk</a>
+      </div>
+    </div>
+  </div>
+  <div id='menus'>
+    <div class="ui four item menu">
+      <a class="item active">All</a>
+      <a class="item">Public</a>
+      <a class="item">Hidden</a>
+      <a class="item">Albums</a>
     </div>
   </div>
 </div>
