@@ -6,11 +6,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  if (req.user) {
-    res.redirect('/auth/profile');
-  } else {
-    res.render('index.html');
-  }
+  res.render('index.html');
 });
 
 router.get('/gallery', (req, res) => {
@@ -32,5 +28,6 @@ router.get('/newVideoForm', (req, res) => {
 router.get('/profile/:id', (req, res) => {
   res.render('profile.html');
 });
+
 /** router for /root */
 module.exports = router;

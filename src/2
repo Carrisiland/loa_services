@@ -3,7 +3,7 @@
 {% extends "skel.html" %}
 
 {% block title %}Gallery{% endblock %}
-{% block body %}
+{% block rootbody %}
 <div id="mainContent">
   <h1>Feed </h1>
   <div class="ui link cards">
@@ -177,6 +177,9 @@
         </span>
       </div>
     </div>
+
   </div>
+
+
 </div>
 {% endblock %}
