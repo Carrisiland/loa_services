@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dustc": "cd ./views; dustc *.dust partials/*.dust -o ../public/js/views.js",
-    "start": "DEBUG='canvas-server' nodemon ./bin/www"
+    "start": "DEBUG='vimtok' nodemon -e js,html,nj ./bin/www"
   },
   "keywords": [
     "Node.js",

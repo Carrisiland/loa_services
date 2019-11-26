@@ -3,7 +3,9 @@
 <div class="ui inverted header segment" style="border-radius: 0">
   <div class="ui large secondary inverted menu">
     <div class="ui container">
-      <a href="/" class="header active item">Home</a>
+      <div class="left item">
+        <a href="/" class="header active item">Home</a>
+      </div>
       {% if not user %}
       <div class="right item">
         <a href="/auth/login" class="ui inverted button user-btn">Log in</a>
