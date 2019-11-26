@@ -16,8 +16,33 @@
     </div>
   </div>
 
+  {% set service = 'youtube' %}
 
+  {% if service == 'youtube' %}
+    <div id="player"></div>
+  {% endif %}
+
+  {% if service == 'vimeo' %}
+  {% set url = "https://player.vimeo.com/video/371525503" %}
+ <iframe src={{url}} width="720" height="480" 
+    frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+   
+   
+  {% endif %}
   
+ 
+{% endblock %}
 
+{% block scripts %}
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script src="../../videoPlayerScripts/vimeoHandler.js"></script>
+<script src="../../videoPlayerScripts/youtubeHandler.js"></script>
+{% if service == 'vimeo' %}
+<script>vmInit();</script>
+{% endif %}
+
+{% if service == 'youtube' %}
+<script>ytInit();</script>
+{% endif %}
 
 {% endblock %}
