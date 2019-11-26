@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
+const { check } = require('express-validator');
 
 const userSchema = mongoose.Schema({
   username: { type: String, required: true },
@@ -26,6 +27,19 @@ const userSchema = mongoose.Schema({
     name: String
   }
 });
+
+userSchema.statics.validateSignup = function() {
+  return [
+    check('username').isAlphanumeric()
+      .withMessage('Username not valid'),
+    check('password').isAlphanumeric().isLength({ min: 8 })
+      .withMessage('Password not valid'),
+    check('password2').isAlphanumeric().isLength({ min: 8 })
+      .withMessage('Password not valid'),
+    check('email').isEmail()
+      .withMessage('Email not valid'),
+  ];
+};
 
 // methods ======================
 // generating a hash

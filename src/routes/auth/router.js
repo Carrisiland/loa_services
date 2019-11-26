@@ -18,11 +18,12 @@ router.get('/signup', (req, res) => {
   res.render('auth/signup.html');
 });
 
-router.post('/signup', passport.authenticate('local-signup', {
-  successRedirect: '/',
-  failureRedirect: '/auth/signup',
-  failureFlash: true
-}));
+router.post('/signup', User.validateSignup(),
+  passport.authenticate('local-signup', {
+    successRedirect: '/',
+    failureRedirect: '/auth/signup',
+    failureFlash: true
+  }));
 
 router.get('/logout', (req, res) => {
   req.logout();

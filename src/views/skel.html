@@ -22,22 +22,22 @@
       {% set messages = getMessages() %}
       {% if messages.success %}
       <div class="ui positive message">
-        {{ messages.success }}
+        {{ messages.success | safe }}
       </div>
       {% endif %}
       {% if messages.info %}
       <div class="ui info message">
-        {{ messages.info }}
+        {{ messages.info | safe }}
       </div>
       {% endif %}
       {% if messages.warn %}
       <div class="ui warning message">
-        {{ messages.warn }}
+        {{ messages.warn | safe }}
       </div>
       {% endif %}
       {% if messages.error %}
       <div class="ui error message">
-        {{ messages.error }}
+        {{ messages.error | safe }}
       </div>
       {% endif %}
       {% block body %}{% endblock %}
