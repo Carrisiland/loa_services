@@ -1,6 +1,7 @@
 // vim: set ts=2 sw=2 et tw=80:
 
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs');
 const { check } = require('express-validator');
 

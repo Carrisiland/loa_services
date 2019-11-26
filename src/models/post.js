@@ -3,8 +3,7 @@
 const mongoose = require('mongoose');
 
 const postSchema = mongoose.Schema({
-
-  user: {type: Schema.Types.ObjectId, ref:'User'},
+  user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
   title: { type: String, required: true },
   dateCreated: { type: Date, required: true, default: Date.now },
   comments: [{type: String}],
@@ -14,8 +13,6 @@ const postSchema = mongoose.Schema({
     duration: Number,
     source: String
   }
-
-  
 });
 
 const Post = mongoose.model('Post', postSchema);
