@@ -4,14 +4,19 @@ const mongoose = require('mongoose');
 
 const postSchema = mongoose.Schema({
 
-  user: {type: String},
+  user: {type: Schema.Types.ObjectId, ref:'User'},
   title: { type: String, required: true },
   dateCreated: { type: Date, required: true, default: Date.now },
-  comments: {type: String},
+  comments: [{type: String}],
   upvotes: {type: Number, default: 1},
   downvotes: {type: Number, default: 0},
-  // video: ???
+  video: {
+    duration: Number,
+    source: String
+  }
+
   
 });
 
-const Favorite = mongoose.model('Favorite', schema);
+const Post = mongoose.model('Post', postSchema);
+module.exports = Post;

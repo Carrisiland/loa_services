@@ -25,7 +25,9 @@ const userSchema = mongoose.Schema({
     token: String,
     email: String,
     name: String
-  }
+  },
+  followers: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  following: [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
 userSchema.statics.validateSignup = function() {
@@ -53,4 +55,5 @@ userSchema.methods.validPassword = function(password) {
 };
 
 // create the model for users and expose it to our app
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+module.exports = User;
