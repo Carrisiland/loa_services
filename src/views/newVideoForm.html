@@ -21,19 +21,19 @@
     <h2>Upload New Video</h2>
     <div class="field required">
       <label>Link:</label>
-      <input required type="text" name="link" placeholder="htps://www.youtube.com/watch?v=YlUKcNNmywk">
+      <input  type="text" name="link" placeholder="htps://www.youtube.com/watch?v=YlUKcNNmywk">
     </div>
     <div class="field required">
       <label>Start:</label>
-      <input required type="text" name="start" placeholder="1:12">
+      <input  type="text" name="start" placeholder="1:12">
     </div>
     <div class="field required">
       <label>End:</label>
-      <input required type="text" name="end" placeholder="2:21">
+      <input  type="text" name="end" placeholder="2:21">
     </div>
-    <div class="field required error">
+    <div class="field required">
       <label>Title:</label>
-      <input required type="text" name="title" placeholder="An old classic that everyone should know">
+      <input  type="text" name="title" placeholder="An old classic that everyone should know">
     </div>
     <div class="field">
       <label>Description</label>
@@ -43,7 +43,7 @@
     <div class="six wide field required">
       <label>Visibility</label>
       <div class="two fields">
-        <div class="field">
+        <div class="field required">
           <select class="ui fluid search dropdown" name="visibility">
             <option value=""></option>
             <option value="1">Public</option>
@@ -56,21 +56,14 @@
     <div class="field">
       <button class="ui button" type="submit">Upload</button>
     </div>
+    <div class="ui error message" style="margin-bottom: 1vh;"></div>
   </form>
 
+{% endblock %}
 
-
-
-
-
-
-
-
+{% block scripts %}
 <script>
-
-
-  $('.ui.form')
-  .form({
+  $('.ui.form').form({
     fields: {
       name: {
         identifier: 'link',
@@ -81,75 +74,43 @@
           }
         ]
       },
-      skills: {
-        identifier: 'skills',
-        rules: [
-          {
-            type   : 'minCount[2]',
-            prompt : 'Please select at least two skills'
-          }
-        ]
-      },
-      gender: {
-        identifier: 'gender',
+      start: {
+        identifier: 'start',
         rules: [
           {
             type   : 'empty',
-            prompt : 'Please select a gender'
+            prompt : 'Please enter a valid timestamp'
           }
         ]
       },
-      username: {
-        identifier: 'username',
+      end: {
+        identifier: 'end',
         rules: [
           {
             type   : 'empty',
-            prompt : 'Please enter a username'
+            prompt : 'Please eneter a valid timestamp'
           }
         ]
       },
-      password: {
-        identifier: 'password',
+      title: {
+        identifier: 'title',
         rules: [
           {
             type   : 'empty',
-            prompt : 'Please enter a password'
-          },
-          {
-            type   : 'minLength[6]',
-            prompt : 'Your password must be at least {ruleValue} characters'
+            prompt : 'Please enter a title'
           }
         ]
       },
-      terms: {
-        identifier: 'terms',
+      visibility: {
+        identifier: 'visibility',
         rules: [
           {
-            type   : 'checked',
-            prompt : 'You must agree to the terms and conditions'
+            type   : 'empty',
+            prompt : 'Please choose a visibility'
           }
         ]
-      }
-    }
-  })
-;
-
-
-
+    },
+  }
+});
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% endblock %}
