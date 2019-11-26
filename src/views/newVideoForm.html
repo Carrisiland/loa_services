@@ -1,155 +1,110 @@
 {# vim: set ts=2 sw=2 et tw=120 ft=htmldjango: #}
-
 {% extends "skel.html" %}
-
 {% block title %} New Post {% endblock %}
 {% block rootbody %}
-
 <div id="my">
-    <div class="ui top secondary stackable main menu following bar light">
-      <div class="ui container" id="navbar">
-           <h1 class="vimtok"> <a href="/gallery"> VimTok </a> </h1>
-     <div class="right item">
-       <div> <a href="newVideoForm" class="ui inverted button">New Video</a> </div>
-     </div>
+  <div class="ui top secondary stackable main menu following bar light">
+    <div class="ui container" id="navbar">
+      <h1 class="vimtok"> <a href="/gallery"> VimTok </a> </h1>
+      <div class="right item">
+        <div> <a href="newVideoForm" class="ui inverted button">New Video</a> </div>
       </div>
     </div>
   </div>
-
-
-  <form class="ui large form new" method="post">
-    <h2>Upload New Video</h2>
-    <div class="field required">
-      <label>Link:</label>
-      <input required type="text" name="link" placeholder="htps://www.youtube.com/watch?v=YlUKcNNmywk">
-    </div>
-    <div class="field required">
-      <label>Start:</label>
-      <input required type="text" name="start" placeholder="1:12">
-    </div>
-    <div class="field required">
-      <label>End:</label>
-      <input required type="text" name="end" placeholder="2:21">
-    </div>
-    <div class="field required error">
-      <label>Title:</label>
-      <input required type="text" name="title" placeholder="An old classic that everyone should know">
-    </div>
-    <div class="field">
-      <label>Description</label>
-      <textarea rows="2" style="margin-top: 0px; margin-bottom: 0px; height: 100px; resize: none"></textarea>
-    </div>
-
-    <div class="six wide field required">
-      <label>Visibility</label>
-      <div class="two fields">
-        <div class="field">
-          <select class="ui fluid search dropdown" name="visibility">
-            <option value=""></option>
-            <option value="1">Public</option>
-            <option value="2">Private</option>
-          </select>
-        </div>
+</div>
+<form class="ui large form new" method="post">
+  <h2>Upload New Video</h2>
+  <div class="field required">
+    <label>Link:</label>
+    <input type="text" name="link" placeholder="htps://www.youtube.com/watch?v=YlUKcNNmywk">
+  </div>
+  <div class="field required">
+    <label>Start:</label>
+    <input type="text" name="start" placeholder="01:12">
+  </div>
+  <div class="field required">
+    <label>End:</label>
+    <input type="text" name="end" placeholder="22:21">
+  </div>
+  <div class="field required">
+    <label>Title:</label>
+    <input type="text" name="title" placeholder="An old classic that everyone should know">
+  </div>
+  <div class="field">
+    <label>Description</label>
+    <textarea rows="2" style="margin-top: 0px; margin-bottom: 0px; height: 100px; resize: none"></textarea>
+  </div>
+  <div class="field required">
+    <label>Visibility</label>
+    <div class="two fields">
+      <div class="field required">
+        <select class="ui fluid search dropdown" value="public" name="visibility">
+          <option value="public">Public</option>
+          <option value="private">Private</option>
+        </select>
       </div>
     </div>
-
-    <div class="field">
-      <button class="ui button" type="submit">Upload</button>
-    </div>
-  </form>
-
-
-
-
-
-
-
-
-
+  </div>
+  <div class="field">
+    <button class="ui button" type="submit">Upload</button>
+  </div>
+  <div class="ui error message"></div>
+</form>
+{% endblock %}
+{% block scripts %}
 <script>
-
-
-  $('.ui.form')
-  .form({
+  $('.ui.form').form({
     fields: {
       name: {
         identifier: 'link',
+        rules: [{ type: 'regExp',
+            value: /(?:(?:(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=)|(?:(?:https?:\/\/)?(?:www\.)?youtu\.be\/))((?:[\w+]){8}(?:[\w+])*)/,
+            prompt: 'Please enter a valid Youtube/Vimeo link' }]
+      },
+      start: {
+        identifier: 'start',
+        rules: [
+          {
+            type: 'empty',
+            type: 'regExp',
+            value: /([0-9])([0-9]):([0-9])([0-9])/,
+            prompt : 'Please enter a valid timestamp',
+          }
+        ]
+      },
+      end: {
+        identifier: 'end',
         rules: [
           {
             type   : 'empty',
-            prompt : 'Please enter a valid Youtube/Vimeo link'
+            type: 'regExp',
+            value: /([0-9])([0-9]):([0-9])([0-9])/,
+            prompt : 'Please eneter a valid timestamp'
           }
         ]
       },
-      skills: {
-        identifier: 'skills',
-        rules: [
-          {
-            type   : 'minCount[2]',
-            prompt : 'Please select at least two skills'
-          }
-        ]
-      },
-      gender: {
-        identifier: 'gender',
+      title: {
+        identifier: 'title',
         rules: [
           {
             type   : 'empty',
-            prompt : 'Please select a gender'
+            type   : 'maxLength[20]',
+            prompt : 'Please enter a title shorter than 20 characters'
           }
         ]
       },
-      username: {
-        identifier: 'username',
+      visibility: {
+        identifier: 'visibility',
         rules: [
           {
             type   : 'empty',
-            prompt : 'Please enter a username'
+            prompt : 'Please choose a visibility'
           }
         ]
-      },
-      password: {
-        identifier: 'password',
-        rules: [
-          {
-            type   : 'empty',
-            prompt : 'Please enter a password'
-          },
-          {
-            type   : 'minLength[6]',
-            prompt : 'Your password must be at least {ruleValue} characters'
-          }
-        ]
-      },
-      terms: {
-        identifier: 'terms',
-        rules: [
-          {
-            type   : 'checked',
-            prompt : 'You must agree to the terms and conditions'
-          }
-        ]
-      }
-    }
-  })
-;
-
-
-
+    },
+  }
+  });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% endblock %}
+COPY TO CLIPBOARD	 SELECT ALL
+© FreeFormatter.com - FREEFORMATTER is a d/b/a of 10174785 Canada Inc. - Copyright Notice - Privacy Statement - Terms of Use
