@@ -13,6 +13,10 @@ router.get('/gallery', (req, res) => {
   res.render('gallery.html');
 });
 
+router.get('/videoPlayer', (req, res) => {
+  res.render('videoPlayer.html');
+});
+
 router.get('/feed', (req, res) => {
   res.render('feed.html');
 });
