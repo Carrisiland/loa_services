@@ -13,5 +13,16 @@ router.get('/gallery', (req, res) => {
   res.render('gallery.html');
 });
 
+router.get('/feed', (req, res) => {
+  res.render('feed.html');
+});
+
+router.get('/newVideoForm', (req, res) => {
+  res.render('newVideoForm.html');
+});
+
+router.get('/profile/:id', (req, res) => {
+  res.render('profile.html');
+});
 /** router for /root */
 module.exports = router;

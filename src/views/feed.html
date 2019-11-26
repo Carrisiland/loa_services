@@ -2,7 +2,7 @@
 
 {% extends "skel.html" %}
 
-{% block title %}Gallery{% endblock %}
+{% block title %}Feed{% endblock %}
 {% block rootbody %}
 
 <div id="my">
@@ -14,12 +14,13 @@
           <input type="text" placeholder="Search...">
           <i class="inverted circular search link icon"></i>
         </div>
-        <a href="/newVideoForm" class="ui inverted button" style='margin-right: 2vw;'>New Post</a>
-        <a href="/feed" class="ui inverted button" style='margin-right: 2vw;'>Feed</a>
+        <a href="/newVideoForm" class="ui inverted button" style='margin-right: 2vw;'> New Video</a>
+        <a href="/gallery" class="ui inverted button" style='margin-right: 2vw;'>Gallery</a>
         <a href="/auth/signup" class="ui inverted button">Profile</a>
      </div>
-      </div>
     </div>
+  </div>
+
   </div>
 
 
@@ -28,7 +29,7 @@
 
     <div id="mainContent">
 
-      <h1> Gallery </h1>
+      <h1> Feed </h1>
 
       <div class="ui link cards">
     <div class="card">
@@ -49,6 +50,7 @@
         </span>
         <span>
           <i class="user icon"></i>
+          {# This should be a link to the user's profile #}
           Mark4316
         </span>
       </div>

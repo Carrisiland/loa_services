@@ -12,6 +12,7 @@
   </head>
 
   <body>
+    <div class="rootbody">
     {% block rootbody %}
     {% block header %}
       {% include "header.html" %}
@@ -42,6 +43,7 @@
       {% block body %}{% endblock %}
     </main>
     {% endblock %}
+  </div>
 
     <div class="ui inverted vertical footer segment">
       <div class="ui container">

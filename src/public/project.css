@@ -6,8 +6,8 @@
   margin-bottom: 10vh;
 }
 
-html, body {
-  height: 100%;
+body {
+  min-height: 100vh;
 }
 
 body {
@@ -15,7 +15,7 @@ body {
   flex-direction: column;
 }
 
-main {
+.rootbody {
   flex: 1 0 auto;
 }
 
@@ -36,14 +36,46 @@ main {
   -webkit-text-fill-color: transparent;
 }
 
+/* a.ui.inverted.button {
+  margin-left: 1vw;
+} */
+
 .ui.top.secondary.stackable.main.menu.following.bar.light {
   background-color: rgb(27, 28, 29);
+  height: 7vh;
+  /* padding-bottom: 2vh; */
+  padding-top: 0.7vh;
+
+}
+
+#my {
+  background-color: rgb(27, 28, 29);
+  margin-bottom: 3vh;
 }
 
 .right.item > .ui.inverted.button.user-btn {
   margin-right: 1em;
 }
 
-#mainContent {
+#profileCard {
+  width: 13vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5vh;
+  margin-bottom: 2vh;
+}
 
+#menus {
+  /* padding-bottom: 5vh; */
+}
+
+#mainContent {
+  height: 90%;
+  padding-left: 4vw;
+  padding-right: 4vw;
+}
+
+.ui.large.form.new {
+  margin-left: 30vw;
+  margin-right: 30vw;
 }

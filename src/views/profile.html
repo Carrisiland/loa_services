@@ -2,7 +2,7 @@
 
 {% extends "skel.html" %}
 
-{% block title %}Gallery{% endblock %}
+{% block title %}Profile{% endblock %}
 {% block rootbody %}
 
 <div id="my">
@@ -14,12 +14,31 @@
           <input type="text" placeholder="Search...">
           <i class="inverted circular search link icon"></i>
         </div>
-        <a href="/newVideoForm" class="ui inverted button" style='margin-right: 2vw;'>New Post</a>
-        <a href="/feed" class="ui inverted button" style='margin-right: 2vw;'>Feed</a>
+        <a href="/newVideoForm" class="ui inverted button" style='margin-right: 2vw;'> New Video</a>
+        <a href="/gallery" class="ui inverted button" style='margin-right: 2vw;'>Gallery</a>
         <a href="/auth/signup" class="ui inverted button">Profile</a>
      </div>
+    </div>
+  </div>
+  <div id='profileCard'>
+      <div class="ui card" >
+      <a class="image" href="#">
+        <img src="/img/elon_musk.jpg">
+      <div class="content">
+        <a class="header" href="#">Elon Musk</a>
       </div>
     </div>
+  </div>
+
+  <div id='menus'>
+    <div class="ui four item menu">
+      <a class="item active">All</a>
+      <a class="item">Public</a>
+      <a class="item">Hidden</a>
+      <a class="item">Albums</a>
+    </div>
+  </div>
+
   </div>
 
 
@@ -27,8 +46,6 @@
 
 
     <div id="mainContent">
-
-      <h1> Gallery </h1>
 
       <div class="ui link cards">
     <div class="card">
@@ -48,8 +65,7 @@
           1 minute ago
         </span>
         <span>
-          <i class="user icon"></i>
-          Mark4316
+          Hidden
         </span>
       </div>
     </div>
@@ -70,8 +86,7 @@
           5 minutes ago
         </span>
         <span>
-          <i class="user icon"></i>
-          LolloXDLOL
+          Hidden
         </span>
       </div>
     </div>
@@ -92,8 +107,7 @@
           5 minutes ago
         </span>
         <span>
-          <i class="user icon"></i>
-          LolloXDLOL
+        Public
         </span>
       </div>
     </div>
@@ -114,8 +128,7 @@
           5 minutes ago
         </span>
         <span>
-          <i class="user icon"></i>
-          LolloXDLOL
+          Hidden
         </span>
       </div>
     </div>
@@ -136,59 +149,11 @@
           5 minutes ago
         </span>
         <span>
-          <i class="user icon"></i>
-          LolloXDLOL
-        </span>
-      </div>
-    </div>
-    <div class="card">
-        <iframe src="https://www.youtube.com/embed/gjQy0bx0Uvw"
-        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      <div class="content">
-        <div class="header">Il Nulla</div>
-        <div class="meta">
-          <span class="date">QuickVideo</span>
-        </div>
-        <div class="description">
-          Non fanno nulla e sono milionari
-        </div>
-      </div>
-      <div class="extra content">
-        <span class="right floated">
-          5 minutes ago
-        </span>
-        <span>
-          <i class="user icon"></i>
-          LolloXDLOL
-        </span>
-      </div>
-    </div>
-
-    <div class="card">
-      <iframe src="https://www.youtube.com/embed/Ag1o3koTLWM" frameborder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      <div class="content">
-        <div class="header">Quanto è bella</div>
-        <div class="meta">
-          <a>Ascoltatela tutti!!11!!!1</a>
-        </div>
-        <div class="description">
-          QuickVideo
-        </div>
-      </div>
-      <div class="extra content">
-        <span class="right floated">
-          7 minutes ago
-        </span>
-        <span>
-          <i class="user icon"></i>
-          GiuliaSal
+          Public
         </span>
       </div>
     </div>
 
   </div>
-
-
     </div>
   {% endblock %}
