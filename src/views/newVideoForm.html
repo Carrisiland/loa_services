@@ -31,7 +31,7 @@
       <label>End:</label>
       <input required type="text" name="end" placeholder="2:21">
     </div>
-    <div class="field required">
+    <div class="field required error">
       <label>Title:</label>
       <input required type="text" name="title" placeholder="An old classic that everyone should know">
     </div>
@@ -57,6 +57,99 @@
       <button class="ui button" type="submit">Upload</button>
     </div>
   </form>
+
+
+
+
+
+
+
+
+
+<script>
+
+
+  $('.ui.form')
+  .form({
+    fields: {
+      name: {
+        identifier: 'link',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Please enter a valid Youtube/Vimeo link'
+          }
+        ]
+      },
+      skills: {
+        identifier: 'skills',
+        rules: [
+          {
+            type   : 'minCount[2]',
+            prompt : 'Please select at least two skills'
+          }
+        ]
+      },
+      gender: {
+        identifier: 'gender',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Please select a gender'
+          }
+        ]
+      },
+      username: {
+        identifier: 'username',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Please enter a username'
+          }
+        ]
+      },
+      password: {
+        identifier: 'password',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Please enter a password'
+          },
+          {
+            type   : 'minLength[6]',
+            prompt : 'Your password must be at least {ruleValue} characters'
+          }
+        ]
+      },
+      terms: {
+        identifier: 'terms',
+        rules: [
+          {
+            type   : 'checked',
+            prompt : 'You must agree to the terms and conditions'
+          }
+        ]
+      }
+    }
+  })
+;
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 {% endblock %}
