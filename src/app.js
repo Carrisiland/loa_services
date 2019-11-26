@@ -25,24 +25,32 @@ const secret = 'luciano-malusa-in-pensione';
 
 //configure app
 app.use(logger('dev'));
-nunjucks.configure('views', {
+
+const engine = nunjucks.configure('views', {
     autoescape: true,
     express: app
 });
+// Add debug json filter to print debug in template
+engine.addFilter('json', JSON.stringify);
+app.set('engine', engine);
 
 app.use(cors());
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.static('public'));
-app.use(session({
-  secret: secret,
-  resave: false,
-  saveUninitialized: false
-}));
+app.use(session({ secret, resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
+// Inject passport.js user in templating engine
+app.use((req, res, next) => {
+    const engine = res.app.get('engine');
+    engine.addGlobal('user', req.user);
+
+    next();
+});
 
 // Initialize routers here
 const routers = require('./routes/routers');

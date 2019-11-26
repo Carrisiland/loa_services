@@ -53,6 +53,10 @@ body {
   margin-bottom: 3vh;
 }
 
+.right.item > .ui.inverted.button.user-btn {
+  margin-right: 1em;
+}
+
 #profileCard {
   width: 13vw;
   margin-left: auto;
@@ -66,7 +70,6 @@ body {
 }
 
 #mainContent {
-
   height: 90%;
   padding-left: 4vw;
   padding-right: 4vw;
