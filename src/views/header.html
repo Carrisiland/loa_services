@@ -4,10 +4,19 @@
   <div class="ui large secondary inverted menu">
     <div class="ui container">
       <a href="/" class="header active item">Home</a>
+      {% if not user %}
       <div class="right item">
-        <a href="/auth/login" class="ui inverted button" style="margin-right: 1em">Log in</a>
+        <a href="/auth/login" class="ui inverted button user-btn">Log in</a>
         <a href="/auth/signup" class="ui inverted button">Sign Up</a>
       </div>
+      {% else %}
+      <div class="right item">
+        <a href="/auth/profile" class="ui inverted button user-btn">
+          <i class="user icon"></i> {{ user.username }}
+        </a>
+        <a href="/auth/logout" class="ui inverted button">Logout</a>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>

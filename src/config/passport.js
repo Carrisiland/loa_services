@@ -4,12 +4,10 @@ const LocalStrategy = require('passport-local');
 const passport = require('passport');
 const User = require('../models/user');
 
-// used to serialize the user for the session
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
-// used to deserialize the user
 passport.deserializeUser(function(id, done) {
   User.findById(id, function(err, user) {
     done(err, user);
@@ -50,21 +48,14 @@ passport.use('local-signup', new LocalStrategy({
   });
 }));
 
-passport.use('local-login', new LocalStrategy({
-  usernameField: 'username',
-  passwordField: 'password',
-  passReqToCallback: true // allows us to pass back the entire request to the
-  // callback
-}, async (req, username, password, done) => {
+passport.use(new LocalStrategy(async (username, password, done) => {
   try {
     const user = await User.findOne({ username });
 
     if (!user) {
-      req.flash('error', 'No user found.');
-      return done(null, false);
+      return done(null, false, { message: 'User does not exist' });
     } else if (!user.validPassword(password)) {
-      req.flash('error', 'Wrong password.');
-      return done(null, false);
+      return done(null, false, { message: 'The password is wrong' });
     } else {
       return done(null, user);
     }

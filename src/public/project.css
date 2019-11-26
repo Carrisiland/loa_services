@@ -40,7 +40,10 @@ main {
   background-color: rgb(27, 28, 29);
 }
 
+.right.item > .ui.inverted.button.user-btn {
+  margin-right: 1em;
+}
 
 #mainContent {
-  
+
 }

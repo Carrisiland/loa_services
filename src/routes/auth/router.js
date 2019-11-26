@@ -8,10 +8,10 @@ router.get('/login', (req, res) => {
 });
 
 // process the login form
-router.post('/login', passport.authenticate('local-login', {
+router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/auth/login',
-  failureFlash: 'Invalid username or password'
+  failureFlash: true
 }));
 
 router.get('/signup', (req, res) => {
@@ -23,5 +23,10 @@ router.post('/signup', passport.authenticate('local-signup', {
   failureRedirect: '/auth/signup',
   failureFlash: true
 }));
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 
 module.exports = router;
