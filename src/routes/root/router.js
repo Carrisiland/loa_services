@@ -21,5 +21,8 @@ router.get('/newVideoForm', (req, res) => {
   res.render('newVideoForm.html');
 });
 
+router.get('/profile/:id', (req, res) => {
+  res.render('profile.html');
+});
 /** router for /root */
 module.exports = router;

@@ -2,7 +2,7 @@
 
 {% extends "skel.html" %}
 
-{% block title %}Feed{% endblock %}
+{% block title %}Profile{% endblock %}
 {% block rootbody %}
 
 <div id="my">
@@ -20,6 +20,24 @@
      </div>
     </div>
   </div>
+  <div id='profileCard'>
+      <div class="ui card" >
+      <a class="image" href="#">
+        <img src="/img/elon_musk.jpg">
+      <div class="content">
+        <a class="header" href="#">Elon Musk</a>
+      </div>
+    </div>
+  </div>
+
+  <div id='menus'>
+    <div class="ui four item menu">
+      <a class="item active">All</a>
+      <a class="item">Public</a>
+      <a class="item">Hidden</a>
+      <a class="item">Albums</a>
+    </div>
+  </div>
 
   </div>
 
@@ -28,8 +46,6 @@
 
 
     <div id="mainContent">
-
-      <h1> Feed </h1>
 
       <div class="ui link cards">
     <div class="card">
@@ -49,9 +65,7 @@
           1 minute ago
         </span>
         <span>
-          <i class="user icon"></i>
-          {# This should be a link to the user's profile #}
-          Mark4316
+          Hidden
         </span>
       </div>
     </div>
@@ -72,8 +86,7 @@
           5 minutes ago
         </span>
         <span>
-          <i class="user icon"></i>
-          LolloXDLOL
+          Hidden
         </span>
       </div>
     </div>
@@ -94,8 +107,7 @@
           5 minutes ago
         </span>
         <span>
-          <i class="user icon"></i>
-          LolloXDLOL
+        Public
         </span>
       </div>
     </div>
@@ -116,8 +128,7 @@
           5 minutes ago
         </span>
         <span>
-          <i class="user icon"></i>
-          LolloXDLOL
+          Hidden
         </span>
       </div>
     </div>
@@ -138,59 +149,11 @@
           5 minutes ago
         </span>
         <span>
-          <i class="user icon"></i>
-          LolloXDLOL
-        </span>
-      </div>
-    </div>
-    <div class="card">
-        <iframe src="https://www.youtube.com/embed/gjQy0bx0Uvw"
-        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      <div class="content">
-        <div class="header">Il Nulla</div>
-        <div class="meta">
-          <span class="date">QuickVideo</span>
-        </div>
-        <div class="description">
-          Non fanno nulla e sono milionari
-        </div>
-      </div>
-      <div class="extra content">
-        <span class="right floated">
-          5 minutes ago
-        </span>
-        <span>
-          <i class="user icon"></i>
-          LolloXDLOL
-        </span>
-      </div>
-    </div>
-
-    <div class="card">
-      <iframe src="https://www.youtube.com/embed/Ag1o3koTLWM" frameborder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      <div class="content">
-        <div class="header">Quanto è bella</div>
-        <div class="meta">
-          <a>Ascoltatela tutti!!11!!!1</a>
-        </div>
-        <div class="description">
-          QuickVideo
-        </div>
-      </div>
-      <div class="extra content">
-        <span class="right floated">
-          7 minutes ago
-        </span>
-        <span>
-          <i class="user icon"></i>
-          GiuliaSal
+          Public
         </span>
       </div>
     </div>
 
   </div>
-
-
     </div>
   {% endblock %}
