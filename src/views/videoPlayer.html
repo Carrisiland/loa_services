@@ -34,15 +34,10 @@
 {% endblock %}
 
 {% block scripts %}
+{% if service == 'vimeo' %}
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="../../videoPlayerScripts/vimeoHandler.js"></script>
+{% else %}
 <script src="../../videoPlayerScripts/youtubeHandler.js"></script>
-{% if service == 'vimeo' %}
-<script>vmInit();</script>
 {% endif %}
-
-{% if service == 'youtube' %}
-<script>ytInit();</script>
-{% endif %}
-
 {% endblock %}
