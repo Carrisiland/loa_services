@@ -5,6 +5,8 @@ const youtubeRegex =
              '(?:(?:https?:\\/\\/)?(?:www\\.)?youtu\\.be\\/))' +
              '([\\w+]{11})$', '');
 const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
+const vimeoRegex = '(?:(?:https:\/\/vimeo\.com\/)(([\d+]{9})|(album\/([\d+]{9})\/video\/([\d+]{9}))|(channels\/([\d+]{9})\/([\d+]{9}))|(groups\/([\d+]{9})\/videos\/([\d+]{9}))|(ondemand\/([\d+]{9})\/([\d+]{9}))))';
+
 
 const urlDom = $('input[name=link]');
 const startDom = $('input[name=start]');
