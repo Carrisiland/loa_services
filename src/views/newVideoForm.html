@@ -2,6 +2,7 @@
 {% extends "skel.html" %}
 {% block title %}New post{% endblock %}
 {% block body %}
+<div id="player"></div>
 <form class="ui form new" method="post">
   <h2>Upload New Video</h2>
   <div class="field required">
@@ -42,45 +43,7 @@
 </form>
 {% endblock %}
 {% block scripts %}
-<script>
-  $('.ui.form').form({
-    fields: {
-      name: {
-        identifier: 'link',
-        rules: [{ type: 'regExp',
-            value: /(?:(?:(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=)|(?:(?:https?:\/\/)?(?:www\.)?youtu\.be\/))((?:[\w+]){8}(?:[\w+])*)/,
-            prompt: 'Please enter a valid Youtube/Vimeo link' }]
-      },
-      start: {
-        identifier: 'start',
-        rules: [{ type: 'regExp',
-            value: /([0-9])([0-9]):([0-9])([0-9])/,
-            prompt : 'Please enter a valid timestamp',}]
-      },
-      end: {
-        identifier: 'end',
-        rules: [
-          {type: 'regExp',
-            value: /([0-9])([0-9]):([0-9])([0-9])/,
-            prompt : 'Please eneter a valid timestamp',}]
-      },
-      title: {
-        identifier: 'title',
-        rules: [
-          {type   : 'empty',
-          prompt : 'Please enter a title'
-        },
-        {
-            type   : 'maxLength[20]',
-            prompt : 'Please enter a title shorter than 20 characters'}]
-      },
-      visibility: {
-        identifier: 'visibility',
-        rules: [
-          {type   : 'empty',
-            prompt : 'Please choose a visibility'}]
-    },
-  }
-  });
-</script>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="/videoPlayerScripts/youtubeHandler.js"></script>
+<script src="/js/newClip.js"></script>
 {% endblock %}
