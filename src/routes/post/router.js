@@ -4,17 +4,19 @@ const mongoose = require('mongoose');
 require('../models/post');
 require('../models/user');
 const Post = mongoose.model('Post');
-const User = mongoose.model('User');
+const { check } = require('express-validator');
 
-router.post('/', (req, res) => {
+router.post('/', [
+    // username must be an email
+    check('username').isEmail(),
+    // password must be at least 5 chars long
+    check('password').isLength({ min: 5 })
+  ], (req, res) => {
 
     if(!req.body || !req.body.title || !req.body.start || !req.body.end || !req.body.link)
-    const user = new User ({
-        username: req.body.username,
-    });
     const post = new Post ({
         id: req.body.id,
-        user: user,
+        user: req.user,
         title: req.body.title,
         video: {
             duration: req.body.end - req.body.start,
@@ -23,7 +25,6 @@ router.post('/', (req, res) => {
         visibility: req.body.visibility
     });
 
-    //add event listener to the upload button
     post.save()
     .then((saved) => {
         res.status(200);
@@ -35,4 +36,8 @@ router.post('/', (req, res) => {
     });
 });
 
-router.get('/')
+router.get('/');
+
+router.delete('/:postid', (req, res) => {
+
+});
