@@ -2,9 +2,22 @@
 {% extends "skel.html" %}
 {% block title %}New post{% endblock %}
 {% block body %}
-<div id="player"></div>
+<template id="player-placeholder">
+  <div class="ui icon header" id="player">
+    <i class="video icon"></i>
+    Put your <em>Youtube</em> or <em>Vimeo</em> video URL below.
+    A preview will appear here.
+  </div>
+</template>
+
 <form class="ui form new" method="post">
   <h2>Upload New Video</h2>
+  <div class="new-video-player ui placeholder segment">
+    <div class="ui icon header" id="player">
+      <i class="video icon"></i>
+      Put your Youtube or Vimeo video URL below. A preview will appear here.
+    </div>
+  </div>
   <div class="field required">
     <label>Link:</label>
     <input type="text" name="link" placeholder="htps://www.youtube.com/watch?v=YlUKcNNmywk">

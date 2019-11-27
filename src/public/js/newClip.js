@@ -10,6 +10,7 @@ const urlDom = $('input[name=link]');
 const startDom = $('input[name=start]');
 const endDom = $('input[name=end]');
 
+
 function parseTime(timeString) {
   const match = timeRegex.exec(timeString);
   if (!match) return null;
@@ -17,11 +18,16 @@ function parseTime(timeString) {
   return match.reduce((sum, e) => sum * 60 + (e ? parseInt(e) : 0), 0);
 }
 
+checkVideo();
+
 function checkVideo() {
   const match = youtubeRegex.exec(urlDom.val());
   const start = parseTime(startDom.val());
   const end = parseTime(endDom.val());
-  if (!match || !start || !end || start >= end) return;
+  if (!match || (start !== 0) && !start || !end || start >= end) {
+    $('#player').replaceWith($('#player-placeholder').html());
+    return;
+  }
 
   console.log(match[1], start, end);
   youtubePlayer(match[1], start, end);

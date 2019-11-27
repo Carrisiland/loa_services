@@ -6,48 +6,43 @@ let id = null;
 let start = null;
 let end = null;
 let duration = null;
-let done = false;
 
 function youtubePlayer(videoId, startTime, endTime, repeat = true) {
-  return new Promise((res, rej) => {
-    id = videoId;
-    start = startTime;
-    end = endTime;
-    duration = end - start;
+  id = videoId;
+  start = startTime;
+  end = endTime;
+  duration = end - start;
 
-    $(document).ready(() => {
-      if (!player) {
-        player = new YT.Player('player', {
-          height: '480',
-          width: '720',
-          events: {
-            onReady: onPlayerReady,
-            onStateChange: onPlayerStateChange
-          }
-        });
-      } else if (ready) {
-        onPlayerReady();
-      }
+  console.log(id, start, end, duration);
 
-      // The API will call this function when the video player is ready.
-      function onPlayerReady() {
-        ready = true;
-        console.log(player, id, start, end);
-        player.loadVideoById({
-          videoId: id,
-          startSeconds: start,
-          endSeconds: end
-        });
-        player.mute();
-        player.playVideo();
-      }
-
-      function onPlayerStateChange(e) {
-        if (e.data == YT.PlayerState.ENDED && repeat) {
-          player.seekTo(start, true);
-          player.playVideo();
-        }
+  $(document).ready(() => {
+    if (player) {
+      player.destroy();
+    }
+    player = new YT.Player('player', {
+      events: {
+        onReady: onPlayerReady,
+        onStateChange: onPlayerStateChange
       }
     });
+
+    // The API will call this function when the video player is ready.
+    function onPlayerReady() {
+      console.log(player, id, start, end);
+      player.loadVideoById({
+        videoId: id,
+        startSeconds: start,
+        endSeconds: end
+      });
+      player.mute();
+      player.playVideo();
+    }
+
+    function onPlayerStateChange(e) {
+      if (e.data == YT.PlayerState.ENDED && repeat) {
+        player.seekTo(start, true);
+        player.playVideo();
+      }
+    }
   });
 }
