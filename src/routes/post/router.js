@@ -13,17 +13,6 @@ const youtubeRegex =
              '([\\w+]{11})$', '');
 
 const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
-// [
-//     check('link').not().matches(youtubeRegex),
-//     check('start').matches(timeRegex),
-//     check('end').matches(timeRegex),
-//     check('title').not().isEmpty(),
-//     check('title').isLength({max: 20})
-//   ]
- // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(422).json({ errors: errors.array() });
-    // }
 
 
 function parseTime(timeString) {
@@ -56,8 +45,6 @@ router.post('/', [
             end: req.body.end
     });
 
-    console.log("duration: ", video.duration);
-
     video.save();
 
     const post = new Post ({
@@ -70,8 +57,6 @@ router.post('/', [
 
     post.save()
     .then((saved) => {
-        console.log("saved!");
-
         res.status(200);
         res.render('gallery.html');
         res.end();
