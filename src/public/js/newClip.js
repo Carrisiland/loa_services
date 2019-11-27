@@ -4,8 +4,8 @@ const youtubeRegex =
   new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\?v=)|' +
              '(?:(?:https?:\\/\\/)?(?:www\\.)?youtu\\.be\\/))' +
              '([\\w+]{11})$', '');
-const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
-const vimeoRegex = 
+const timeRegex = new RegExp("/^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/");
+const vimeoRegex =
   new RegExp( '(?:(?:https:\/\/vimeo\.com\/)(([\d+]{9})|'+
             '(album\/([\d+]{9})\/video\/([\d+]{9}))|(channels\/([\d+]{9})\/([\d+]{9}))|'+
             '(groups\/([\d+]{9})\/videos\/([\d+]{9}))|(ondemand\/([\d+]{9})\/([\d+]{9}))))');
