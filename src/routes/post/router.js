@@ -13,12 +13,6 @@ const youtubeRegex =
              '([\\w+]{11})$', '');
 
 const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
-
-
-router.post('/', (req, res) => {
-    com
-})
-
 // [
 //     check('link').not().matches(youtubeRegex),
 //     check('start').matches(timeRegex),
@@ -37,8 +31,11 @@ router.post('/', (req, res) => {
             start: req.body.start,
             end: req.body.end
     });
+    //start and end are saved as strings so they have to be converted to Date? number?
     console.log("duration: ", video.duration);
     
+    video.save();
+
     const post = new Post ({
         user: req.user,
         title: req.body.title,
@@ -47,8 +44,21 @@ router.post('/', (req, res) => {
         description: req.body.description
     });
 
+    post.statics.validateSignup = function() {
+        return [
+            check('link').not().matches(youtubeRegex),
+            check('start').matches(timeRegex),
+            check('end').matches(timeRegex),
+            check('title').not().isEmpty(),
+            check('title').isLength({max: 20})
+        ];
+    };
+    console.log("user: ", post.user);
+    
     post.save()
     .then((saved) => {
+        console.log("saved!");
+        
         res.status(200);
         res.render('gallery.html');
         res.end();
