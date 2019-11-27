@@ -32,7 +32,7 @@ function checkVideo() {
   }
 
   console.log(match[1], start, end);
-  youtubePlayer(match[1], start, end);
+  youtubePlayer(match[1], start, end).then(console.log);
 }
 
 urlDom.on('keyup', checkVideo);
