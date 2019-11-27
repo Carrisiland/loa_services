@@ -9,10 +9,7 @@ const postSchema = mongoose.Schema({
   comments: [{type: mongoose.Schema.Types.ObjectId, ref:'Comment'}],
   upvotes: {type: Number, default: 1},
   downvotes: {type: Number, default: 0},
-  video: {
-    duration: Number,
-    source: String
-  }
+  video: {type: mongoose.Schema.Types.ObjectId, ref:'Video'}
 });
 
 const Post = mongoose.model('Post', postSchema);
