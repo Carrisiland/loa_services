@@ -24,15 +24,38 @@ const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
     // if (!errors.isEmpty()) {
     //     return res.status(422).json({ errors: errors.array() });
     // }
-router.post('/', (req, res) => {
 
+
+function parseTime(timeString) {
+  const match = timeRegex.exec(timeString);
+  if (!match) return null;
+  match.shift();
+  return match.reduce((sum, e) => sum * 60 + (e ? parseInt(e) : 0), 0);
+}
+
+router.post('/', [
+    check('link').matches(youtubeRegex),
+    check('start').matches(timeRegex),
+    check('end').matches(timeRegex),
+    check('title').not().isEmpty(),
+    check('title').isLength({max: 20})
+  ],
+  (req, res) => {
+
+
+    const errors = validationResult(req);
+       if (!errors.isEmpty()) {
+           return res.status(422).json({ errors: errors.array() });
+       }
+
+    const duration = parseTime(req.body.end) - parseTime(req.body.start);
     const video = new Video({
-        duration: Number(req.body.end) - Number(req.body.start),
+        duration: duration,
             link: req.body.link,
             start: req.body.start,
             end: req.body.end
     });
-    //start and end are saved as strings so they have to be converted to Date? number?
+
     console.log("duration: ", video.duration);
 
     video.save();
@@ -44,17 +67,6 @@ router.post('/', (req, res) => {
         visibility: req.body.visibility,
         description: req.body.description
     });
-
-    post.statics.validateSignup = function() {
-        return [
-            check('link').not().matches(youtubeRegex),
-            check('start').matches(timeRegex),
-            check('end').matches(timeRegex),
-            check('title').not().isEmpty(),
-            check('title').isLength({max: 20})
-        ];
-    };
-    console.log("user: ", post.user);
 
     post.save()
     .then((saved) => {
@@ -69,10 +81,10 @@ router.post('/', (req, res) => {
     });
 });
 
-router.get('/');
-
-router.delete('/:postid', (req, res) => {
-
-});
+// router.get('/');
+//
+// router.delete('/:postid', (req, res) => {
+//
+// });
 
 module.exports = router;
