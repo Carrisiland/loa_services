@@ -57,8 +57,13 @@ router.post('/', [
 
     post.save()
     .then((saved) => {
+      if (req.user) {
+        req.user.posts.push(saved);
+        req.user.save();
+      }
+      console.log(saved);
         res.status(200);
-        res.render('gallery.html');
+        res.redirect('/gallery');
         res.end();
     })
     .catch((err) => {
