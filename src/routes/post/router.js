@@ -1,33 +1,69 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-require('../models/post');
-require('../models/user');
+require('../../models/post');
+require('../../models/user');
+require('../../models/video');
 const Post = mongoose.model('Post');
-const User = mongoose.model('User');
+const Video = mongoose.model('Video');
+const {check, validationResult} = require('express-validator');
+const youtubeRegex =
+  new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\?v=)|' +
+             '(?:(?:https?:\\/\\/)?(?:www\\.)?youtu\\.be\\/))' +
+             '([\\w+]{11})$', '');
 
-router.post('/', (req, res) => {
+const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
 
-    if(!req.body || !req.body.title || !req.body.start || !req.body.end || !req.body.link)
-    const user = new User ({
-        username: req.body.username,
+
+function parseTime(timeString) {
+  const match = timeRegex.exec(timeString);
+  if (!match) return null;
+  match.shift();
+  return match.reduce((sum, e) => sum * 60 + (e ? parseInt(e) : 0), 0);
+}
+
+router.post('/', [
+    check('link').matches(youtubeRegex),
+    check('start').matches(timeRegex),
+    check('end').matches(timeRegex),
+    check('title').not().isEmpty(),
+    check('title').isLength({max: 20})
+  ],
+  (req, res) => {
+
+
+    const errors = validationResult(req);
+       if (!errors.isEmpty()) {
+           return res.status(422).json({ errors: errors.array() });
+       }
+
+    const duration = parseTime(req.body.end) - parseTime(req.body.start);
+    const video = new Video({
+        duration: duration,
+            link: req.body.link,
+            start: req.body.start,
+            end: req.body.end
     });
+
+    video.save();
+
     const post = new Post ({
-        id: req.body.id,
-        user: user,
+        user: req.user,
         title: req.body.title,
-        video: {
-            duration: req.body.end - req.body.start,
-            source: req.body.links
-        },
-        visibility: req.body.visibility
+        video: video,
+        visibility: req.body.visibility,
+        description: req.body.description
     });
 
-    //add event listener to the upload button
     post.save()
     .then((saved) => {
+      if (req.user) {
+        req.user.posts.push(saved);
+        req.user.save();
+      }
+      console.log(saved);
         res.status(200);
-        res.render('gallery.html');
+        res.redirect('/gallery');
         res.end();
     })
     .catch((err) => {
@@ -35,4 +71,10 @@ router.post('/', (req, res) => {
     });
 });
 
-router.get('/')
+// router.get('/');
+//
+// router.delete('/:postid', (req, res) => {
+//
+// });
+
+module.exports = router;

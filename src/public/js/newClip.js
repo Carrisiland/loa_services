@@ -5,7 +5,10 @@ const youtubeRegex =
              '(?:(?:https?:\\/\\/)?(?:www\\.)?youtu\\.be\\/))' +
              '([\\w+]{11})$', '');
 const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
-const vimeoRegex = '(?:(?:https:\/\/vimeo\.com\/)(([\d+]{9})|(album\/([\d+]{9})\/video\/([\d+]{9}))|(channels\/([\d+]{9})\/([\d+]{9}))|(groups\/([\d+]{9})\/videos\/([\d+]{9}))|(ondemand\/([\d+]{9})\/([\d+]{9}))))';
+const vimeoRegex =
+  new RegExp( '(?:(?:https:\/\/vimeo\.com\/)(([\d+]{9})|'+
+            '(album\/([\d+]{9})\/video\/([\d+]{9}))|(channels\/([\d+]{9})\/([\d+]{9}))|'+
+            '(groups\/([\d+]{9})\/videos\/([\d+]{9}))|(ondemand\/([\d+]{9})\/([\d+]{9}))))');
 
 
 const urlDom = $('input[name=link]');
@@ -24,14 +27,29 @@ checkVideo();
 
 function checkVideo() {
   const match = youtubeRegex.exec(urlDom.val());
+  console.log("yt")
+  const vmatch = vimeoRegex.exec(urlDom.val());
+  console.log("vim")
+  console.log("id = ", vmatch)
+  if (match === null) {
+
+    const start = parseTime(startDom.val());
+    const end = parseTime(endDom.val());
+
+    if (!match || (start !== 0) && !start || !end || start >= end) {
+      $('#player').replaceWith($('#player-placeholder').html());
+      return;
+    }
+    vimeoPlayer(vmatch[1], start, end);
+  }
+
   const start = parseTime(startDom.val());
   const end = parseTime(endDom.val());
   if (!match || (start !== 0) && !start || !end || start >= end) {
     $('#player').replaceWith($('#player-placeholder').html());
     return;
   }
-
-  console.log(match[1], start, end);
+  console.log(match[1], "prima", start, end);
   youtubePlayer(match[1], start, end).then(console.log);
 }
 
@@ -53,7 +71,7 @@ $('.ui.form').form({
       identifier: 'start',
       rules: [{
         type: 'regExp',
-        value: /([0-9])([0-9]):([0-9])([0-9])/,
+        value: timeRegex,
         prompt: 'Please enter a valid timestamp'
       }]
     },
@@ -61,7 +79,7 @@ $('.ui.form').form({
       identifier: 'end',
       rules: [{
         type: 'regExp',
-        value: /([0-9])([0-9]):([0-9])([0-9])/,
+        value: timeRegex,
         prompt: 'Please eneter a valid timestamp'
       }]
     },
@@ -84,4 +102,3 @@ $('.ui.form').form({
     },
   }
 });
-

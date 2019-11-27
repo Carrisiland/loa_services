@@ -27,9 +27,9 @@ const userSchema = mongoose.Schema({
     email: String,
     name: String
   },
-  followers: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  following: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  posts: [{type: Schema.Types.ObjectId, ref: 'Post'}]
+  followers: [{type: Schema.Types.ObjectId, ref: 'User', default: []}],
+  following: [{type: Schema.Types.ObjectId, ref: 'User', default: []}],
+  posts: [{type: Schema.Types.ObjectId, ref: 'Post', default: []}]
 });
 
 userSchema.statics.validateSignup = function() {

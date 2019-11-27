@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<form class="ui form new" method="post">
+<form class="ui form new" method="POST" action='/post'>
   <h2>Upload New Video</h2>
   <div class="new-video-player ui placeholder segment">
     <div class="ui icon header" id="player">
@@ -36,7 +36,7 @@
   </div>
   <div class="field">
     <label>Description</label>
-    <textarea rows="2" style="margin-top: 0px; margin-bottom: 0px; height: 100px; resize: none"></textarea>
+    <textarea rows="2" name='description' style="margin-top: 0px; margin-bottom: 0px; height: 100px; resize: none"></textarea>
   </div>
   <div class="field required">
     <label>Visibility</label>

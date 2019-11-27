@@ -17,6 +17,9 @@
       <div class="left item">
         <a href="/clip/new" class="header active item">New Video</a>
         <a href="/gallery" class="header active item">Gallery</a>
+        {% if user %}
+        <a href="/feed" class="header active item">Feed</a>
+        {% endif %}
       </div>
       {% if not user %}
       <div class="right item">

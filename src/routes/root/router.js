@@ -26,8 +26,9 @@ router.get('/clip/new', (req, res) => {
 });
 
 router.get('/profile/:id', (req, res) => {
-  res.render('profile.html');
+    res.render('profile.html');
 });
+
 
 /** router for /root */
 module.exports = router;
