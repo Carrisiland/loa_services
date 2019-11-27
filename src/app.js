@@ -44,10 +44,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-// Inject passport.js user in templating engine
+// Inject passport.js user in templating engine and add CORS header to response
 app.use((req, res, next) => {
     const engine = res.app.get('engine');
     engine.addGlobal('user', req.user);
+    res.header('Access-Control-Allow-Origin', '*');
 
     next();
 });
