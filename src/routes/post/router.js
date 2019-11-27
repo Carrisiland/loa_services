@@ -4,25 +4,39 @@ const mongoose = require('mongoose');
 require('../models/post');
 require('../models/user');
 const Post = mongoose.model('Post');
-const { check } = require('express-validator');
+const Video = mongoose.model('Video');
+const { check, validationResult } = require('express-validator');
+const youtubeRegex =
+  new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\?v=)|' +
+             '(?:(?:https?:\\/\\/)?(?:www\\.)?youtu\\.be\\/))' +
+             '([\\w+]{11})$', '');
+
+const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
 
 router.post('/', [
-    // username must be an email
-    check('username').isEmail(),
-    // password must be at least 5 chars long
-    check('password').isLength({ min: 5 })
+    check('link').matches(youtubeRegex),
+    check('start').matches(timeRegex),
+    check('end').matches(timeRegex),
+    check('title').not().isEmpty(),
+    check('title').isLength({max: 20})
   ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
 
-    if(!req.body || !req.body.title || !req.body.start || !req.body.end || !req.body.link)
+    const video = new Video({
+        duration: req.body.end - req.body.start,
+            link: req.body.link,
+            start: req.body.start,
+            end: req.body.end
+    });
     const post = new Post ({
-        id: req.body.id,
         user: req.user,
         title: req.body.title,
-        video: {
-            duration: req.body.end - req.body.start,
-            source: req.body.links
-        },
-        visibility: req.body.visibility
+        video: video,
+        visibility: req.body.visibility,
+        description: req.body.description
     });
 
     post.save()
