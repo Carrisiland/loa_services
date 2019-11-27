@@ -3,6 +3,7 @@
 <div class="ui inverted header segment" style="border-radius: 0">
   <div class="ui large secondary inverted menu">
     <div class="ui container">
+      {% if not index %}
       <div class="item">
         <div class="ui logo shape">
           <div class="sides">
@@ -12,6 +13,7 @@
           </div>
         </div>
       </div>
+      {% endif %}
       <div class="left item">
         <a href="/clip/new" class="header active item">New Video</a>
         <a href="/gallery" class="header active item">Gallery</a>
