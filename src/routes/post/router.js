@@ -6,7 +6,6 @@ require('../../models/user');
 require('../../models/video');
 const Post = mongoose.model('Post');
 const Video = mongoose.model('Video');
-
 const { check, validationResult } = require('express-validator');
 const youtubeRegex =
   new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\?v=)|' +
@@ -16,16 +15,22 @@ const youtubeRegex =
 const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
 
 
-// router.post('/', (req, res) => {
-//     console.log("cioaiaoiaoa");
-// })
-
 router.post('/', (req, res) => {
-    // const errors = validationResult(req);
+    com
+})
+
+// [
+//     check('link').not().matches(youtubeRegex),
+//     check('start').matches(timeRegex),
+//     check('end').matches(timeRegex),
+//     check('title').not().isEmpty(),
+//     check('title').isLength({max: 20})
+//   ]
+ // const errors = validationResult(req);
     // if (!errors.isEmpty()) {
     //     return res.status(422).json({ errors: errors.array() });
     // }
-
+router.post('/', (req, res) => {
     const video = new Video({
         duration: Number(req.body.end) - Number(req.body.start),
             link: req.body.link,
@@ -33,14 +38,6 @@ router.post('/', (req, res) => {
             end: req.body.end
     });
     console.log("duration: ", video.duration);
-    console.log("link: ", video.link);
-    console.log("start: ", video.start);
-    
-    //this is not saved for some reason
-    video.save()
-    .catch((err) => {
-        res.status(400).end();
-    });
     
     const post = new Post ({
         user: req.user,
@@ -61,7 +58,7 @@ router.post('/', (req, res) => {
     });
 });
 
-// router.get('/');
+router.get('/');
 
 router.delete('/:postid', (req, res) => {
 
