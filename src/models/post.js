@@ -6,7 +6,7 @@ const postSchema = mongoose.Schema({
   user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
   title: { type: String, required: true },
   dateCreated: { type: Date, required: true, default: Date.now },
-  comments: [{type: String}],
+  comments: [{type: mongoose.Schema.Types.ObjectId, ref:'Comment'}],
   upvotes: {type: Number, default: 1},
   downvotes: {type: Number, default: 0},
   video: {
