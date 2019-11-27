@@ -1,7 +1,7 @@
 {# vim: set ts=2 sw=2 et tw=120 ft=htmldjango: #}
 {% extends "skel.html" %}
-{% block title %}Gallery{% endblock %}
-{% block body %}
+{% block title %}Profile{% endblock %}
+{% block rootbody %}
 <div id="my">
   <div class="ui top secondary stackable main menu following bar light">
     <div class="ui container" id="navbar">
@@ -11,12 +11,29 @@
           <input type="text" placeholder="Search...">
           <i class="inverted circular search link icon"></i>
         </div>
-        <a href="/newVideoForm" class="ui inverted button" style='margin-right: 2vw;'>New Post</a>
+        <a href="/newVideoForm" class="ui inverted button" style='margin-right: 2vw;'> New Video</a>
+        <a href="/gallery" class="ui inverted button" style='margin-right: 2vw;'>Gallery</a>
         {% if user %}
-        <a href="/feed" class="ui inverted button" style='margin-right: 2vw;'>Feed</a>
-        <a href="/profile/123" class="ui inverted button">Profile</a>
+        <a href="#" class="ui inverted button">Logout</a>
         {% endif %}
       </div>
+    </div>
+  </div>
+  <div id='profileCard'>
+    <div class="ui card" >
+      <a class="image" href="#">
+        <img src="/img/elon_musk.jpg">
+        <div class="content">
+      <a class="header" href="#">Elon Musk</a>
+      </div>
+    </div>
+  </div>
+  <div id='menus'>
+    <div class="ui four item menu">
+      <a class="item active">All</a>
+      <a class="item">Public</a>
+      <a class="item">Hidden</a>
+      <a class="item">Albums</a>
     </div>
   </div>
 </div>
