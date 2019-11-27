@@ -70,7 +70,7 @@ $('.ui.form').form({
       identifier: 'start',
       rules: [{
         type: 'regExp',
-        value: /([0-9])([0-9]):([0-9])([0-9])/,
+        value: timeRegex,
         prompt: 'Please enter a valid timestamp'
       }]
     },
@@ -78,7 +78,7 @@ $('.ui.form').form({
       identifier: 'end',
       rules: [{
         type: 'regExp',
-        value: /([0-9])([0-9]):([0-9])([0-9])/,
+        value: timeRegex,
         prompt: 'Please eneter a valid timestamp'
       }]
     },
@@ -101,4 +101,3 @@ $('.ui.form').form({
     },
   }
 });
-

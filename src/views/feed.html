@@ -1,25 +1,7 @@
 {# vim: set ts=2 sw=2 et tw=120 ft=htmldjango: #}
 {% extends "skel.html" %}
 {% block title %}Feed{% endblock %}
-{% block rootbody %}
-<div id="my">
-  <div class="ui top secondary stackable main menu following bar light">
-    <div class="ui container" id="navbar">
-      <h1 class="vimtok"> <a href="/gallery"> VimTok </a> </h1>
-      <div class="right item">
-        <div class="ui icon input" style="margin-right: 2vw;">
-          <input type="text" placeholder="Search...">
-          <i class="inverted circular search link icon"></i>
-        </div>
-        <a href="/newVideoForm" class="ui inverted button" style='margin-right: 2vw;'> New Video</a>
-        <a href="/gallery" class="ui inverted button" style='margin-right: 2vw;'>Gallery</a>
-        {% if user %}
-        <a href="/profile/123" class="ui inverted button">Profile</a>
-        {% endif %}
-      </div>
-    </div>
-  </div>
-</div>
+{% block body %}
 <div id="mainContent">
   <h1> Feed </h1>
   <div class="ui link cards">
