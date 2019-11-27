@@ -15,8 +15,8 @@
       </div>
       {% endif %}
       <div class="left item">
-        <a href="/clip/new" class="header active item">New Video</a>
-        <a href="/gallery" class="header active item">Gallery</a>
+        <a href="/post/new" class="header active item">New Post</a>
+        <a href="/post/gallery" class="header active item">Gallery</a>
         {% if user %}
         <a href="/feed" class="header active item">Feed</a>
         {% endif %}
@@ -28,7 +28,7 @@
       </div>
       {% else %}
       <div class="right item">
-        <a href="/auth/profile" class="ui inverted button user-btn">
+        <a href="/profile/{{ user.id }}" class="ui inverted button user-btn">
           <i class="user icon"></i> {{ user.username }}
         </a>
         <a href="/auth/logout" class="ui inverted button">Logout</a>

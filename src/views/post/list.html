@@ -1,0 +1,31 @@
+{# vim: set ts=2 sw=2 et tw=120: #}
+
+{% for post in posts %}
+<div class="card">
+  <img width="100%" height="56.25%" src="{{ post.video.thumbnailLink }}">
+  <div class="content">
+    <div class="header">{{ post.title }}</div>
+    <div class="meta">
+      <a>Quick Video</a>
+    </div>
+    <div class="description">
+      {{ post.description }}
+    </div>
+  </div>
+  <div class="extra content">
+    <span>
+      <i class="user icon"></i>
+      {% if not post.user %}
+      Anonymous
+      {% else %}
+      <a href="/profile/{{ post.user._id }}">@{{ post.user.username }}</a>
+      {% endif %}
+    </span>
+    <span class="right floated">
+      <button><i class="thumbs up outline icon"></i>{{ post.upvotes }}</button>
+      <button><i class="thumbs down outline icon"></i>{{ post.downvotes }}</button>
+    </span>
+  </div>
+</div>
+{% endfor %}
+

@@ -20,9 +20,7 @@ router.get('/signup', (req, res) => {
 });
 
 router.get('/profile', authenticated, (req, res) => {
-  // console.log( "POOPOPOPOPOP")
-  // console.log(req.user.posts[0]);
-  res.render('auth/profile.html', {posts: req.user.posts})
+  res.redirect('/profile/' + req.user.id);
 });
 
 router.post('/signup', User.validateSignup(),

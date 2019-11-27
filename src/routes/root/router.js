@@ -9,10 +9,6 @@ router.get('/', (req, res) => {
   res.render('index.html');
 });
 
-router.get('/gallery', (req, res) => {
-  res.render('gallery.html');
-});
-
 router.get('/videoPlayer', (req, res) => {
   res.render('videoPlayer.html');
 });
@@ -20,15 +16,6 @@ router.get('/videoPlayer', (req, res) => {
 router.get('/feed', (req, res) => {
   res.render('feed.html');
 });
-
-router.get('/clip/new', (req, res) => {
-  res.render('newVideoForm.html');
-});
-
-router.get('/profile/:id', (req, res) => {
-    res.render('profile.html');
-});
-
 
 /** router for /root */
 module.exports = router;

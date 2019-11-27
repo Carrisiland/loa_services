@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const videoSchema = mongoose.Schema({
     duration: Number,
     link: String,
+    thumbnailLink: String,
     start: String,
     end: String
 });
