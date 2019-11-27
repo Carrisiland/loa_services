@@ -21,7 +21,7 @@ router.get('/feed', (req, res) => {
   res.render('feed.html');
 });
 
-router.get('/newVideoForm', (req, res) => {
+router.get('/clip/new', (req, res) => {
   res.render('newVideoForm.html');
 });
 
