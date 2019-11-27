@@ -2,7 +2,7 @@
 
 {% extends "skel.html" %}
 
-{% set service = 'youtube' %}
+{% set service = 'vimeo' %}
 
 {% block title %} New Post {% endblock %}
 {% block rootbody %}
@@ -22,11 +22,9 @@
 {% endif %}
 
 {% if service == 'vimeo' %}
-{% set url = "https://player.vimeo.com/video/371525503" %}
-<iframe src="{{ url }}" width="960" height="570" 
-  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
-</iframe>
+<div id= vimeo></div>
 {% endif %}
+
 {% endblock %}
 
 {% block scripts %}
