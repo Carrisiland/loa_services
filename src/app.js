@@ -15,13 +15,11 @@ const mongoose = require('mongoose');
 require('./models/user.js');
 require('./config/passport');
 
-mongoose.connect('mongodb://localhost/vimtok', {
+mongoose.connect('mongodb://127.0.0.1/vimtok', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-
-// mongoose.connect('mongodb://127.0.0.1/test', {useNewUrlParser: true}).catch((err) => {console.log(err)})
 
 const app = express();
 const secret = 'luciano-malusa-in-pensione';
