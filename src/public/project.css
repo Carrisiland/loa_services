@@ -118,3 +118,18 @@ main .ui.link.cards {
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.center-margin {
+  margin-top: 2vh;
+  text-align: center;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.center-margin > * {
+  text-align: initial;
+}
+
+.ui.comments.center-margin {
+  margin-bottom: 3vh;
+}
