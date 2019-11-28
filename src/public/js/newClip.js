@@ -47,7 +47,7 @@ function checkVideo() {
     $('#player').replaceWith($('#player-placeholder').html());
     return;
   }
-  console.log(match[1], "prima", start, end);
+  console.log(match[1], start, end);
   youtubePlayer(match[1], start, end).then(e => {
     console.log(e);
     if (end > e.duration) {

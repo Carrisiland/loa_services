@@ -2,15 +2,12 @@
 
 {% extends "skel.html" %}
 
-{% set service = 'vimeo' %}
+{% set service = 'youtube' %}
 
 {% block title %} New Post {% endblock %}
 {% block body %}
-
 <div class="center-margin">
-  <iframe id="player" width="560" height="315" src="https://www.youtube.com/embed/ctWDAdQ81B8"
-  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;
-  picture-in-picture" allowfullscreen></iframe>
+  <div id="player"></div>
 </div>
 
 <div class="ui comments center-margin">
@@ -94,10 +91,23 @@
 {% endblock %}
 
 {% block scripts %}
+
 {% if service == 'vimeo' %}
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="/videoPlayerScripts/vimeoHandler.js"></script>
 {% else %}
+<script src="https://www.youtube.com/iframe_api"></script>
 <script src="/videoPlayerScripts/youtubeHandler.js"></script>
+<script src="/js/viewClip.js"></script>
+<script type="application/json" id="selected-video">
+  {{ video | json | safe }}
+</script>
+<script>
+var post = JSON.parse($('#selected-video').html());
+console.log(post)
+console.log(post.video.link)
+loadVideo(post.video.link, post.video.start, post.video.end);
+</script>
 {% endif %}
+
 {% endblock %}

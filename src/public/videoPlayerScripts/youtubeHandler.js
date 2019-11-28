@@ -25,14 +25,23 @@ function youtubePlayer(videoId, startTime, endTime, repeat = true) {
           volume = player.getVolume();
         player.destroy();
       }
-      player = new YT.Player('player', {
-        events: {
-          onReady: onPlayerReady,
-          onStateChange: onPlayerStateChange
-        }
-      });
 
+      
+        setTimeout(function() {
+          player = new YT.Player('player', {
+          events: {
+            onReady: onPlayerReady,
+            onStateChange: onPlayerStateChange
+          }
+        }) 
+        
+      }, 0);
+    
+      
+      
+      
       // The API will call this function when the video player is ready.
+    
       function onPlayerReady() {
         player.loadVideoById({
           videoId: id,

@@ -114,9 +114,16 @@ router.post('/', [
 });
 
 router.get('/:id', (req, res) => {
-  console.log("posss");
-  res.render('post/view.html');
+  console.log(req.params.id)
+  const id = req.params.id;
+  Post.findById(id).populate("video").then(video => {
+    res.render('post/view.html', {video});
+  });
 });
+
+ 
+
+
 
 // router.get('/');
 //
