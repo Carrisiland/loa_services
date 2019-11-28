@@ -8,14 +8,18 @@ require('../../models/user');
 require('../../models/video');
 const Post = mongoose.model('Post');
 const Video = mongoose.model('Video');
-const {check, validationResult} = require('express-validator');
+const { check, validationResult, sanitize } = require('express-validator');
+const fetch = require('node-fetch');
+
 const youtubeRegex =
-  new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\?v=)|' +
-    '(?:(?:https?:\\/\\/)?(?:www\\.)?youtu\\.be\\/))' +
-    '([\\w+]{11})$', '');
+  new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\' +
+    '?v=)|(?:(?:https?:\\/\\/)?(?:www\\.)?youtu\\.be\\/))([\\w+]{11})$');
+
+const vimeoRegex =
+  new RegExp('(http|https)?:\\/\\/(www\\.)?vimeo.com\\/(?:channels\\/' +
+    '(?:\\w+\\/)?|groups\\/([^\\/]*)\\/videos\\/|)(\\d+)(?:|\\/\\?)');
 
 const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
-
 
 function parseTime(timeString) {
   const match = timeRegex.exec(timeString);
@@ -38,36 +42,53 @@ router.get('/gallery', (req, res) => {
 });
 
 router.post('/', [
-  check('link').matches(youtubeRegex),
+  sanitize('link').customSanitizer((v, re) => {
+    if (re = youtubeRegex.exec(v)) {
+      re.videoType = 'youtube';
+      return re;
+    } else if (re = vimeoRegex.exec(v)) {
+      re.videoType = 'vimeo';
+      return re;
+    } else {
+      throw new Error(`${v} is not a valid Youtube/Vimeo link`);
+    }
+  }),
   check('start').matches(timeRegex),
   check('end').matches(timeRegex),
   check('title').not().isEmpty(),
   check('title').isLength({max: 20})
-], (req, res) => {
+], async (req, res) => {
+  try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log(errors.array());
       req.flash('error', 'Post submission not valid');
       res.render('newVideoForm.html');
       return;
     }
 
     const duration = parseTime(req.body.end) - parseTime(req.body.start);
+    const match = req.body.link;
     const video = new Video({
       duration: duration,
-      link: req.body.link,
+      link: match[0],
       start: req.body.start,
       end: req.body.end
     });
 
-    let match;
-    if ((match = youtubeRegex.exec(req.body.link))) {
-      console.log(match);
-      video.thumbnailLink = 'http://i3.ytimg.com/vi/' + match[1] + '/hqdefault.jpg';
+    console.log(match);
+    if (match.videoType == 'youtube') {
+      video.thumbnailLink = 'http://i3.ytimg.com/vi/' + match[1] +
+        '/hqdefault.jpg';
     } else {
-      video.thumbnailLink = 'http://placehold.it/800x600.jpg';
+      const info = await
+        fetch(`http://vimeo.com/api/v2/video/${match.pop()}.json`)
+      const infoJson = await info.json();
+      console.log(infoJson);
+      video.thumbnailLink = infoJson[0].thumbnail_large;
     }
 
-    video.save();
+    await video.save();
 
     const post = new Post({
       user: req.user,
@@ -77,21 +98,20 @@ router.post('/', [
       description: req.body.description
     });
 
-    post.save()
-      .then((saved) => {
-        if (req.user) {
-          req.user.posts.push(saved);
-          req.user.save();
-        }
-        console.log(saved);
-        res.status(200);
-        res.redirect('/post/gallery');
-        res.end();
-      })
-      .catch((err) => {
-        res.status(400).end();
-      });
-  });
+    const saved = await post.save();
+    if (req.user) {
+      req.user.posts.push(saved);
+      await req.user.save();
+    }
+
+    console.log(saved);
+    res.redirect('/post/gallery');
+  } catch(e) {
+    console.log(e);
+    req.flash('error', e.toString());
+    res.status(500).render('newVideoForm.html');
+  }
+});
 
 // router.get('/');
 //

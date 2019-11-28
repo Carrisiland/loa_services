@@ -2,10 +2,8 @@
 {% extends "skel.html" %}
 {% block title %}Gallery{% endblock %}
 {% block body %}
-<div id="mainContent">
-  <h1>Gallery</h1>
-  <div class="ui link cards">
-    {% include "post/list.html" %}
-  </div>
+<h1 class="ui header">Gallery</h1>
+<div class="ui link cards">
+  {% include "post/list.html" %}
 </div>
 {% endblock %}

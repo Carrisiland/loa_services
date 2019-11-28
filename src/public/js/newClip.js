@@ -6,9 +6,8 @@ const youtubeRegex =
              '([\\w+]{11})$', '');
 const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
 const vimeoRegex =
-  new RegExp( '(?:(?:https:\/\/vimeo\.com\/)(([\d+]{9})|'+
-            '(album\/([\d+]{9})\/video\/([\d+]{9}))|(channels\/([\d+]{9})\/([\d+]{9}))|'+
-            '(groups\/([\d+]{9})\/videos\/([\d+]{9}))|(ondemand\/([\d+]{9})\/([\d+]{9}))))');
+  new RegExp('(http|https)?:\/\/(www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|' +
+             'groups\/([^\/]*)\/videos\/|)(\d+)(?:|\/\?)');
 
 
 const urlDom = $('input[name=link]');
@@ -27,12 +26,9 @@ checkVideo();
 
 function checkVideo() {
   const match = youtubeRegex.exec(urlDom.val());
-  console.log("yt")
   const vmatch = vimeoRegex.exec(urlDom.val());
-  console.log("vim")
-  console.log("id = ", vmatch)
-  if (match === null) {
 
+  if (match === null) {
     const start = parseTime(startDom.val());
     const end = parseTime(endDom.val());
 
@@ -57,13 +53,16 @@ urlDom.on('keyup', checkVideo);
 startDom.on('keyup', checkVideo);
 endDom.on('keyup', checkVideo);
 
+$.fn.form.settings.rules.videoRe = function(value) {
+  return youtubeRegex.match(value) || vimeoRegex.match(value);
+};
+
 // Form validation code for form
 $('.ui.form').form({
   fields: {
     name: {
       identifier: 'link',
-      rules: [{ type: 'regExp',
-        value: youtubeRegex,
+      rules: [{ type: 'videoRe',
         prompt: 'Please enter a valid Youtube/Vimeo link'
       }]
     },
