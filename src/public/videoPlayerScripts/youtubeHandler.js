@@ -6,10 +6,12 @@ let id = null;
 let start = null;
 let end = null;
 let duration = null;
-let firstUnstarted = true;
+let volume = 0;
 
 function youtubePlayer(videoId, startTime, endTime, repeat = true) {
   return new Promise((resolve, reject) => {
+    let firstPlay = true;
+
     id = videoId;
     start = startTime;
     end = endTime;
@@ -19,6 +21,8 @@ function youtubePlayer(videoId, startTime, endTime, repeat = true) {
 
     $(document).ready(() => {
       if (player) {
+        if (player.getVolume)
+          volume = player.getVolume();
         player.destroy();
       }
       player = new YT.Player('player', {
@@ -35,15 +39,13 @@ function youtubePlayer(videoId, startTime, endTime, repeat = true) {
           startSeconds: start,
           endSeconds: end
         });
-        player.mute();
+        player.setVolume(volume);
         player.playVideo();
       }
 
       function onPlayerStateChange(e) {
-        console.log(player.getDuration(), e.data, firstUnstarted);
-        if (e.data == YT.PlayerState.UNSTARTED && firstUnstarted) {
-          firstUnstarted = false;
-        } else {
+        if (e.data == YT.PlayerState.PLAYING && firstPlay) {
+          firstPlay = false;
           resolve({
             duration: player.getDuration()
           });

@@ -24,6 +24,8 @@ function parseTime(timeString) {
 
 checkVideo();
 
+let urlConstraints;
+
 function checkVideo() {
   const match = youtubeRegex.exec(urlDom.val());
   const vmatch = vimeoRegex.exec(urlDom.val());
@@ -46,7 +48,13 @@ function checkVideo() {
     return;
   }
   console.log(match[1], "prima", start, end);
-  youtubePlayer(match[1], start, end).then(console.log);
+  youtubePlayer(match[1], start, end).then(e => {
+    console.log(e);
+    if (end > e.duration) {
+      $('#player').replaceWith($('#player-placeholder').html());
+    }
+    urlConstraints = e;
+  });
 }
 
 urlDom.on('keyup', checkVideo);
@@ -56,6 +64,12 @@ endDom.on('keyup', checkVideo);
 $.fn.form.settings.rules.videoRe = function(value) {
   return youtubeRegex.match(value) || vimeoRegex.match(value);
 };
+
+$.fn.form.settings.rules.urlDuration = function(value) {
+  return (value = parseTime(value)) || !urlConstraints ||
+    (value > 0 && value < urlConstraints.duration);
+};
+
 
 // Form validation code for form
 $('.ui.form').form({
@@ -77,6 +91,9 @@ $('.ui.form').form({
     end: {
       identifier: 'end',
       rules: [{
+        type: 'urlDuration',
+        prompt: 'End timestamp is not in video bounds'
+      },{
         type: 'regExp',
         value: timeRegex,
         prompt: 'Please eneter a valid timestamp'
