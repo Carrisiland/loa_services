@@ -115,7 +115,7 @@ router.post('/', [
 
 router.get('/:id', (req, res) => {
   console.log("posss");
-  res.render('post/videoView.html');
+  res.render('post/view.html');
 });
 
 // router.get('/');
