@@ -113,6 +113,11 @@ router.post('/', [
   }
 });
 
+router.get('/:id', (req, res) => {
+  console.log("posss");
+  res.render('videoView.html.html');
+});
+
 // router.get('/');
 //
 // router.delete('/:postid', (req, res) => {
