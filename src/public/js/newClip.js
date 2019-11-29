@@ -37,6 +37,8 @@ function checkVideo() {
   const start = parseTime($start.val());
   const end = parseTime($end.val());
 
+  console.log(start, end);
+
   if ((start !== 0 && !start) || !end || start >= end) {
     clearVideo();
     return;

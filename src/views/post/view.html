@@ -1,0 +1,113 @@
+{# vim: set ts=2 sw=2 et tw=120 ft=htmldjango: #}
+
+{% extends "skel.html" %}
+
+{% set service = 'youtube' %}
+
+{% block title %} New Post {% endblock %}
+{% block body %}
+<div class="center-margin">
+  <div id="player"></div>
+</div>
+
+<div class="ui comments center-margin">
+  <h3 class="ui dividing header">Comments</h3>
+  <div class="comment">
+    <div class="content">
+      <a class="author">Matt</a>
+      <div class="metadata">
+        <span class="date">Today at 5:42PM</span>
+      </div>
+      <div class="text">
+        How artistic!
+      </div>
+      <div class="actions">
+        <a class="reply">Reply</a>
+        <button><i class="thumbs up outline icon"></i>0</button>
+        <button><i class="thumbs down outline icon"></i>0</button>
+      </div>
+
+    </div>
+  </div>
+  <div class="comment">
+    <div class="content">
+      <a class="author">Elliot Fu</a>
+      <div class="metadata">
+        <span class="date">Yesterday at 12:30AM</span>
+      </div>
+      <div class="text">
+        <p>This has been very useful for my research. Thanks as well!</p>
+      </div>
+      <div class="actions">
+        <a class="reply">Reply</a>
+        <button><i class="thumbs up outline icon"></i>0</button>
+        <button><i class="thumbs down outline icon"></i>0</button>
+      </div>
+    </div>
+    <div class="comments">
+      <div class="comment">
+        <div class="content">
+          <a class="author">Jenny Hess</a>
+          <div class="metadata">
+            <span class="date">Just now</span>
+          </div>
+          <div class="text">
+            Elliot you are always so right :)
+          </div>
+          <div class="actions">
+            <a class="reply">Reply</a>
+            <button><i class="thumbs up outline icon"></i>0</button>
+            <button><i class="thumbs down outline icon"></i>0</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="comment">
+    <div class="content">
+      <a class="author">Joe Henderson</a>
+      <div class="metadata">
+        <span class="date">5 days ago</span>
+      </div>
+      <div class="text">
+        Dude, this is awesome. Thanks so much
+      </div>
+      <div class="actions">
+        <a class="reply">Reply</a>
+        <button><i class="thumbs up outline icon"></i>0</button>
+        <button><i class="thumbs down outline icon"></i>0</button>
+      </div>
+    </div>
+  </div>
+  <form class="ui reply form">
+    <div class="field">
+      <textarea></textarea>
+    </div>
+    <div class="ui blue labeled submit icon button">
+      <i class="icon edit"></i> Add Reply
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+{% if service == 'vimeo' %}
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script src="/videoPlayerScripts/vimeoHandler.js"></script>
+{% else %}
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="/videoPlayerScripts/youtubeHandler.js"></script>
+<script src="/js/viewClip.js"></script>
+<script type="application/json" id="selected-video">
+  {{ video | json | safe }}
+</script>
+<script>
+var post = JSON.parse($('#selected-video').html());
+console.log(post)
+console.log(post.video.link)
+loadVideo(post.video.link, post.video.start, post.video.end);
+</script>
+{% endif %}
+
+{% endblock %}

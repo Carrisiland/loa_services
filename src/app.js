@@ -61,6 +61,7 @@ app.use('/', routers.root);
 app.use('/auth', routers.auth);
 app.use('/post', routers.post);
 app.use('/profile', routers.profile);
+// app.use('/likes', routers.likes); not yet ready
 
 app.set('port', process.env.PORT || 3000);
 const server = app.listen(app.get('port'), function() {

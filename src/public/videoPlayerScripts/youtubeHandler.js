@@ -28,12 +28,14 @@ function youtubePlayer(videoId, startTime, endTime, repeat = true) {
       if (playState.player) {
         youtubeDestroy();
       }
-      playState.player = new YT.Player('player', {
-        events: {
-          onReady: onPlayerReady,
-          onStateChange: onPlayerStateChange
-        }
-      });
+      setTimeout(function() {
+        playState.player = new YT.Player('player', {
+          events: {
+            onReady: onPlayerReady,
+            onStateChange: onPlayerStateChange
+          }
+        })
+      }, 0);
 
       // The API will call this function when the video player is ready.
       function onPlayerReady() {
