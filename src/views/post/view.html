@@ -8,29 +8,29 @@
 {% block body %}
 
 <div class="center-margin">
-  <div id="player"></div>
+  <div id="player">{{post.title}}</div>
 </div>
-    <button name="upvotes"><i class="thumbs up outline icon"></i>{{video.upvotes}}</button>
-    <button name="downvotes"><i class="thumbs down outline icon"></i>0</button>
+    <button name="upvotes"><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
+    <button name="downvotes"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
     <br>
 
     
 <div class="ui comments center-margin">
   <h3 class="ui dividing header">Comments</h3>
-  {% for post in posts %}
+  {% for comment in post.comments%}
   <div class="comment">
     <div class="content">
-      <a class="author">{{post.username}}</a>
+      <a class="author">{{comment.user.username}}</a>
       <div class="metadata">
-        <span class="date">{{post.dateCreated}}</span>
+        <span class="date">{{comment.dateCreated}}</span>
       </div>
       <div class="text">
-        How artistic!
+        {{comment.text}}
       </div>
       <div class="actions">
         <a class="reply">Reply</a>
-        <button><i class="thumbs up outline icon"></i>0</button>
-        <button><i class="thumbs down outline icon"></i>0</button>
+        <button><i class="thumbs up outline icon"></i>{{comment.upvotes}}</button>
+        <button><i class="thumbs down outline icon"></i>{{comment.downvotes}}</button>
       </div>
 
     </div>
@@ -96,7 +96,6 @@
     </div>
   </form>
 </div>
-
 {% endblock %}
 
 {% block scripts %}
