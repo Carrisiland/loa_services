@@ -2,18 +2,18 @@
 
 const youtubeRegex =
   new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\?v=)|' +
-             '(?:(?:https?:\\/\\/)?(?:www\\.)?youtu\\.be\\/))' +
-             '([\\w+]{11})$', '');
+    '(?:(?:https?:\\/\\/)?(?:www\\.)?youtu\\.be\\/))' +
+    '([\\w+]{11})$', '');
 const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
 const vimeoRegex =
-  new RegExp('(http|https)?:\/\/(www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|' +
-             'groups\/([^\/]*)\/videos\/|)(\d+)(?:|\/\?)');
+  new RegExp('^(http|https)?:\\/\\/(www\\.)?vimeo.com\\/(?:channels\\/(?:\\w+\\/)?|' +
+    'groups\\/([^\\/]*)\\/videos\\/|)(\\d+)(?:|\\/\\?)$');
 
 
-const urlDom = $('input[name=link]');
-const startDom = $('input[name=start]');
-const endDom = $('input[name=end]');
-
+const $link = $('input[name=link]');
+const $start = $('input[name=start]');
+const $end = $('input[name=end]');
+const $submit = $('button[type=submit]');
 
 function parseTime(timeString) {
   const match = timeRegex.exec(timeString);
@@ -22,54 +22,60 @@ function parseTime(timeString) {
   return match.reduce((sum, e) => sum * 60 + (e ? parseInt(e) : 0), 0);
 }
 
+$submit.attr('disabled', true);
 checkVideo();
 
 let urlConstraints;
 
-function checkVideo() {
-  const match = youtubeRegex.exec(urlDom.val());
-  const vmatch = vimeoRegex.exec(urlDom.val());
-
-  if (match === null) {
-    const start = parseTime(startDom.val());
-    const end = parseTime(endDom.val());
-
-    if (!match || (start !== 0) && !start || !end || start >= end) {
-      $('#player').replaceWith($('#player-placeholder').html());
-      return;
-    }
-    vimeoPlayer(vmatch[1], start, end);
-  }
-
-  const start = parseTime(startDom.val());
-  const end = parseTime(endDom.val());
-  if (!match || (start !== 0) && !start || !end || start >= end) {
-    $('#player').replaceWith($('#player-placeholder').html());
-    return;
-  }
-  console.log(match[1], "prima", start, end);
-  youtubePlayer(match[1], start, end).then(e => {
-    console.log(e);
-    if (end > e.duration) {
-      $('#player').replaceWith($('#player-placeholder').html());
-    }
-    urlConstraints = e;
-  });
+function clearVideo() {
+  // The JQuery selector must be invoked every time since the DOM object changes
+  // every time we reload the video
+  $('#player').replaceWith($('#player-placeholder').html());
 }
 
-urlDom.on('keyup', checkVideo);
-startDom.on('keyup', checkVideo);
-endDom.on('keyup', checkVideo);
+function checkVideo() {
+  const start = parseTime($start.val());
+  const end = parseTime($end.val());
+
+  if ((start !== 0 && !start) || !end || start >= end) {
+    clearVideo();
+    return;
+  }
+
+  $submit.add('disabled', true);
+  let match;
+  if (match = youtubeRegex.exec($link.val())) {
+    console.log('youtube', start, end, $link.val());
+    youtubePlayer(match[1], start, end).then(e => {
+      if (end > e.duration) {
+        clearVideo();
+      } else {
+        $submit.attr('disabled', false);
+      }
+
+      urlConstraints = e;
+    });
+  } else if (match = vimeoRegex.exec($link.val())) {
+    console.log('vimeo', match[1], start, end);
+    vimeoPlayer(match[1], start, end);
+  } else {
+    console.log('none', $link.val());
+    clearVideo();
+  }
+}
+
+$link.on('keyup', checkVideo);
+$start.on('keyup', checkVideo);
+$end.on('keyup', checkVideo);
 
 $.fn.form.settings.rules.videoRe = function(value) {
-  return youtubeRegex.match(value) || vimeoRegex.match(value);
+  return value && (value.match(youtubeRegex) || value.match(vimeoRegex));
 };
 
 $.fn.form.settings.rules.urlDuration = function(value) {
   return (value = parseTime(value)) || !urlConstraints ||
     (value > 0 && value < urlConstraints.duration);
 };
-
 
 // Form validation code for form
 $('.ui.form').form({

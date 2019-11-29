@@ -1,16 +1,22 @@
 // vim: set ts=2 sw=2 et tw=80:
 
-let player = null;
-let id = null;
-let start = null;
-let end = null;
-let duration = null;
+window.playState = window.playState || {
+  service: null,
+  player: null,
+  volume: null
+};
 
 function vimeoPlayer(videoId, startTime, endTime, repeat = true) {
   let videoUrl = 'https://player.vimeo.com/video/' + videoId;
   start = startTime;
   end = endTime;
   duration = end - start;
+
+  if (playState.service === 'youtube') {
+    youtubeDestroy();
+  }
+
+  playState.service = 'vimeo';
 
   var frame = $('player').replaceWith(`<iframe id="player" src="${videoUrl}"
     width="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen

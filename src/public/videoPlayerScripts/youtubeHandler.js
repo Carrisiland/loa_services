@@ -1,31 +1,34 @@
 // vim: set ts=2 sw=2 et tw=80:
 // This code loads the IFrame Player API code asynchronously.
 
-let player = null;
-let id = null;
-let start = null;
-let end = null;
-let duration = null;
-let volume = 0;
+window.playState = window.playState || {
+  service: null,
+  player: null,
+  volume: null
+};
+
+function youtubeDestroy() {
+  if (playState.player.getVolume)
+    playState.volume = playState.player.getVolume();
+  playState.player.destroy();
+  playState.service = null;
+}
 
 function youtubePlayer(videoId, startTime, endTime, repeat = true) {
   return new Promise((resolve, reject) => {
     let firstPlay = true;
 
-    id = videoId;
-    start = startTime;
-    end = endTime;
-    duration = end - start;
+    if (playState.service === 'vimeo') {
+      vimeoDestroy();
+    }
 
-    console.log(id, start, end, duration);
+    playState.service = 'youtube';
 
     $(document).ready(() => {
-      if (player) {
-        if (player.getVolume)
-          volume = player.getVolume();
-        player.destroy();
+      if (playState.player) {
+        youtubeDestroy();
       }
-      player = new YT.Player('player', {
+      playState.player = new YT.Player('player', {
         events: {
           onReady: onPlayerReady,
           onStateChange: onPlayerStateChange
@@ -34,17 +37,17 @@ function youtubePlayer(videoId, startTime, endTime, repeat = true) {
 
       // The API will call this function when the video player is ready.
       function onPlayerReady() {
-        player.loadVideoById({
-          videoId: id,
-          startSeconds: start,
-          endSeconds: end
+        playState.player.loadVideoById({
+          videoId: videoId,
+          startSeconds: startTime,
+          endSeconds: endTime
         });
-        player.setVolume(volume);
-        player.playVideo();
+        playState.player.setVolume(playState.volume);
+        playState.player.playVideo();
       }
 
       function onPlayerStateChange(e) {
-        if (e.data == YT.PlayerState.PLAYING && firstPlay) {
+        if (e.data == YT.PlayerState.PLAYING && player.getDuration && firstPlay) {
           firstPlay = false;
           resolve({
             duration: player.getDuration()
@@ -52,8 +55,8 @@ function youtubePlayer(videoId, startTime, endTime, repeat = true) {
         }
 
         if (e.data == YT.PlayerState.ENDED && repeat) {
-          player.seekTo(start, true);
-          player.playVideo();
+          playState.player.seekTo(startTime, true);
+          playState.player.playVideo();
         }
       }
     });
