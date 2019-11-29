@@ -3,7 +3,7 @@
 {% extends "skel.html" %}
 
 {% set service = 'youtube' %}
-
+{%set comments = post.comments%}
 {% block title %} New Post {% endblock %}
 {% block body %}
 
@@ -17,7 +17,7 @@
     
 <div class="ui comments center-margin">
   <h3 class="ui dividing header">Comments</h3>
-  {% for comment in post.comments%}
+  {% for comment in comments%}
   <div class="comment">
     <div class="content">
       <a class="author">{{comment.user.username}}</a>

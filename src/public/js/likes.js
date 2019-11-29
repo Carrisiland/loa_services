@@ -1,7 +1,7 @@
 const upvotesBtn = document.getElementsByName("upvotes");
 const downvoteBtn = document.getElementsByName('downvotes');
 
-// function upvote() {
+function upvote() {
     
     upvotesBtn.addEventListener('click', event => {
         event.preventDefault();
@@ -15,7 +15,7 @@ const downvoteBtn = document.getElementsByName('downvotes');
         .catch(console.error());
     });
     
-// }
+}
 function downvote() {
     const downvotes = document.getElementsByName("downvotes").val();
 }
