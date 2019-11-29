@@ -3,33 +3,40 @@
 {% extends "skel.html" %}
 
 {% set service = 'youtube' %}
-
+{%set comments = post.comments%}
 {% block title %} New Post {% endblock %}
 {% block body %}
-<div class="center-margin">
-  <div id="player"></div>
-</div>
 
+<div class="center-margin">
+  <div id="player">{{post.title}}</div>
+</div>
+    <button name="upvotes"><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
+    <button name="downvotes"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
+    <br>
+
+    
 <div class="ui comments center-margin">
   <h3 class="ui dividing header">Comments</h3>
+  {% for comment in comments%}
   <div class="comment">
     <div class="content">
-      <a class="author">Matt</a>
+      <a class="author">{{comment.user.username}}</a>
       <div class="metadata">
-        <span class="date">Today at 5:42PM</span>
+        <span class="date">{{comment.dateCreated}}</span>
       </div>
       <div class="text">
-        How artistic!
+        {{comment.text}}
       </div>
       <div class="actions">
         <a class="reply">Reply</a>
-        <button><i class="thumbs up outline icon"></i>0</button>
-        <button><i class="thumbs down outline icon"></i>0</button>
+        <button><i class="thumbs up outline icon"></i>{{comment.upvotes}}</button>
+        <button><i class="thumbs down outline icon"></i>{{comment.downvotes}}</button>
       </div>
 
     </div>
   </div>
-  <div class="comment">
+  
+  <!-- <div class="comment">
     <div class="content">
       <a class="author">Elliot Fu</a>
       <div class="metadata">
@@ -40,8 +47,8 @@
       </div>
       <div class="actions">
         <a class="reply">Reply</a>
-        <button><i class="thumbs up outline icon"></i>0</button>
-        <button><i class="thumbs down outline icon"></i>0</button>
+        <button name="upvotes"><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
+        <button name="downvotes"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
       </div>
     </div>
     <div class="comments">
@@ -78,7 +85,8 @@
         <button><i class="thumbs down outline icon"></i>0</button>
       </div>
     </div>
-  </div>
+  </div> -->
+  {% endfor %}
   <form class="ui reply form">
     <div class="field">
       <textarea></textarea>

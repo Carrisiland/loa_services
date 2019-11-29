@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 require('../../models/post');
 require('../../models/user');
 require('../../models/video');
+require('../../models/comment');
 const Post = mongoose.model('Post');
 const Video = mongoose.model('Video');
 const { check, validationResult, sanitize } = require('express-validator');
@@ -34,7 +35,7 @@ router.get('/new', (req, res) => {
 
 router.get('/gallery', (req, res) => {
   Post.find({ visibility: 'public' }).populate('user').populate('video')
-    .then(posts => res.render('gallery.html', { posts }))
+    .then(posts => { console.log(posts); res.render('gallery.html', { posts }) })
     .catch(err => {
       res.flash('error', err.toString());
       res.status(500).render('gallery.html');
@@ -116,8 +117,16 @@ router.post('/', [
 router.get('/:id', (req, res) => {
   console.log(req.params.id)
   const id = req.params.id;
-  Post.findById(id).populate("video").then(video => {
-    res.render('post/view.html', {video});
+  Post.findById(id)
+  .populate("video")
+  .populate("comments")
+  .populate("upvotes")
+  .populate("downvotes")
+  .populate("user")
+  .populate("title")
+  .populate("dateCreated")
+  .then(post => {
+    res.render('post/view.html', {post});
   });
 });
 

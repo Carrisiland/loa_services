@@ -5,7 +5,8 @@ const commentSchema = mongoose.Schema({
     user: {type: Schema.Types.ObjectId, ref: 'User'},
     dateCreated: { type: Date, required: true, default: Date.now },
     upvotes: {type: Number, default: 1},
-    downvotes: {type: Number, default: 0}
+    downvotes: {type: Number, default: 0},
+    text: {type: String}
 });
 
 const Comment = mongoose.model('Comment', commentSchema);
