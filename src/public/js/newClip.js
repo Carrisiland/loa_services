@@ -37,8 +37,6 @@ function checkVideo() {
   const start = parseTime($start.val());
   const end = parseTime($end.val());
 
-  console.log(start, end);
-
   if ((start !== 0 && !start) || !end || start >= end) {
     clearVideo();
     return;
@@ -58,8 +56,8 @@ function checkVideo() {
       urlConstraints = e;
     });
   } else if (match = vimeoRegex.exec($link.val())) {
-    console.log('vimeo', match[1], start, end);
-    vimeoPlayer(match[1], start, end);
+    console.log('vimeo', match[match.length - 1], start, end);
+    vimeoPlayer(match[match.length - 1], start, end);
   } else {
     console.log('none', $link.val());
     clearVideo();

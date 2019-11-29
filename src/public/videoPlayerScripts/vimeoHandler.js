@@ -7,7 +7,6 @@ window.playState = window.playState || {
 };
 
 function vimeoPlayer(videoId, startTime, endTime, repeat = true) {
-  let videoUrl = 'https://player.vimeo.com/video/' + videoId;
   start = startTime;
   end = endTime;
   duration = end - start;
@@ -18,12 +17,10 @@ function vimeoPlayer(videoId, startTime, endTime, repeat = true) {
 
   playState.service = 'vimeo';
 
-  var frame = $('player').replaceWith(`<iframe id="player" src="${videoUrl}"
-    width="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen
-    allowfullscreen></iframe>`);
-
-  let iframe = document.querySelector('iframe')
-  player = new Vimeo.Player(iframe);
+  $('#player').html('');
+  player = new Vimeo.Player('player', {
+    id: videoId
+  });
 
   player.ready().then(function() {
     timeSeeker();
@@ -31,10 +28,9 @@ function vimeoPlayer(videoId, startTime, endTime, repeat = true) {
   });
 
   function startPlayer() {
-    player.on('play', function() {
-      setTimeout(stopVideo, duration * 1000);
-      console.log('Played the video');
-    });
+    player.play();
+    setTimeout(stopVideo, duration * 1000);
+    console.log('Played the video');
   }
 
   function timeSeeker() {

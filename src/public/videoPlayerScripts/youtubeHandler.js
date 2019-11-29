@@ -18,9 +18,9 @@ function youtubePlayer(videoId, startTime, endTime, repeat = true) {
   return new Promise((resolve, reject) => {
     let firstPlay = true;
 
-    if (playState.service === 'vimeo') {
-      vimeoDestroy();
-    }
+    //if (playState.service === 'vimeo') {
+    //  vimeoDestroy();
+    //}
 
     playState.service = 'youtube';
 
