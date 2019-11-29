@@ -22,51 +22,55 @@ function parseTime(timeString) {
   return match.reduce((sum, e) => sum * 60 + (e ? parseInt(e) : 0), 0);
 }
 
-$submit.attr('disabled', true);
-checkVideo();
-
 let urlConstraints;
 
-function clearVideo() {
-  // The JQuery selector must be invoked every time since the DOM object changes
-  // every time we reload the video
-  $('#player').replaceWith($('#player-placeholder').html());
-}
+function onYouTubeIframeAPIReady() {
+  const player = new Player();
+  $submit.attr('disabled', true);
+  checkVideo();
 
-function checkVideo() {
-  const start = parseTime($start.val());
-  const end = parseTime($end.val());
-
-  if ((start !== 0 && !start) || !end || start >= end) {
-    clearVideo();
-    return;
+  function clearVideo() {
+    // The JQuery selector must be invoked every time since the DOM object changes
+    // every time we reload the video
+    $('#player').replaceWith($('#player-placeholder').html());
   }
 
-  $submit.add('disabled', true);
-  let match;
-  if (match = youtubeRegex.exec($link.val())) {
-    console.log('youtube', start, end, $link.val());
-    youtubePlayer(match[1], start, end).then(e => {
-      if (end > e.duration) {
-        clearVideo();
-      } else {
-        $submit.attr('disabled', false);
-      }
+  function checkVideo() {
+    const start = parseTime($start.val());
+    const end = parseTime($end.val());
 
-      urlConstraints = e;
-    });
-  } else if (match = vimeoRegex.exec($link.val())) {
-    console.log('vimeo', match[match.length - 1], start, end);
-    vimeoPlayer(match[match.length - 1], start, end);
-  } else {
-    console.log('none', $link.val());
-    clearVideo();
+    if ((start !== 0 && !start) || !end || start >= end) {
+      clearVideo();
+      return;
+    }
+
+    $submit.add('disabled', true);
+    let match;
+    if (match = youtubeRegex.exec($link.val())) {
+      player.play('youtube', match[1], start, end).then(e => {
+        if (end > e.duration) {
+          clearVideo();
+        } else {
+          $submit.attr('disabled', false);
+        }
+
+        urlConstraints = e;
+        $('.ui.form')
+      });
+    } else if (match = vimeoRegex.exec($link.val())) {
+      player.play('vimeo', match[match.length - 1], start, end).then(e => {
+        urlConstraints = e;
+
+    } else {
+      console.log('none', $link.val());
+      clearVideo();
+    }
   }
-}
 
-$link.on('keyup', checkVideo);
-$start.on('keyup', checkVideo);
-$end.on('keyup', checkVideo);
+  $link.on('keyup', checkVideo);
+  $start.on('keyup', checkVideo);
+  $end.on('keyup', checkVideo);
+}
 
 $.fn.form.settings.rules.videoRe = function(value) {
   return value && (value.match(youtubeRegex) || value.match(vimeoRegex));
