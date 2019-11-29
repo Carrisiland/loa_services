@@ -6,17 +6,23 @@
 
 {% block title %} New Post {% endblock %}
 {% block body %}
+
 <div class="center-margin">
   <div id="player"></div>
 </div>
+    <button name="upvotes"><i class="thumbs up outline icon"></i>{{video.upvotes}}</button>
+    <button name="downvotes"><i class="thumbs down outline icon"></i>0</button>
+    <br>
 
+    
 <div class="ui comments center-margin">
   <h3 class="ui dividing header">Comments</h3>
+  {% for post in posts %}
   <div class="comment">
     <div class="content">
-      <a class="author">Matt</a>
+      <a class="author">{{post.username}}</a>
       <div class="metadata">
-        <span class="date">Today at 5:42PM</span>
+        <span class="date">{{post.dateCreated}}</span>
       </div>
       <div class="text">
         How artistic!
@@ -29,7 +35,8 @@
 
     </div>
   </div>
-  <div class="comment">
+  
+  <!-- <div class="comment">
     <div class="content">
       <a class="author">Elliot Fu</a>
       <div class="metadata">
@@ -40,8 +47,8 @@
       </div>
       <div class="actions">
         <a class="reply">Reply</a>
-        <button><i class="thumbs up outline icon"></i>0</button>
-        <button><i class="thumbs down outline icon"></i>0</button>
+        <button name="upvotes"><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
+        <button name="downvotes"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
       </div>
     </div>
     <div class="comments">
@@ -78,7 +85,8 @@
         <button><i class="thumbs down outline icon"></i>0</button>
       </div>
     </div>
-  </div>
+  </div> -->
+  {% endfor %}
   <form class="ui reply form">
     <div class="field">
       <textarea></textarea>
@@ -88,6 +96,7 @@
     </div>
   </form>
 </div>
+
 {% endblock %}
 
 {% block scripts %}

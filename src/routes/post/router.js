@@ -34,7 +34,7 @@ router.get('/new', (req, res) => {
 
 router.get('/gallery', (req, res) => {
   Post.find({ visibility: 'public' }).populate('user').populate('video')
-    .then(posts => res.render('gallery.html', { posts }))
+    .then(posts => { console.log(posts); res.render('gallery.html', { posts }) })
     .catch(err => {
       res.flash('error', err.toString());
       res.status(500).render('gallery.html');
