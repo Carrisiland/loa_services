@@ -14,13 +14,17 @@
     <button name="downvotes"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
     <br>
 
-    
+
 <div class="ui comments center-margin">
   <h3 class="ui dividing header">Comments</h3>
-  {% for comment in comments%}
+  {% for comment in post.comments%}
   <div class="comment">
     <div class="content">
+      {% if comment.user%}
       <a class="author">{{comment.user.username}}</a>
+      {% else %}
+        <a class="author">Anonymous</a>
+        {% endif %}
       <div class="metadata">
         <span class="date">{{comment.dateCreated}}</span>
       </div>
@@ -35,65 +39,15 @@
 
     </div>
   </div>
-  
-  <!-- <div class="comment">
-    <div class="content">
-      <a class="author">Elliot Fu</a>
-      <div class="metadata">
-        <span class="date">Yesterday at 12:30AM</span>
-      </div>
-      <div class="text">
-        <p>This has been very useful for my research. Thanks as well!</p>
-      </div>
-      <div class="actions">
-        <a class="reply">Reply</a>
-        <button name="upvotes"><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
-        <button name="downvotes"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
-      </div>
-    </div>
-    <div class="comments">
-      <div class="comment">
-        <div class="content">
-          <a class="author">Jenny Hess</a>
-          <div class="metadata">
-            <span class="date">Just now</span>
-          </div>
-          <div class="text">
-            Elliot you are always so right :)
-          </div>
-          <div class="actions">
-            <a class="reply">Reply</a>
-            <button><i class="thumbs up outline icon"></i>0</button>
-            <button><i class="thumbs down outline icon"></i>0</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="comment">
-    <div class="content">
-      <a class="author">Joe Henderson</a>
-      <div class="metadata">
-        <span class="date">5 days ago</span>
-      </div>
-      <div class="text">
-        Dude, this is awesome. Thanks so much
-      </div>
-      <div class="actions">
-        <a class="reply">Reply</a>
-        <button><i class="thumbs up outline icon"></i>0</button>
-        <button><i class="thumbs down outline icon"></i>0</button>
-      </div>
-    </div>
-  </div> -->
   {% endfor %}
-  <form class="ui reply form">
+
+  <form class="ui reply form" method="POST" action="/post/comment/{{post.id}}">
     <div class="field">
-      <textarea></textarea>
+      <textarea name='reply'></textarea>
     </div>
-    <div class="ui blue labeled submit icon button">
+    <button class="ui blue labeled submit icon button">
       <i class="icon edit"></i> Add Reply
-    </div>
+    </button>
   </form>
 </div>
 {% endblock %}

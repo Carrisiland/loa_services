@@ -9,6 +9,7 @@ require('../../models/video');
 require('../../models/comment');
 const Post = mongoose.model('Post');
 const Video = mongoose.model('Video');
+const Comment = mongoose.model('Comment');
 const { check, validationResult, sanitize } = require('express-validator');
 const fetch = require('node-fetch');
 
@@ -115,22 +116,46 @@ router.post('/', [
 });
 
 router.get('/:id', (req, res) => {
-  console.log(req.params.id)
   const id = req.params.id;
-  Post.findById(id)
-  .populate("video")
-  .populate("comments")
-  .populate("upvotes")
-  .populate("downvotes")
-  .populate("user")
-  .populate("title")
-  .populate("dateCreated")
+  Post.findById(id).populate('video').populate('user').populate({
+    path: 'comments',
+    populate: [{
+      path: 'user',
+      model: 'User'
+    }]
+  })
   .then(post => {
+    // console.log(post)
     res.render('post/view.html', {post});
   });
 });
 
- 
+
+router.post('/comment/:id', async (req, res) => {
+  const post_id = req.params.id;
+
+  let user;
+  if (req.user) {
+    user = req.user;
+  } else {
+    user = undefined;
+  }
+  console.log("cioaoaiao")
+  console.log(req.body.reply);
+  const comment = new Comment ({
+    user: req.user,
+    text: req.body.reply,
+  })
+
+  await comment.save();
+
+  let post = await Post.findById(post_id);
+  post.comments.push(comment);
+  await post.save();
+  res.redirect('/post/'+post_id);
+});
+
+
 
 
 
