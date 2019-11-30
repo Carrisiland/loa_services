@@ -23,8 +23,12 @@
       {% endif %}
     </span>
     <span class="right floated">
-      <button onclick="upvote()" name="upvotes"><i class="thumbs up outline icon"></i>{{ post.upvotes }}</button>
-      <button onclick="downvote()" name="downvotes"><i class="thumbs down outline icon"></i>{{ post.downvotes }}</button>
+      <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
+        <button><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
+      </form>
+      <form method='POST' action='/like/post/down/{{post.id}}' style='display: inline;'>
+        <button><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
+      </form>
     </span>
   </div>
 </div>

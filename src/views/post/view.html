@@ -10,9 +10,14 @@
 <div class="center-margin">
   <div id="player">{{post.title}}</div>
 </div>
-    <button name="upvotes"><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
-    <button name="downvotes"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
-    <br>
+<span class="right floated">
+  <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
+    <button><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
+  </form>
+  <form method='POST' action='/like/post/down/{{post.id}}' style='display: inline;'>
+    <button><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
+  </form>
+</span>
 
 
 <div class="ui comments center-margin">
@@ -33,8 +38,12 @@
       </div>
       <div class="actions">
         <a class="reply">Reply</a>
-        <button onclick=''><i class="thumbs up outline icon"></i>{{comment.upvotes}}</button>
-        <button><i class="thumbs down outline icon"></i>{{comment.downvotes}}</button>
+        <form method='POST' action='/like/comment/up/{{comment.id}}' style='display: inline;'>
+          <button><i class="thumbs up outline icon"></i>{{comment.upvotes}}</button>
+        </form>
+        <form method='POST' action='/like/comment/down/{{comment.id}}' style='display: inline;'>
+          <button><i class="thumbs down outline icon"></i>{{comment.downvotes}}</button>
+        </form>
       </div>
 
     </div>
