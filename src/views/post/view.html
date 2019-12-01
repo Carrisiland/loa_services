@@ -12,7 +12,8 @@
       <a class="author" href="/profile/{{ post.user._id }}">@{{post.user.username}}</a>
       {% else %}
         <a class="author">Anonymous</a>
-        {% endif %}
+        {% endif %} <br>
+        {{post.dateCreated}}
   </div>
 </div>
 <span class="right floated">
