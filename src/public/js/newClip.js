@@ -26,7 +26,7 @@ let urlConstraints;
 
 function onYouTubeIframeAPIReady() {
   const player = new Player();
-  $submit.attr('disabled', true);
+//  $submit.attr('disabled', true);
   checkVideo();
 
   function clearVideo() {
@@ -44,23 +44,22 @@ function onYouTubeIframeAPIReady() {
       return;
     }
 
-    $submit.add('disabled', true);
+//    $submit.add('disabled', true);
     let match;
     if (match = youtubeRegex.exec($link.val())) {
       player.play('youtube', match[1], start, end).then(e => {
         if (end > e.duration) {
           clearVideo();
         } else {
-          $submit.attr('disabled', false);
+//          $submit.attr('disabled', false);
         }
 
         urlConstraints = e;
-        $('.ui.form')
       });
     } else if (match = vimeoRegex.exec($link.val())) {
       player.play('vimeo', match[match.length - 1], start, end).then(e => {
         urlConstraints = e;
-
+      });
     } else {
       console.log('none', $link.val());
       clearVideo();
