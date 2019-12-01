@@ -11,7 +11,9 @@ const postSchema = mongoose.Schema({
   downvotes: {type: Number, default: 0},
   video: {type: mongoose.Schema.Types.ObjectId, ref:'Video'},
   visibility: {type: String},
-  description: {type: String, default: ""}
+  description: {type: String, default: ""},
+  likersDown: [{type: mongoose.Schema.Types.ObjectId, ref:'User', default: []}],
+  likersUp: [{type: mongoose.Schema.Types.ObjectId, ref:'User', default: []}],
 });
 
 const Post = mongoose.model('Post', postSchema);

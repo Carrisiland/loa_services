@@ -35,7 +35,7 @@ router.get('/new', (req, res) => {
 
 router.get('/gallery', (req, res) => {
   Post.find({ visibility: 'public' }).populate('user').populate('video')
-    .then(posts => { console.log(posts); res.render('gallery.html', { posts }) })
+    .then(posts => {res.render('gallery.html', { posts }) })
     .catch(err => {
       res.flash('error', err.toString());
       res.status(500).render('gallery.html');
@@ -77,7 +77,6 @@ router.post('/', [
       end: req.body.end
     });
 
-    console.log(match);
     if (match.videoType == 'youtube') {
       video.thumbnailLink = 'http://i3.ytimg.com/vi/' + match[1] +
         '/hqdefault.jpg';
@@ -85,30 +84,31 @@ router.post('/', [
       const info = await
         fetch(`http://vimeo.com/api/v2/video/${match.pop()}.json`)
       const infoJson = await info.json();
-      console.log(infoJson);
       video.thumbnailLink = infoJson[0].thumbnail_large;
     }
 
     await video.save();
 
-    const post = new Post({
+    let post = new Post({
       user: req.user,
       title: req.body.title,
       video: video,
       visibility: req.body.visibility,
-      description: req.body.description
+      description: req.body.description,
     });
 
+    if (req.user) {
+      console.log(req.user);
+      post.likersUp.push(req.user);
+    }
     const saved = await post.save();
+
     if (req.user) {
       req.user.posts.push(saved);
       await req.user.save();
     }
-
-    console.log(saved);
     res.redirect('/post/gallery');
   } catch(e) {
-    console.log(e);
     req.flash('error', e.toString());
     res.status(500).render('newVideoForm.html');
   }
@@ -124,7 +124,6 @@ router.get('/:id', (req, res) => {
     }]
   })
   .then(post => {
-    // console.log(post)
     res.render('post/view.html', {post});
   });
 });
@@ -139,12 +138,14 @@ router.post('/comment/:id', async (req, res) => {
   } else {
     user = undefined;
   }
-  console.log("cioaoaiao")
-  console.log(req.body.reply);
   const comment = new Comment ({
     user: req.user,
     text: req.body.reply,
   })
+
+  if (req.user) {
+    comment.likersUp.push(req.user);
+  }
 
   await comment.save();
 
