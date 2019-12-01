@@ -40,12 +40,13 @@ router.post('/comment/down/:id' , (req, res) => {
 });
 
 router.post('/post/up/:id' , (req, res) => {
+  const id = req.params.id;
   Post.findById(req.params.id).then((post) => {
     post.upvotes +=1;
     return post.save();
   }).then((saved) => {
     res.status(200);
-    res.end();
+    res.redirect('/post/' + id);
   }).catch((err) => {
     res.flash('error', err.toString());
     res.status(500).render('gallery.html');
@@ -53,12 +54,13 @@ router.post('/post/up/:id' , (req, res) => {
 });
 
 router.post('/post/down/:id' , (req, res) => {
+  const id = req.params.id;
   Post.findById(req.params.id).then((post) => {
     post.downvotes +=1;
     return post.save();
   }).then((saved) => {
     res.status(200);
-    res.end();
+    res.redirect('/post/' + id);
   }).catch((err) => {
     res.flash('error', err.toString());
     res.status(500).render('gallery.html');
