@@ -117,10 +117,10 @@ class Player {
             .catch(console.error);
 
           this.player.getDuration()
-            .then(e => resolve({ duration: e })
+            .then(e => resolve({ duration: e }))
             .catch(reject);
         });
-      };
-    });
+      });
+    };
   }
 }

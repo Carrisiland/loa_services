@@ -5,8 +5,8 @@ new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\?v=)|' +
            '([\\w+]{11})$', '');
 const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
 const vimeoRegex =
-new RegExp('(http|https)?:\/\/(www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|' +
-           'groups\/([^\/]*)\/videos\/|)(\d+)(?:|\/\?)');
+new RegExp('(http|https)?:\\/\\/(www\\.)?vimeo.com\\/(?:channels\\/(?:\\w+\\/)?|' +
+           'groups\\/([^\\/]*)\\/videos\\/|)(\\d+)(?:|\\/\\?)');
 
 
 function parseTime(timeString) {
@@ -22,6 +22,9 @@ function parseTime(timeString) {
     const start = parseTime(startTime);
     const end = parseTime(ednTime);
     console.log("entrato")
-    youtubePlayer(match[1], start, end)
-
+	 if (match) {
+	    new Player().play('youtube', match[1], start, end);
+	} else {
+		new Player().play('vimeo', vmatch.pop(), start, end);
+	}
 }

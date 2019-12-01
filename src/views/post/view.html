@@ -7,7 +7,7 @@
 {% block body %}
 
 <div class="center-margin">
-  <div id="player">{{post.title}} <br> 
+  <div id="player">{{post.title}} <br>
     {% if post.user.username%}
       <a class="author" href="/profile/{{ post.user._id }}">@{{post.user.username}}</a>
       {% else %}
@@ -69,22 +69,21 @@
 
 {% block scripts %}
 
-{% if service == 'vimeo' %}
 <script src="https://player.vimeo.com/api/player.js"></script>
-<script src="/videoPlayerScripts/vimeoHandler.js"></script>
-{% else %}
 <script src="https://www.youtube.com/iframe_api"></script>
-<script src="/videoPlayerScripts/youtubeHandler.js"></script>
+<script src="/js/player.js"></script>
 <script src="/js/viewClip.js"></script>
 <script type="application/json" id="selected-video">
-  {{ video | json | safe }}
+  {{ post | json | safe }}
 </script>
 <script>
+
+function onYouTubeIframeAPIReady() {
 var post = JSON.parse($('#selected-video').html());
 console.log(post)
 console.log(post.video.link)
 loadVideo(post.video.link, post.video.start, post.video.end);
+}
 </script>
-{% endif %}
 
 {% endblock %}
