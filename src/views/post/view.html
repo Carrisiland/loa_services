@@ -15,15 +15,19 @@
         {% endif %} <br>
         {{post.dateCreated}}
   </div>
+
+  <br>
+  <br>
+  <span class="right floated" style:"margin: auto;">
+    <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
+      <button><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
+    </form>
+    <form method='POST' action='/like/post/down/{{post.id}}' style='display: inline;'>
+      <button><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
+    </form>
+  </span>
 </div>
-<span class="right floated">
-  <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
-    <button><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
-  </form>
-  <form method='POST' action='/like/post/down/{{post.id}}' style='display: inline;'>
-    <button><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
-  </form>
-</span>
+
 
 
 <div class="ui comments center-margin">
