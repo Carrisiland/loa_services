@@ -3,12 +3,17 @@
 {% extends "skel.html" %}
 
 {% set service = 'youtube' %}
-{%set comments = post.comments%}
 {% block title %} New Post {% endblock %}
 {% block body %}
 
 <div class="center-margin">
-  <div id="player">{{post.title}}</div>
+  <div id="player">{{post.title}} <br> 
+    {% if post.user.username%}
+      <a class="author" href="/profile/{{ post.user._id }}">@{{post.user.username}}</a>
+      {% else %}
+        <a class="author">Anonymous</a>
+        {% endif %}
+  </div>
 </div>
 <span class="right floated">
   <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
@@ -26,7 +31,7 @@
   <div class="comment">
     <div class="content">
       {% if comment.user%}
-      <a class="author">{{comment.user.username}}</a>
+      <a class="author" href="/profile/{{ comment.user._id }}">@{{comment.user.username}}</a>
       {% else %}
         <a class="author">Anonymous</a>
         {% endif %}

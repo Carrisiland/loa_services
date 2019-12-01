@@ -2,7 +2,11 @@
 {% extends "skel.html" %}
 {% block title %}Feed{% endblock %}
 {% block body %}
-<div id="mainContent">
+<h1 class="ui header">Feed</h1>
+<div class="ui link cards">
+  {% include "post/list.html" %}
+</div>
+<!-- <div id="mainContent">
   <h1> Feed </h1>
   <div class="ui link cards">
     {% for i in range(1,5) %}
@@ -32,5 +36,5 @@
     </div>
     {% endfor %}
   </div>
-</div>
+</div> -->
 {% endblock %}
