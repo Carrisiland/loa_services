@@ -157,6 +157,15 @@ router.post('/comment/:id', async (req, res) => {
 
 
 
+router.get('/edit/:id', (req, res) => {
+  Post.findById(req.params.id).populate('video')
+  .then((post) => {
+    res.render('editVideoForm.html', {post});
+  });
+});
+
+
+
 
 
 // router.get('/');
