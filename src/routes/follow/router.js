@@ -5,11 +5,13 @@ require('../../models/post');
 require('../../models/user');
 require('../../models/video');
 require('../../models/comment');
+const User = mongoose.model("User");
 const Post = mongoose.model('Post');
 const Video = mongoose.model('Video');
 const Comment = mongoose.model('Comment');
 const { check, validationResult, sanitize } = require('express-validator');
 const fetch = require('node-fetch');
+
 
 router.get('/feed', (req, res) => {
     let user = req.user;
@@ -28,15 +30,37 @@ router.get('/feed', (req, res) => {
       });
     });
 
-router.post("/follow/up/:id"), (req, res)=>{
-    User.findById(req.params.id).populate("followers").then((user)=>{
+router.post("/:id",  (req, res)=>{
+    User.findById(req.params.id).populate("followers").then(async (followedUser)=>{
         const userId = req.user.id;
+        const user = await req.user.populate("following");
         let found = undefined;
-        for (i in user.followers){
-            if (userId == user.followers[i].id) {
-                foundUp = comment.likersUp[i].id;
+        for (i in followedUser.followers){
+            if (userId == followedUser.followers[i].id) {
+                found = followedUser.followers[i].id;
               }
         }
+        if (found == undefined){
+            followedUser.followers.push(req.user);
+            user.following.push(followedUser);
+        } else{
+            followedUser.followers = followedUser.followers.filter((followedUser) => {
+                return followedUser.id != userId;
+              });
+            user.following = user.following.filter((followingUser)=>{
+                return followingUser.id != followedUser.id;
+            });
+        }
+         await followedUser.save();
+         await user.save();
+         return ;
+    }).then((saved) => {
+        res.status(200).render('index.html');
+        res.end();
+      }).catch((err) => {
+        // res.flash('error', err.toString());
+        res.status(500).render('feed.html');
+    });
 
-    })
-}
+});
+module.exports = router;
