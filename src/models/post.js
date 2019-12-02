@@ -14,6 +14,7 @@ const postSchema = mongoose.Schema({
   description: {type: String, default: ""},
   likersDown: [{type: mongoose.Schema.Types.ObjectId, ref:'User', default: []}],
   likersUp: [{type: mongoose.Schema.Types.ObjectId, ref:'User', default: []}],
+  views: {type: Number, default: 0}
 });
 
 const Post = mongoose.model('Post', postSchema);

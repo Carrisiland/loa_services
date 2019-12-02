@@ -121,9 +121,12 @@ router.get('/:id', (req, res) => {
     populate: [{
       path: 'user',
       model: 'User'
-    }]
+    }],
   })
   .then(post => {
+    post.views +=1;
+    //post.dateCreated = post.dateCreated.toUTCString();
+    post.save();
     res.render('post/view.html', {post});
   });
 });

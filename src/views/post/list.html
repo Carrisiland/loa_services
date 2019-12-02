@@ -54,8 +54,9 @@
       <a href="/profile/{{ post.user._id }}">@{{ post.user.username }}</a>
       {% endif %}
       <br>
-      <!-- {{post.dateCreated}} -->
+      {{post.dateCreated}}
     </span>
+    <span class="right floated">{{post.views}} views</span>
     <span class="right floated">
       <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
         <button><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
