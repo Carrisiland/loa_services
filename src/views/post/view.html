@@ -26,10 +26,12 @@
 
 
 <div class="ui comments center-margin">
-    <div><h2>{{post.title}} </h2><br>
+    <div><h2>{{post.title}}</h2>
+      <br>
       {% for tag in post.tags%}
-      <h3><i>{{tag}}</i></h3>
+      <a href=""><i>{{tag}}</i></a>
       {% endfor %}
+      <br>
       {% if post.user.username%}
         <a class="author" href="/profile/{{ post.user._id }}">@{{post.user.username}}</a>
         {% else %}
