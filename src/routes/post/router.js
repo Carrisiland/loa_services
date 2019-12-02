@@ -169,6 +169,57 @@ router.get('/edit/:id', (req, res) => {
 });
 
 
+router.patch('/edit/:id', [
+  sanitize('link').customSanitizer((v, re) => {
+    if (re = youtubeRegex.exec(v)) {
+      re.videoType = 'youtube';
+      return re;
+    } else if (re = vimeoRegex.exec(v)) {
+      re.videoType = 'vimeo';
+      return re;
+    } else {
+      throw new Error(`${v} is not a valid Youtube/Vimeo link`);
+    }
+  }),
+  check('start').matches(timeRegex),
+  check('end').matches(timeRegex),
+  check('title').not().isEmpty(),
+  check('title').isLength({max: 20})
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log(errors.array());
+      req.flash('error', 'Post submission not valid');
+      res.render('newVideoForm.html');
+      return;
+    }
+
+    const duration = parseTime(req.body.end) - parseTime(req.body.start);
+    const match = req.body.link;
+
+
+    const post = await Post.findById(req.params.id).populate("video");
+    post.video.duration = duration;
+    post.video.start = req.body.start;
+    post.video.end = req.body.end;
+
+    await post.video.save();
+
+    post.title = req.body.title;
+    post.visibility = req.body.visibility;
+    post.description = req.body.description;
+    await post.save();
+
+    res.redirect('/post/gallery');
+  } catch(e) {
+    req.flash('error', e.toString());
+    res.status(500).render('newVideoForm.html');
+  }
+});
+
+
+
 
 
 
