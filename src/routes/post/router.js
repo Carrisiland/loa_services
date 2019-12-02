@@ -35,7 +35,8 @@ router.get('/new', (req, res) => {
 
 router.get('/gallery', (req, res) => {
   Post.find({ visibility: 'public' }).populate('user').populate('video')
-    .then(posts => {res.render('gallery.html', { posts }) })
+    .then(posts => {
+      res.render('gallery.html', { posts }) })
     .catch(err => {
       res.flash('error', err.toString());
       res.status(500).render('gallery.html');
@@ -125,9 +126,9 @@ router.get('/:id', (req, res) => {
   })
   .then(post => {
     post.views +=1;
-    //post.dateCreated = post.dateCreated.toUTCString();
+    post.dateCreated = post.dateCreated.slice(0, 21);
     post.save();
-    res.render('post/view.html', {post});
+      res.render('post/view.html', {post});
   });
 });
 

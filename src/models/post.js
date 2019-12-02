@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const postSchema = mongoose.Schema({
   user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
   title: { type: String, required: true },
-  dateCreated: { type: Date, required: true, default: Date.now },
+  dateCreated: { type: String, required: true, default: new Date().toString()},
   comments: [{type: mongoose.Schema.Types.ObjectId, ref:'Comment', default: []}],
   upvotes: {type: Number, default: 1},
   downvotes: {type: Number, default: 0},
