@@ -29,5 +29,14 @@ router.get('/feed', (req, res) => {
     });
 
 router.post("/follow/up/:id"), (req, res)=>{
-    User.findById(req.params.id).populate("followers")
+    User.findById(req.params.id).populate("followers").then((user)=>{
+        const userId = req.user.id;
+        let found = undefined;
+        for (i in user.followers){
+            if (userId == user.followers[i].id) {
+                foundUp = comment.likersUp[i].id;
+              }
+        }
+
+    })
 }

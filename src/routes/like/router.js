@@ -24,7 +24,7 @@ router.post('/comment/up/:id' , (req, res) => {
         foundUp = comment.likersUp[i].id;
       }
     }
-    for(user in comment.likersDown) {
+    for(i in comment.likersDown) {
       if (userId == comment.likersDown[i].id) {
         foundDown = comment.likersDown[i].id;
       }
@@ -70,7 +70,7 @@ router.post('/comment/down/:id' , (req, res) => {
         foundUp = comment.likersUp[i].id;
       }
     }
-    for(user in comment.likersDown) {
+    for(i in comment.likersDown) {
       if (userId == comment.likersDown[i].id) {
         foundDown = comment.likersDown[i].id;
       }
@@ -118,7 +118,7 @@ router.post('/post/up/:id' , (req, res) => {
         foundUp = post.likersUp[i].id;
       }
     }
-    for(user in post.likersDown) {
+    for(i in post.likersDown) {
       if (userId == post.likersDown[i].id) {
         foundDown = post.likersDown[i].id;
       }
@@ -162,7 +162,7 @@ router.post('/post/down/:id' , (req, res) => {
         foundUp = post.likersUp[i].id;
       }
     }
-    for(user in post.likersDown) {
+    for(i in post.likersDown) {
       if (userId == post.likersDown[i].id) {
         foundDown = post.likersDown[i].id;
       }
