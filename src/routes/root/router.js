@@ -22,14 +22,10 @@ router.get('/', (req, res) => {
 // router.get('/feed', (req, res) => {
 //   res.render('feed.html');
 // });
-router.get('/feed', (req, res) => {
-  Post.find({ visibility: 'public' }).populate('user').populate('video')
-    .then(posts => { console.log(posts); res.render('feed.html', { posts }) })
-    .catch(err => {
-      res.flash('error', err.toString());
-      res.status(500).render('feed.html');
-    });
-});
+
+      
+    
+
 
 
 /** router for /root */
