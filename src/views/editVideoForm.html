@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<form class="ui form new" method="GET" action='/edit_method=PATCH'>
+<form class="ui form new" method="POST" action='/post/edit/{{post.id}}?_method=PATCH'>
   <h1 class="ui header">Upload New Video</h1>
   <div class="new-video-player ui placeholder segment">
     <div class="ui icon header" id="player">
@@ -43,7 +43,7 @@
     <label>Visibility</label>
     <div class="two fields">
       <div class="field required">
-        <select class="ui fluid search dropdown" value='{{post.visibility}}' name="visibility">
+        <select class="ui fluid search dropdown" value='{{post.visibility}' name="visibility">
           <option value="public">Public</option>
           <option value="private">Private</option>
         </select>
