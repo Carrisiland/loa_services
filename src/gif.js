@@ -1,13 +1,22 @@
 // vim: set ts=2 sw=2 et tw=80:
+// use as: node git.js <video link> <start seconds> <end seconds>
 
 const youtubedl = require('youtube-dl');
 const ffmpeg = require('fluent-ffmpeg');
 
-const url = 'http://www.youtube.com/watch?v=dQw4w9WgXcQ';
-const start = 50;
-const end = 60;
+const url = process.argv[2];
+const start = parseInt(process.argv[3]);
+const end = parseInt(process.argv[4]);
 
-youtubedl.getInfo(url, ['-f worst'], (err, info) => {
+let options;
+
+if (url.match('vimeo.com')) {
+  options = ['-f http-240p'];
+} else {
+  options = ['-f worst'];
+}
+
+youtubedl.getInfo(url, options, (err, info) => {
   if (err) {
     console.error(err);
     return;
