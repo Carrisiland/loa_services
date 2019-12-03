@@ -127,9 +127,8 @@ router.get('/:id', (req, res) => {
   })
   .then(post => {
     post.views +=1;
-    post.dateCreated = post.dateCreated.slice(4, 21);
     post.save();
-      res.render('post/view.html', {post});
+    res.render('post/view.html', {post});
   });
 });
 
