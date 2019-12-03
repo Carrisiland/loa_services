@@ -17,24 +17,23 @@ router.get('/feed', (req, res) => {
     let user = req.user;
     User.findById(user.id).populate({
       path : "following", 
-      populate :[{
+      populate: [{
         path: "user",
         model: "User",
-        populate :[{
+        populate: [{
           path: "posts",
-          model : "Post"
-        }] 
+          model: "Post"
+        }]
       }]
     }).then(user =>{
-      console.log ("user= ", user.following.length)
+      console.log ("user= ", user.following)
       let postArr = [];
       for (i in user.following){
         for(j in user.following[i].posts){
-           console.log ("user following post= ", user.following[i].posts[j])
-           console.log()
           postArr.push(user.following[i].posts[j])
         }
       }
+      console.log('arr = ', postArr)
       res.render('feed.html', {posts: postArr});
       });
     });
