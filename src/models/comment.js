@@ -9,6 +9,7 @@ const commentSchema = mongoose.Schema({
     text: {type: String},
     likersDown: [{type: mongoose.Schema.Types.ObjectId, ref:'User', default: []}],
     likersUp: [{type: mongoose.Schema.Types.ObjectId, ref:'User', default: []}],
+    replies: [{type: mongoose.Schema.Types.ObjectId, ref:'Comment', default: []}],
 
 });
 

@@ -18,11 +18,16 @@
         <a href="/post/new" class="header active item">New Post</a>
         <a href="/post/gallery" class="header active item">Gallery</a>
         {% if user %}
-        <a href="/feed" class="header active item">Feed</a>
+        <a href="/follow/feed" class="header active item">Feed</a>
         {% endif %}
+        <div class="ui icon input" style="margin-left: 1em;">
+          <input type="text" placeholder="Search...">
+          <i class="inverted circular search link icon"></i>
+        </div>
       </div>
       {% if not user %}
       <div class="right item">
+
         <a href="/auth/login" class="ui inverted button user-btn">Log in</a>
         <a href="/auth/signup" class="ui inverted button">Sign Up</a>
       </div>

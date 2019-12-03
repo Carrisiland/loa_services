@@ -136,12 +136,6 @@ router.get('/:id', (req, res) => {
 router.post('/comment/:id', async (req, res) => {
   const post_id = req.params.id;
 
-  let user;
-  if (req.user) {
-    user = req.user;
-  } else {
-    user = undefined;
-  }
   const comment = new Comment ({
     user: req.user,
     text: req.body.reply
@@ -225,9 +219,12 @@ router.delete('/delete/:id', (req, res) => {
       throw new Error("You need to login to delete posts");
     }
 
-    user.posts.filter((post) => {
+    user.posts = user.posts.filter((post) => {
       return post.id != found.id;
     });
+
+    await user.save();
+    
     return found.remove();
   }).then((removed) => {
     res.status(204).render('gallery.html');
@@ -239,7 +236,5 @@ router.delete('/delete/:id', (req, res) => {
     }
   });
 });
-
-
 
 module.exports = router;
