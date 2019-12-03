@@ -33,7 +33,7 @@ router.get('/feed', (req, res) => {
 router.post("/:id",  (req, res)=>{
     User.findById(req.params.id).populate("followers").then(async (followedUser)=>{
         const userId = req.user.id;
-        const user = await req.user.populate("following");
+        const user = await User.findById(req.user.id).populate("following");
         let found = undefined;
         for (i in followedUser.followers){
             if (userId == followedUser.followers[i].id) {
@@ -44,10 +44,13 @@ router.post("/:id",  (req, res)=>{
             followedUser.followers.push(req.user);
             user.following.push(followedUser);
         } else{
-            followedUser.followers = followedUser.followers.filter((followedUser) => {
-                return followedUser.id != userId;
+            followedUser.followers = followedUser.followers.filter((follower) => {
+                return follower.id != userId;
               });
             user.following = user.following.filter((followingUser)=>{
+              console.log("following = ", followingUser.id )
+              console.log("followed = ", followedUser.id )
+              console.log("remove=", followingUser.id != followedUser.id)
                 return followingUser.id != followedUser.id;
             });
         }
