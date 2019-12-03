@@ -15,7 +15,7 @@ const fetch = require('node-fetch');
 
 router.get('/feed', (req, res) => {
     let user = req.user;
-    user.populate({
+    User.findById(user.id).populate({
       path : "following", 
       populate :[{
         path: "user",
@@ -25,8 +25,17 @@ router.get('/feed', (req, res) => {
           model : "Post"
         }] 
       }]
-    }).then(post =>{
-      res.render('feed.html', {post});
+    }).then(user =>{
+      console.log ("user= ", user.following.length)
+      let postArr = [];
+      for (i in user.following){
+        for(j in user.following[i].posts){
+           console.log ("user following post= ", user.following[i].posts[j])
+           console.log()
+          postArr.push(user.following[i].posts[j])
+        }
+      }
+      res.render('feed.html', {posts: postArr});
       });
     });
 
@@ -66,4 +75,7 @@ router.post("/:id",  (req, res)=>{
     });
 
 });
+
+
+
 module.exports = router;
