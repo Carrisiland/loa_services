@@ -98,7 +98,7 @@ router.post('/', [
       description: req.body.description,
       tags: req.body.tags.split(",")
     });
-
+    
     if (req.user) {
       console.log(req.user);
       post.likersUp.push(req.user);
