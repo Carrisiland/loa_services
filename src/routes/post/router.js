@@ -171,17 +171,6 @@ router.get('/edit/:id', (req, res) => {
 
 
 router.patch('/edit/:id', [
-  sanitize('link').customSanitizer((v, re) => {
-    if (re = youtubeRegex.exec(v)) {
-      re.videoType = 'youtube';
-      return re;
-    } else if (re = vimeoRegex.exec(v)) {
-      re.videoType = 'vimeo';
-      return re;
-    } else {
-      throw new Error(`${v} is not a valid Youtube/Vimeo link`);
-    }
-  }),
   check('start').matches(timeRegex),
   check('end').matches(timeRegex),
   check('title').not().isEmpty(),
@@ -221,13 +210,5 @@ router.patch('/edit/:id', [
 
 
 
-
-
-
-// router.get('/');
-//
-// router.delete('/:postid', (req, res) => {
-//
-// });
 
 module.exports = router;
