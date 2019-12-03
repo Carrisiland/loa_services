@@ -127,9 +127,8 @@ router.get('/:id', (req, res) => {
   })
   .then(post => {
     post.views +=1;
-    post.dateCreated = post.dateCreated.slice(0, 21);
     post.save();
-      res.render('post/view.html', {post});
+    res.render('post/view.html', {post});
   });
 });
 
@@ -139,15 +138,14 @@ router.post('/comment/:id', async (req, res) => {
 
   const comment = new Comment ({
     user: req.user,
-    text: req.body.reply,
+    text: req.body.reply
   })
 
   if (req.user) {
     comment.likersUp.push(req.user);
   }
-
+  comment.dateCreated = comment.dateCreated.slice(4, 21);
   await comment.save();
-
   let post = await Post.findById(post_id);
   post.comments.push(comment);
   await post.save();

@@ -55,7 +55,7 @@
       <a href="/profile/{{ post.user._id }}">@{{ post.user.username }}</a>
       {% endif %}
       <br>
-      {{post.dateCreated | truncate(21)}}
+      {{post.dateCreated.slice(4, 21)}}
     </span>
     <span class="right floated">
       <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
