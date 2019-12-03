@@ -203,6 +203,7 @@ router.patch('/edit/:id', [
     post.title = req.body.title;
     post.visibility = req.body.visibility;
     post.description = req.body.description;
+    post.tags = req.body.tags;
     await post.save();
 
     res.redirect('/post/gallery');
