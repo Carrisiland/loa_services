@@ -27,6 +27,7 @@
     "express-flash-messages": "^0.1.1",
     "express-session": "^1.17.0",
     "express-validator": "^6.3.0",
+    "fluent-ffmpeg": "^2.1.2",
     "method-override": "^3.0.0",
     "mongoose": "^5.7.7",
     "morgan": "^1.9.0",
@@ -35,6 +36,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "request": "^2.88.0",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "youtube-dl": "^2.1.0"
   }
 }
