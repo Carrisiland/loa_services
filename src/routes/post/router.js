@@ -170,17 +170,6 @@ router.get('/edit/:id', (req, res) => {
 
 
 router.patch('/edit/:id', [
-  sanitize('link').customSanitizer((v, re) => {
-    if (re = youtubeRegex.exec(v)) {
-      re.videoType = 'youtube';
-      return re;
-    } else if (re = vimeoRegex.exec(v)) {
-      re.videoType = 'vimeo';
-      return re;
-    } else {
-      throw new Error(`${v} is not a valid Youtube/Vimeo link`);
-    }
-  }),
   check('start').matches(timeRegex),
   check('end').matches(timeRegex),
   check('title').not().isEmpty(),
@@ -196,10 +185,16 @@ router.patch('/edit/:id', [
     }
 
     const duration = parseTime(req.body.end) - parseTime(req.body.start);
-    const match = req.body.link;
 
 
-    const post = await Post.findById(req.params.id).populate("video");
+    const post = await Post.findById(req.params.id).populate("video").populate('user');
+    if (req.user) {
+      if (req.user.id != post.user.id) {
+        throw new Error('You are not the owner of this post');
+      }
+    } else {
+      throw new Error("You need to login to delete posts");
+    }
     post.video.duration = duration;
     post.video.start = req.body.start;
     post.video.end = req.body.end;
@@ -218,15 +213,33 @@ router.patch('/edit/:id', [
   }
 });
 
+router.delete('/delete/:id', (req, res) => {
+  Post.findById(req.params.id).populate('user').then(async (found) => {
+    let user = req.user;
+
+    if (user) {
+      if (user.id != found.user.id) {
+        throw new Error('You are not the owner of this post');
+      }
+    } else {
+      throw new Error("You need to login to delete posts");
+    }
+
+    user.posts.filter((post) => {
+      return post.id != found.id;
+    });
+    return found.remove();
+  }).then((removed) => {
+    res.status(204).render('gallery.html');
+  }).catch((err) => {
+    if(err.name == "CastError") {
+      res.status(404).render('/profile/profile.html');
+    } else {
+      res.status(500).render("/profile/profile.html");
+    }
+  });
+});
 
 
-
-
-
-// router.get('/');
-//
-// router.delete('/:postid', (req, res) => {
-//
-// });
 
 module.exports = router;
