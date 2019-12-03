@@ -37,7 +37,7 @@
         {% else %}
           <a class="author">Anonymous</a>
           {% endif %} <br>
-          {{post.dateCreated}}
+          {{post.dateCreated.slice(4, 21)}}
         </div>
   <h3 class="ui dividing header">Comments</h3>
   {% for comment in post.comments%}
