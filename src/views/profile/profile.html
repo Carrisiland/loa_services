@@ -13,8 +13,9 @@
     </h1>
     {% if user.id != profileUser.id %}
     <form method='POST' action='/follow/{{profileUser.id}}' style='display: inline;'>
-      <button><i class="thumbs up outline icon"></i>Follow</button>
+      <button class="ui button"><i class="thumbs up outline icon"></i>Follow</button>
     </form>
+    <br>
     {%endif%}
     <br>
     <div class="ui icon input">
