@@ -218,9 +218,12 @@ router.delete('/delete/:id', (req, res) => {
       throw new Error("You need to login to delete posts");
     }
 
-    user.posts.filter((post) => {
+    user.posts = user.posts.filter((post) => {
       return post.id != found.id;
     });
+
+    await user.save();
+    
     return found.remove();
   }).then((removed) => {
     res.status(204).render('gallery.html');
