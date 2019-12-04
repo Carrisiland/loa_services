@@ -136,6 +136,10 @@ router.post('/', [
       tags: req.body.tags.split(",")
     });
 
+    for (let i = 0; i < post.tags.length; i++) {
+      post.tags[i] = post.tags[i].trim();
+    }
+
     if (req.user) {
       console.log(req.user);
       post.likersUp.push(req.user);
@@ -239,7 +243,10 @@ router.patch('/edit/:id', [
     post.title = req.body.title;
     post.visibility = req.body.visibility;
     post.description = req.body.description;
-    post.tags = req.body.tags;
+    post.tags = req.body.tags.split(",");
+    for (let i = 0; i < post.tags.length; i++) {
+      post.tags[i] = post.tags[i].trim();
+    }
     await post.save();
 
     res.redirect('/post/gallery');
