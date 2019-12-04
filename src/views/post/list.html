@@ -38,25 +38,23 @@
     {% endif %}
     {% endif %}
     <div class="header">{{ post.title }}</div>
-    <!-- <div class="description">
-      {{ post.description }}
-      </div> -->
-      <hr>
-      <a class="teal ui label" {% if post.user %}href="/profile/{{ post.user._id }}"{% endif %}>
-        <i class="user icon"></i>
-        {% if not post.user %}
-        Anonymous
-        {% else %}
-        {{ post.user.username }}
-        {% endif %}
-      </a>
-      <div class="ui grey label">
-        {{post.views}} views
-      </div>
-      <br>
-      <a class="ui grey label" style="margin-top: .5em">
-        <i class="calendar icon"></i>{{ post.dateCreated.slice(4, 21) }}
-      </a>
+    <br>
+
+    <a class="teal ui label" {% if post.user %}href="/profile/{{ post.user._id }}"{% endif %}>
+      <i class="user icon"></i>
+      {% if not post.user %}
+      Anonymous
+      {% else %}
+      {{ post.user.username }}
+      {% endif %}
+    </a>
+    <div class="ui grey label">
+      {{post.views}} views
+    </div>
+    <br>
+    <a class="ui grey label" style="margin-top: .5em">
+      <i class="calendar icon"></i>{{ post.dateCreated.slice(4, 21) }}
+    </a>
   </div>
   <div class="extra content">
     <span class="right floated">
