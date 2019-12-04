@@ -19,6 +19,9 @@ router.get('/feed', (req, res) => {
       path : "following", 
       populate: [{
         path: "posts",
+        populate: {
+          path: "video",
+        }
       }]
     }).then(user =>{
       console.log ("user= ", user.following)
