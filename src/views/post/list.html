@@ -1,7 +1,6 @@
 {# vim: set ts=2 sw=2 et tw=120: #}
 
 {% for post in posts %}
-
 <div class="card">
   <img width="100%" height="56.25%" src="{{ post.video.thumbnailLink }}" onclick="window.location='/post/{{post.id }}'">
   <div class="content">
@@ -59,10 +58,10 @@
     </span>
     <span class="right floated">
       <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
-        <button class="likeUp"><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
+        <button id="{{post.id}}" class="likeUp"><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
       </form>
       <form method='POST' action='/like/post/down/{{post.id}}' style='display: inline;'>
-        <button class="likeDown"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
+        <button id="{{post.id}}" class="likeDown"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
       </form>
     </span>
   </div>

@@ -1,5 +1,5 @@
-/* Fetch */
 // vim: set ts=2 sw=2 et tw=80:
+
 
 const BODY_METHODS = ['PUT', 'POST', 'PATCH'];
 const NON_BODY_METHODS = ['GET', 'OPTIONS', 'HEAD', 'DELETE'];
@@ -49,7 +49,7 @@ function doFetchRequest(method, url, headers, body) {
  * @returns {Promise} which receives directly the object parsed from the
  * response JSON.
  */
-function doJSONRequest(method, url, headers, data){
+ function doJSONRequest(method, url, headers, data){
   const JSON_MIME = 'application/json';
 
   headers = Object.assign({}, headers);
@@ -85,3 +85,4 @@ function doJSONRequest(method, url, headers, data){
     .then(res => res.status == 204 ? {} : res.json());
 }
 
+// export {doFetchRequest};
