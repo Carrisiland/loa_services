@@ -107,10 +107,10 @@
       <div class="actions">
         <a class="reply">Reply</a>
         <form method="POST" action="/like/comment/up/{{ comment.id }}" style="display: inline;">
-          <button><i class="thumbs up outline icon"></i>{{ comment.upvotes }}</button>
+          <button class="likeUp"><i class="thumbs up outline icon"></i>{{ comment.upvotes }}</button>
         </form>
         <form method="POST" action="/like/comment/down/{{ comment.id }}" style="display: inline;">
-          <button><i class="thumbs down outline icon"></i>{{ comment.downvotes }}</button>
+          <button class="likeDown"><i class="thumbs down outline icon"></i>{{ comment.downvotes }}</button>
         </form>
       </div>
 
