@@ -5,7 +5,7 @@
   <img width="100%" height="56.25%" src="{{ post.video.thumbnailLink }}" onclick="window.location='/post/{{post.id }}'">
   <div class="content">
     {% if post.user %}
-      {% if user.id == post.user.id %}
+    {% if user.id == post.user.id %}
     <div class="ui dropdown" style="float: right;">
       <i class="dropdown icon"></i>
       <div class="menu">
@@ -34,34 +34,36 @@
         </form>
       </div>
     </div>
-      {% endif %}
+    {% endif %}
     {% endif %}
     <div class="header">{{ post.title }}</div>
-    <!-- <div class="description">
-      {{ post.description }}
-    </div> -->
-    <hr>
-    <div class="extra content">
-        {{post.views}} views
-    </div>
-  </div>
-  <div class="extra content">
-    <span>
+    <br>
+
+    <a class="teal ui label" {% if post.user %}href="/profile/{{ post.user._id }}"{% endif %}>
       <i class="user icon"></i>
       {% if not post.user %}
       Anonymous
       {% else %}
-      <a href="/profile/{{ post.user._id }}">@{{ post.user.username }}</a>
+      {{ post.user.username }}
       {% endif %}
-      <br>
-      {{post.dateCreated.slice(4, 21)}}
-    </span>
+    </a>
+    <div class="ui grey label">
+      {{post.views}} views
+    </div>
+    <br>
+    <a class="ui grey label" style="margin-top: .5em">
+      <i class="calendar icon"></i>{{ post.dateCreated.slice(4, 21) }}
+    </a>
+  </div>
+  <div class="extra content">
     <span class="right floated">
       <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
-        <button id="{{post.id}}" class="likeUp"><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
+        <button class="ui tiny blue button likeUp">
+          <i class="thumbs up icon"></i>{{post.upvotes}}</button>
       </form>
       <form method='POST' action='/like/post/down/{{post.id}}' style='display: inline;'>
-        <button id="{{post.id}}" class="likeDown"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
+        <button class="ui tiny red button likeDown">
+          <i class="thumbs down icon"></i>{{post.downvotes}}</button>
       </form>
     </span>
   </div>
