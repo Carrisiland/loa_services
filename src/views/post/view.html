@@ -6,39 +6,38 @@
 {% block title %} New Post {% endblock %}
 {% block body %}
 
-<div class="center-margin">
-  <div id="player">
+<div class="center-margin ui grid">
+  <div class="row centered">
+    <div class="column" id="player"></div>
   </div>
-  <br>
-  <br>
-  <span class="right floated" style:"margin: auto;">
+  <div class="row centered" style="text-align: center">
     <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
-      <button><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
+      <button class="ui blue button"><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
     </form>
     <form method='POST' action='/like/post/down/{{post.id}}' style='display: inline;'>
-      <button><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
+      <button class="ui red button"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
     </form>
-  </span>
-  <br>
-  <span class="right floated">{{post.views}} views</span>
+    <a class="ui button" href="/post/{{ post.id }}/gif" target="_blank">GIF it</a>
+  </div>
+  <div class="row centered">
+      <div class="ui orange label">{{post.views}} views</div>
+  </div>
 </div>
 
-
-
 <div class="ui comments center-margin">
-    <div><h2>{{post.title}}</h2>
-      {% for tag in post.tags%}
-      <a href="/feed/{{tag}}">#{{ tag }}</a>
-      {% endfor %}
-    
-      <br>
-      {% if post.user.username%}
-        <a class="author" href="/profile/{{ post.user._id }}">@{{post.user.username}}</a>
-        {% else %}
-          <a class="author">Anonymous</a>
-          {% endif %} <br>
-          {{post.dateCreated.slice(4, 21)}}
-        </div>
+  <div><h2>{{post.title}}</h2>
+    {% for tag in post.tags %}
+    <a href="/feed/{{tag}}">#{{ tag }}</a>
+    {% endfor %}
+
+    <br>
+    {% if post.user.username%}
+    <a class="author" href="/profile/{{ post.user._id }}">@{{post.user.username}}</a>
+    {% else %}
+    <a class="author">Anonymous</a>
+    {% endif %} <br>
+    {{post.dateCreated.slice(4, 21)}}
+  </div>
   <h3 class="ui dividing header">Comments</h3>
   {% for comment in post.comments%}
   <div class="comment">
@@ -46,8 +45,8 @@
       {% if comment.user%}
       <a class="author" href="/profile/{{ comment.user._id }}">@{{comment.user.username}}</a>
       {% else %}
-        <a class="author">Anonymous</a>
-        {% endif %}
+      <a class="author">Anonymous</a>
+      {% endif %}
       <div class="metadata">
         <span class="date">{{comment.dateCreated}}</span>
       </div>
@@ -90,12 +89,12 @@
 </script>
 <script>
 
-function onYouTubeIframeAPIReady() {
-var post = JSON.parse($('#selected-video').html());
-console.log(post)
-console.log(post.video.link)
-loadVideo(post.video.link, post.video.start, post.video.end);
-}
+  function onYouTubeIframeAPIReady() {
+    var post = JSON.parse($('#selected-video').html());
+    console.log(post)
+    console.log(post.video.link)
+    loadVideo(post.video.link, post.video.start, post.video.end);
+  }
 </script>
 
 {% endblock %}
