@@ -119,9 +119,15 @@ main .ui.link.cards {
   margin-bottom: 0;
 }
 
+.margin-top, .center-margin {
+  margin-top: 2vh !important;
+}
+
+.center, .center-margin {
+  text-align: center !important;
+}
+
 .center-margin {
-  margin-top: 2vh;
-  text-align: center;
   margin-left: auto !important;
   margin-right: auto !important;
 }
