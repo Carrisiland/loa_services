@@ -2,43 +2,56 @@
 
 {% extends "skel.html" %}
 
-{% set service = 'youtube' %}
-{% block title %} New Post {% endblock %}
+{% block title %}New Post{% endblock %}
 {% block body %}
 
-<div class="center-margin ui grid">
+<div class="ui grid segment">
   <div class="row centered">
     <div class="column" id="player"></div>
   </div>
-  <div class="row centered" style="text-align: center">
-    <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
-      <button class="ui blue button"><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
-    </form>
-    <form method='POST' action='/like/post/down/{{post.id}}' style='display: inline;'>
-      <button class="ui red button"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
-    </form>
-    <a class="ui button" href="/post/{{ post.id }}/gif" target="_blank">GIF it</a>
+  <div class="row centered">
+    <div class="ui column">
+      <form method="POST" class="center-margin">
+        <button formaction="/like/post/up/{{ post.id }}" class="ui labeled button" tabindex="0">
+          <div class="ui blue icon button">
+            <i class="thumbs up icon"></i>
+          </div>
+          <a class="ui basic label">
+            {{ post.upvotes }}
+          </a>
+        </button>
+        <button formaction="/like/post/down/{{ post.id }}" class="ui labeled button" tabindex="0">
+          <div class="ui red icon button">
+            <i class="thumbs down icon"></i>
+          </div>
+          <a class="ui basic label">
+            {{ post.downvotes }}
+          </a>
+        </button>
+        <a class="ui button" href="/post/{{ post.id }}/gif" target="_blank">GIF it</a>
+        <div class="ui orange large label" href="#">{{ post.views }} views</div>
+      </form>
+    </div>
   </div>
   <div class="row centered">
-    <div class="ui orange label">{{post.views}} views</div>
   </div>
 </div>
 
 <div class="ui comments center-margin">
   <div>
-    <h2>{{post.title}}</h2>
-    {% for tag in post.tags%}
+    <h2>{{ post.title }}</h2>
+    {% for tag in post.tags %}
     {% if tag %}
-    <a href="/feed/{{tag}}">#{{ tag }}</a>
+    <a href="/feed/{{ tag }}">#{{ tag }}</a>
     {% endif %}
     {% endfor %}
     <br>
-    {% if post.user.username%}
-    <a class="author" href="/profile/{{ post.user._id }}">@{{post.user.username}}</a>
+    {% if post.user.username %}
+    <a class="author" href="/profile/{{ post.user._id }}">@{{ post.user.username }}</a>
     {% else %}
     <a class="author">Anonymous</a>
     {% endif %} <br>
-    {{post.dateCreated.slice(4, 21)}}
+    {{ post.dateCreated.slice(4, 21) }}
   </div>
   {% if post.user %}
   {% if user.id == post.user.id %}
@@ -49,13 +62,13 @@
       {# The Fact that these are forms with button makes them appear really ugly.
       Once the app will be realtime I will change them back to divs!!! #}
       {# //////////////////////////////////////////////////////////////////////////////// #}
-      <form class="item" method="GET" action="/post/edit/{{post.id}}">
+      <form class="item" method="GET" action="/post/edit/{{ post.id }}">
         <button>
           <i class="edit icon"></i>
           Edit
         </button>
       </form>
-      <form class="item" method="POST" action="/post/delete/{{post.id}}?_method=DELETE">
+      <form class="item" method="POST" action="/post/delete/{{ post.id }}?_method=DELETE">
         <button>
           <i class="trash icon"></i>
           Delete
@@ -73,27 +86,27 @@
   {% endif %}
   {% endif %}
   <h3 class="ui dividing header">Comments</h3>
-  {% for comment in post.comments%}
+  {% for comment in post.comments %}
   <div class="comment">
     <div class="content">
-      {% if comment.user%}
-      <a class="author" href="/profile/{{ comment.user._id }}">@{{comment.user.username}}</a>
+      {% if comment.user %}
+      <a class="author" href="/profile/{{ comment.user._id }}">@{{ comment.user.username }}</a>
       {% else %}
       <a class="author">Anonymous</a>
       {% endif %}
       <div class="metadata">
-        <span class="date">{{comment.dateCreated}}</span>
+        <span class="date">{{ comment.dateCreated }}</span>
       </div>
       <div class="text">
-        {{comment.text}}
+        {{ comment.text }}
       </div>
       <div class="actions">
         <a class="reply">Reply</a>
-        <form method='POST' action='/like/comment/up/{{comment.id}}' style='display: inline;'>
-          <button><i class="thumbs up outline icon"></i>{{comment.upvotes}}</button>
+        <form method="POST" action="/like/comment/up/{{ comment.id }}" style="display: inline;">
+          <button><i class="thumbs up outline icon"></i>{{ comment.upvotes }}</button>
         </form>
-        <form method='POST' action='/like/comment/down/{{comment.id}}' style='display: inline;'>
-          <button><i class="thumbs down outline icon"></i>{{comment.downvotes}}</button>
+        <form method="POST" action="/like/comment/down/{{ comment.id }}" style="display: inline;">
+          <button><i class="thumbs down outline icon"></i>{{ comment.downvotes }}</button>
         </form>
       </div>
 
@@ -101,9 +114,9 @@
   </div>
   {% endfor %}
 
-  <form class="ui reply form" method="POST" action="/post/comment/{{post.id}}">
+  <form class="ui reply form" method="POST" action="/post/comment/{{ post.id }}">
     <div class="field">
-      <textarea name='reply'></textarea>
+      <textarea name="reply"></textarea>
     </div>
     <button class="ui blue labeled submit icon button">
       <i class="icon edit"></i> Add Reply
@@ -124,7 +137,7 @@
 <script>
 
   function onYouTubeIframeAPIReady() {
-    var post = JSON.parse($('#selected-video').html());
+    var post = JSON.parse($("#selected-video").html());
     console.log(post)
     console.log(post.video.link)
     loadVideo(post.video.link, post.video.start, post.video.end);
