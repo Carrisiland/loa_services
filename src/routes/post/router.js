@@ -22,6 +22,43 @@ const vimeoRegex =
 
 const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
 
+function createGif(url, start, end, res) {
+  const youtubedl = require('youtube-dl');
+  const ffmpeg = require('fluent-ffmpeg');
+
+  let options;
+
+  if (url.match('vimeo.com')) {
+    options = ['-f http-240p'];
+  } else {
+    options = ['-f worst'];
+  }
+
+  youtubedl.getInfo(url, options, (err, info) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    start = parseTime(start);
+    end = parseTime(end);
+    const duration = end - start;
+
+    console.log('title:', info.title);
+    console.log('url:', info.url);
+
+    ffmpeg(info.url)
+      .seekInput(start)
+      .duration(end - start)
+      .outputOptions('-pix_fmt rgb8')
+      .fps(10)
+      .outputFormat('gif')
+      .output(res, { end: true })
+      .on('stderr', console.warn)
+      .run()
+  });
+}
+
 function parseTime(timeString) {
   const match = timeRegex.exec(timeString);
   if (!match) return null;
@@ -98,7 +135,7 @@ router.post('/', [
       description: req.body.description,
       tags: req.body.tags.split(",")
     });
-    
+
     if (req.user) {
       console.log(req.user);
       post.likersUp.push(req.user);
@@ -125,13 +162,18 @@ router.get('/:id', (req, res) => {
       model: 'User'
     }],
   })
-  .then(post => {
-    post.views +=1;
-    post.save();
-    res.render('post/view.html', {post});
-  });
+    .then(post => {
+      post.views +=1;
+      post.save();
+      res.render('post/view.html', {post});
+    });
 });
 
+router.get('/:id/gif', (req, res) => {
+  Post.findById(req.params.id).populate('video').then(post => {
+    createGif(post.video.link, post.video.start, post.video.end, res);
+  });
+});
 
 router.post('/comment/:id', async (req, res) => {
   const post_id = req.params.id;
@@ -156,9 +198,9 @@ router.post('/comment/:id', async (req, res) => {
 
 router.get('/edit/:id', (req, res) => {
   Post.findById(req.params.id).populate('video')
-  .then((post) => {
-    res.render('editVideoForm.html', {post});
-  });
+    .then((post) => {
+      res.render('editVideoForm.html', {post});
+    });
 });
 
 
@@ -224,7 +266,7 @@ router.delete('/delete/:id', (req, res) => {
     });
 
     await user.save();
-    
+
     return found.remove();
   }).then((removed) => {
     res.status(204).render('gallery.html');
