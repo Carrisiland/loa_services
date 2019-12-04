@@ -21,7 +21,10 @@
         <a href="/follow/feed" class="header active item">Feed</a>
         {% endif %}
         <div class="ui icon input" style="margin-left: 1em;">
-          <input type="text" placeholder="Search Posts, Users...">
+          <form  method="GET" action='/search'></form>
+            <input type="text" name= "searchBar" placeholder="Search Posts, Users...">
+            <input type="submit" style="visibility: hidden;">
+          </form>
           <i class="inverted circular search link icon"></i>
         </div>
       </div>
@@ -40,5 +43,12 @@
       </div>
       {% endif %}
     </div>
+    
+
   </div>
 </div>
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/js/search.js"></script>
+<script> searchInit() </script>
+{% endblock %}
