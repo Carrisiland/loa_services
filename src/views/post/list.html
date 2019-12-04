@@ -59,10 +59,10 @@
     </span>
     <span class="right floated">
       <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
-        <button><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
+        <button class="likeUp"><i class="thumbs up outline icon"></i>{{post.upvotes}}</button>
       </form>
       <form method='POST' action='/like/post/down/{{post.id}}' style='display: inline;'>
-        <button><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
+        <button class="likeDown"><i class="thumbs down outline icon"></i>{{post.downvotes}}</button>
       </form>
     </span>
   </div>
