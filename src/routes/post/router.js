@@ -96,7 +96,7 @@ router.post('/', [
       video: video,
       visibility: req.body.visibility,
       description: req.body.description,
-      tags: req.body.tags.split(",")
+      tags: req.body.tags.split(", ")
     });
     
     if (req.user) {
