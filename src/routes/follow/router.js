@@ -18,12 +18,10 @@ router.get('/feed', (req, res) => {
     User.findById(user.id).populate({
       path : "following", 
       populate: [{
-        path: "user",
-        model: "User",
-        populate: [{
-          path: "posts",
-          model: "Post"
-        }]
+        path: "posts",
+        populate: {
+          path: "video",
+        }
       }]
     }).then(user =>{
       console.log ("user= ", user.following)
@@ -62,13 +60,14 @@ router.post("/:id",  (req, res)=>{
                 return followingUser.id != followedUser.id;
             });
         }
-         await followedUser.save();
+         
          await user.save();
-         return ;
-    }).then((saved) => {
-        res.status(200).render('index.html');
+         return followedUser.save(); ;
+    }).then((followed) => {
+        res.status(200).redirect('/profile/'+ followed.id);
         res.end();
       }).catch((err) => {
+        console.log('error = ',err)
         // res.flash('error', err.toString());
         res.status(500).render('feed.html');
     });
