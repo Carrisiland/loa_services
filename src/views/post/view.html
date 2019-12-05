@@ -134,16 +134,14 @@
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="/js/player.js"></script>
-<script src="/js/viewClip.js"></script>
+<script src="/js/regex.js"></script>
 <script type="application/json" id="selected-video">
   {{ post | json | safe }}
 </script>
+<script src="/js/viewClip.js"></script>
 <script>
-
   function onYouTubeIframeAPIReady() {
-    var post = JSON.parse($("#selected-video").html());
-    console.log(post)
-    console.log(post.video.link)
+    const post = JSON.parse($("#selected-video").html());
     loadVideo(post.video.link, post.video.start, post.video.end);
   }
 </script>
