@@ -63,6 +63,7 @@ app.use('/post', routers.post);
 app.use('/profile', routers.profile);
 app.use('/like', routers.like);
 app.use('/follow', routers.follow);
+app.use('/search', routers.search);
 // app.use('/likes', routers.likes); not yet ready
 
 app.set('port', process.env.PORT || 3000);

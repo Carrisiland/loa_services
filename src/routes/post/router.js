@@ -14,7 +14,7 @@ const fetch = require('node-fetch');
 
 const youtubeRegex =
   new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\' +
-    '?v=)|(?:(?:https?:\\/\\/)?(?:www\\.)?youtu\\.be\\/))([\\w+]{11})$');
+    '?v=)|(?:(?:https?:\\/\\/)?(?:www\\.)?youtu\\.be\\/))([\\w+\\-]{11})$');
 
 const vimeoRegex =
   new RegExp('(http|https)?:\\/\\/(www\\.)?vimeo.com\\/(?:channels\\/' +
