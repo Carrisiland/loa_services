@@ -23,35 +23,11 @@ function likeStart() {
 }
 
 
-async function likeUp(id) {
-
-  let realId = id.substr(0, id.length - 6)
-  let likeDownId = realId + "likedown";
-  let res = await doJSONRequest('PATCH', '/like/post/up/'+realId, undefined, {});
-
-  let buttonUp = document.getElementById(id);
-  let numUp = buttonUp.querySelector('.num');
-  numUp.innerHTML = res.upvotes;
-
-
-  let buttonDown = document.getElementById(likeDownId);
-  let numDown = buttonDown.querySelector('.num');
-  numDown.innerHTML = res.downvotes;
-
+function likeUp(id) {
+  // doFetchRequest('GET', '/ciao/post', undefined, {});
 
 }
 
-async function likeDown(id) {
+function likeDown(id) {
 
-  let realId = id.substr(0, id.length - 8);
-  let likeUpId = realId + "likeup";
-  let res = await doJSONRequest('PATCH', '/like/post/down/'+realId, undefined, {});
-
-  let buttonDown = document.getElementById(id);
-  let numDown = buttonDown.querySelector('.num');
-  numDown.innerHTML = res.downvotes;
-
-  let buttonUp = document.getElementById(likeUpId);
-  let numUp = buttonUp.querySelector('.num');
-  numUp.innerHTML = res.upvotes;
 }
