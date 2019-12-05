@@ -33,25 +33,23 @@
       <div class="ui grey label" href="#">{{ post.views }} views</div>
     </div>
     <div class="ui sixteen wide column">
-      <form method="POST" class="center-margin">
-        <button formaction="/like/post/up/{{ post.id }}" class="ui labeled button" tabindex="0">
+        <button id="{{post.id}}likeup" class="ui labeled button likeUp" tabindex="0">
           <div class="ui blue icon button">
             <i class="thumbs up icon"></i>
           </div>
-          <a class="ui basic label">
+          <a class="ui basic label num">
             {{ post.upvotes }}
           </a>
         </button>
-        <button formaction="/like/post/down/{{ post.id }}" class="ui labeled button" tabindex="0">
+        <button id="{{post.id}}likedown" class="ui labeled button likeDown" tabindex="0">
           <div class="ui red icon button">
             <i class="thumbs down icon"></i>
           </div>
-          <a class="ui basic label">
+          <a class="ui basic label num">
             {{ post.downvotes }}
           </a>
         </button>
         <a class="ui orange button" href="/post/{{ post.id }}/gif" target="_blank">GIF it</a>
-      </form>
     </div>
   </div>
 </div>
@@ -106,16 +104,20 @@
       </div>
       <div class="actions">
         <a class="reply">Reply</a>
-        <form method="POST" action="/like/comment/up/{{ comment.id }}" style="display: inline;">
-          <button class="ui blue tiny button likeUp">
-            <i class="thumbs up icon"></i>{{ comment.upvotes }}
+
+          <button id="{{comment.id}}likeup" class="ui blue tiny button likeUpComment">
+            <i class="thumbs up icon"></i>
+            <span class='num'>
+              {{post.upvotes}}
+            </span>
           </button>
-        </form>
-        <form method="POST" action="/like/comment/down/{{ comment.id }}" style="display: inline;">
-          <button class="ui red tiny button likeDown">
-            <i class="thumbs down icon"></i>{{ comment.downvotes }}
+
+          <button id="{{comment.id}}likedown" class="ui red tiny button likeDownComment">
+            <i class="thumbs down icon"></i>
+            <span class='num'>
+                {{post.downvotes}}
+            </span>
           </button>
-        </form>
       </div>
     </div>
   </div>
@@ -133,7 +135,8 @@
 {% endblock %}
 
 {% block scripts %}
-
+<script> src="https://code.jquery.com/jquery-3.1.1.min.js" </script>
+<script src="/js/like.js"></script><script> likeStart(); </script>
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="/js/player.js"></script>
