@@ -46,7 +46,6 @@ router.patch('/comment/up/:id' , (req, res) => {
       });
     }
 
-    console.log("oooooo");
     return comment.save();
   }).then((saved) => {
     if (req.accepts("html")) {
