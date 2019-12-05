@@ -17,8 +17,11 @@ router.get('/', (req, res)=>{
     let input = req.query.searchBar;
     console.log("input:", input);
     User.find({username: input}).then((found) => {
+        console.log(found)
             if (found.length == 1) {
-                res.status(200).redirect('/profile/'+ found[0]._id);
+                res.status(200);
+                res.render('searchResult.html' , {users: found});
+                console.log("CISOXS")
                 res.end();
             }
         }).catch((err) => {

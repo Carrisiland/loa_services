@@ -5,3 +5,12 @@
 <h1 class="ui header">Result</h1>
 {% include "post/list.html" %}
 {% endblock %}
+{% block users %}
+<div>
+    <ul>
+    {% for user in users %}
+    <a href="/profile/{{ user._id }}"><li> {user.username} </li></a>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}
