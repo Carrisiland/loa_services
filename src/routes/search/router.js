@@ -13,12 +13,8 @@ const { check, validationResult, sanitize } = require('express-validator');
 const fetch = require('node-fetch');
 
 
-router.get('/', (req, res)=>{
-    console.log("req", req.body)
+router.get('/search', (req, res)=>{
     let input = req.body.searchBar;
     console.log("input:", input);
 
 })
-
-
-module.exports = router;

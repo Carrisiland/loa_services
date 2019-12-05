@@ -1,48 +1,51 @@
 {# vim: set ts=2 sw=2 et tw=120 ft=htmldjango: #}
 
 <div class="ui inverted header segment" style="border-radius: 0">
-  <div class="ui large secondary inverted menu main-menu">
-    {% if not index %}
-    <div class="item">
-      <div class="ui logo shape">
-        <div class="sides">
-          <div class="active ui side">
-            <a href="/" class="vimtok">Vimtok</a>
+  <div class="ui large secondary inverted menu">
+    <div class="ui container">
+      {% if not index %}
+      <div class="item">
+        <div class="ui logo shape">
+          <div class="sides">
+            <div class="active ui side">
+              <a href="/" class="vimtok">Vimtok</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    {% endif %}
-    <div class="left item">
-      <a href="/post/new" class="header active item">New Post</a>
-      <a href="/post/gallery" class="header active item">Gallery</a>
-      {% if user %}
-      <a href="/follow/feed" class="header active item">Feed</a>
+      {% endif %}
+      <div class="left item">
+        <a href="/post/new" class="header active item">New Post</a>
+        <a href="/post/gallery" class="header active item">Gallery</a>
+        {% if user %}
+        <a href="/follow/feed" class="header active item">Feed</a>
+        {% endif %}
+        <div onclick="location.href='/search';" class="ui icon input" style="margin-left: 1em;">
+            <input type="text" name= "searchBar" placeholder="Search Posts, Users...">
+            <i class="inverted circular search link icon"></i>
+          {# <!-- <form   method="GET" action='/search'> --> #}
+            {# <input type="text" name= "searchBar" placeholder="Search Posts, Users...">
+              <i class="inverted circular search link icon"></i> #}
+          {# <!-- </form> --> #}
+        </div>
+      </div>
+      {% if not user %}
+      <div class="right item">
+
+        <a href="/auth/login" class="ui inverted button user-btn">Log in</a>
+        <a href="/auth/signup" class="ui inverted button">Sign Up</a>
+      </div>
+      {% else %}
+      <div class="right item">
+        <a href="/profile/{{ user.id }}" class="ui inverted button user-btn">
+          <i class="user icon"></i> {{ user.username }}
+        </a>
+        <a href="/auth/logout" class="ui inverted button">Logout</a>
+      </div>
       {% endif %}
     </div>
-    <div class="right item">
-      <div onclick="location.href='/search';" class="ui icon input" style="margin-left: 1em;">
-        <input type="text" name= "searchBar" placeholder="Search Posts, Users...">
-        <i class="inverted circular search link icon"></i>
-        {# <!-- <form   method="GET" action='/search'> --> #}
-        {# <input type="text" name= "searchBar" placeholder="Search Posts, Users...">
-        <i class="inverted circular search link icon"></i> #}
-        {# <!-- </form> --> #}
-      </div>
-    </div>
-    {% if not user %}
-    <div class="right item">
-      <a href="/auth/login" class="ui inverted button user-btn">Log in</a>
-      <a href="/auth/signup" class="ui inverted button">Sign Up</a>
-    </div>
-    {% else %}
-    <div class="right item">
-      <a href="/profile/{{ user.id }}" class="ui inverted button user-btn">
-        <i class="user icon"></i> {{ user.username }}
-      </a>
-      <a href="/auth/logout" class="ui inverted button">Logout</a>
-    </div>
-    {% endif %}
+
+
   </div>
 </div>
 {% block scripts %}

@@ -28,11 +28,11 @@ body {
   flex-shrink: 0;
 }
 
-.ui.menu.main-menu > .left.item > a {
+.ui.menu > .container > .left.item > a {
   margin-right: .5rem;
 }
 
-.ui.menu.main-menu > .left.item > a:last-child {
+.ui.menu > .container > .left.item > a:last-child {
   margin-right: 0;
 }
 
@@ -143,26 +143,4 @@ main .ui.link.cards {
 #player[data-vimeo-initialized=true] {
     min-height: 300px;
     height: 25em;
-}
-
-.ui.inverted.header.segment .right.item {
-  margin-left: 0 !important;
-}
-
-@media screen and (max-width: 900px) {
-  .ui.inverted.header.segment .ui.menu > .item {
-    margin: 0 !important;
-  }
-
-  .ui.inverted.header.segment .ui.menu {
-    flex-direction: column;
-  }
-
-  .ui.inverted.header.segment .ui.menu .ui.icon.input {
-    margin: .5em !important;
-  }
-}
-
-main.ui.container {
-  margin-bottom: 2em;
 }

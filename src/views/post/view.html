@@ -107,16 +107,13 @@
       <div class="actions">
         <a class="reply">Reply</a>
         <form method="POST" action="/like/comment/up/{{ comment.id }}" style="display: inline;">
-          <button class="ui blue tiny button likeUp">
-            <i class="thumbs up icon"></i>{{ comment.upvotes }}
-          </button>
+          <button class="likeUp"><i class="thumbs up outline icon"></i>{{ comment.upvotes }}</button>
         </form>
         <form method="POST" action="/like/comment/down/{{ comment.id }}" style="display: inline;">
-          <button class="ui red tiny button likeDown">
-            <i class="thumbs down icon"></i>{{ comment.downvotes }}
-          </button>
+          <button class="likeDown"><i class="thumbs down outline icon"></i>{{ comment.downvotes }}</button>
         </form>
       </div>
+
     </div>
   </div>
   {% endfor %}
@@ -137,14 +134,16 @@
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="/js/player.js"></script>
-<script src="/js/regex.js"></script>
+<script src="/js/viewClip.js"></script>
 <script type="application/json" id="selected-video">
   {{ post | json | safe }}
 </script>
-<script src="/js/viewClip.js"></script>
 <script>
+
   function onYouTubeIframeAPIReady() {
-    const post = JSON.parse($("#selected-video").html());
+    var post = JSON.parse($("#selected-video").html());
+    console.log(post)
+    console.log(post.video.link)
     loadVideo(post.video.link, post.video.start, post.video.end);
   }
 </script>
