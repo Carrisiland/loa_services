@@ -16,12 +16,12 @@ const fetch = require('node-fetch');
 router.get('/', (req, res)=>{
     let input = req.query.searchBar;
     console.log("input:", input);
-    User.find({username: input}).then((found) =>{
-        
-        console.log("id =",found.id)
-        res.status(200).redirect('/profile/'+ found.id);
-        res.end();
-      }).catch((err) => {
+    User.find({username: input}).then((found) => {
+            if (found.length == 1) {
+                res.status(200).redirect('/profile/'+ found[0]._id);
+                res.end();
+            }
+        }).catch((err) => {
         res.status(500).redirect('/post/gallery');
     });
 })
