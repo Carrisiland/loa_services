@@ -11,6 +11,9 @@ const Video = mongoose.model('Video');
 const Comment = mongoose.model('Comment');
 const { check, validationResult, sanitize } = require('express-validator');
 const fetch = require('node-fetch');
+const youtubedl = require('youtube-dl');
+const ffmpeg = require('fluent-ffmpeg');
+const { Base64Encode } = require('base64-stream');
 
 const youtubeRegex =
   new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\' +
@@ -23,9 +26,6 @@ const vimeoRegex =
 const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
 
 function createGif(url, start, end, res) {
-  const youtubedl = require('youtube-dl');
-  const ffmpeg = require('fluent-ffmpeg');
-
   let options;
 
   if (url.match('vimeo.com')) {
@@ -37,6 +37,7 @@ function createGif(url, start, end, res) {
   youtubedl.getInfo(url, options, (err, info) => {
     if (err) {
       console.error(err);
+      res.status(500).json(err);
       return;
     }
 
@@ -48,6 +49,7 @@ function createGif(url, start, end, res) {
     console.log('url:', info.url);
 
     ffmpeg(info.url)
+      .noAudio()
       .seekInput(start)
       .duration(end - start)
       .outputOptions('-pix_fmt rgb8')
@@ -56,6 +58,31 @@ function createGif(url, start, end, res) {
       .output(res, { end: true })
       .on('stderr', console.warn)
       .run()
+  });
+}
+
+function createStill(url, time, video) {
+  youtubedl.getInfo(url, ['-f best'], (err, info) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    const os = new Base64Encode();
+    let image = 'data:image/png;base64,';
+    os.on('data', s => image += s);
+    os.on('end', () => {
+      video.thumbnailLink = image;
+      video.save().catch(console.error);
+    });
+
+    ffmpeg(info.url)
+      .noAudio()
+      .seekInput(time)
+      .frames(1)
+      .outputOptions('-pix_fmt rgb8')
+      .outputOptions('-f image2')
+      .pipe(os)
   });
 }
 
@@ -106,7 +133,8 @@ router.post('/', [
       return;
     }
 
-    const duration = parseTime(req.body.end) - parseTime(req.body.start);
+    const start = parseTime(req.body.start), end = parseTime(req.body.end);
+    const duration = end - start;
     const match = req.body.link;
     const video = new Video({
       duration: duration,
@@ -124,8 +152,10 @@ router.post('/', [
       const infoJson = await info.json();
       video.thumbnailLink = infoJson[0].thumbnail_large;
     }
-
     await video.save();
+
+    // Asynchronously fork to background the real thumbnail fetch
+    createStill(video.link, (start + end) / 2, video);
 
     let post = new Post({
       user: req.user,
@@ -152,6 +182,7 @@ router.post('/', [
     }
     res.redirect('/post/gallery');
   } catch(e) {
+    console.error(e);
     req.flash('error', e.toString());
     res.status(500).render('newVideoForm.html');
   }
