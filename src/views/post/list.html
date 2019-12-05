@@ -57,14 +57,18 @@
   </div>
   <div class="extra content">
     <span class="right floated">
-      <form method='POST' action='/like/post/up/{{post.id}}' style='display: inline;'>
-        <button id="{{post.id}}" class="ui tiny blue button likeUp">
-          <i class="thumbs up icon"></i>{{post.upvotes}}</button>
-      </form>
-      <form method='POST' action='/like/post/down/{{post.id}}' style='display: inline;'>
-        <button  id="{{post.id}}" class="ui tiny red button likeDown">
-          <i class="thumbs down icon"></i>{{post.downvotes}}</button>
-      </form>
+        <button id="{{post.id}}likeup" class="ui tiny blue button likeUp">
+          <i class="thumbs up icon"></i>
+          <span class='num'>
+            {{post.upvotes}}
+          </span>
+        </button>
+        <button id="{{post.id}}likedown" class="ui tiny red button likeDown">
+          <i class="thumbs down icon"></i>
+          <span class='num'>
+            {{post.downvotes}}
+          </span>
+        </button>
     </span>
   </div>
 </div>

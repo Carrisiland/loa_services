@@ -103,7 +103,7 @@ router.post('/comment/down/:id' , (req, res) => {
 
 
 
-router.post('/post/up/:id' , (req, res) => {
+router.patch('/post/up/:id' , (req, res) => {
   Post.findById(req.params.id).populate('likersUp').populate('likersDown').then((post) => {
     if(req.user == undefined) {
       return post;
@@ -141,15 +141,18 @@ router.post('/post/up/:id' , (req, res) => {
     }
     return post.save();
   }).then((saved) => {
-    res.status(200);
-    res.redirect('/post/' + req.params.id);
+    if (req.accepts("html")) {
+        res.status(200).redirect('/post/' + req.params.id);
+    } else {
+        res.status(200).json(saved);
+    }
   }).catch((err) => {
     res.flash('error', err.toString());
     res.status(500).render('gallery.html');
   });
 });
 
-router.post('/post/down/:id' , (req, res) => {
+router.patch('/post/down/:id' , (req, res) => {
   Post.findById(req.params.id).populate('likersUp').populate('likersDown').then((post) => {
     if(req.user == undefined) {
       return post;
@@ -185,8 +188,11 @@ router.post('/post/down/:id' , (req, res) => {
     }
     return post.save();
   }).then((saved) => {
-    res.status(200);
-    res.redirect('/post/' + req.params.id);
+    if (req.accepts("html")) {
+        res.status(200).redirect('/post/' + req.params.id);
+    } else {
+        res.status(200).json(saved);
+    }
   }).catch((err) => {
     res.flash('error', err.toString());
     res.status(500).render('gallery.html');
