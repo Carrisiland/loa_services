@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
         res.end();
     }
     //how do we show both users and posts?? :(
-        
+
     // User.find({username: input}).then((found) => {
     //     console.log(found)
     //         if (found.length == 1) {
@@ -44,7 +44,10 @@ router.get('/', async (req, res) => {
 })
 router.get('/:tag', async (req, res) => {
     const tag = req.params.tag;
-    let posts = await Post.find({tags: tag});
+    let posts = await Post.find({});
+    console.log("posts: ", posts);
+    const postsWithTag = posts.filter(item => item.tags.includes(tag));
+    console.log("found: ", postsWithTag);
     if(posts) {
         res.status(200);
         res.render('searchResult.html' , {found: posts});
