@@ -9,7 +9,7 @@ let urlConstraints;
 
 function onYouTubeIframeAPIReady() {
   const player = new Player();
-  //  $submit.attr('disabled', true);
+  $submit.attr('disabled', true);
   checkVideo();
 
   function clearVideo() {
@@ -47,12 +47,12 @@ function onYouTubeIframeAPIReady() {
       return;
     }
 
-    //    $submit.add('disabled', true);
-    player(type, match[1], start, end).then(e => {
+    $submit.add('disabled', true);
+    player.play(type, match[1], start, end).then(e => {
       if (end > e.duration) {
         clearVideo();
       } else {
-        //          $submit.attr('disabled', false);
+        $submit.attr('disabled', false);
       }
     });
   }
