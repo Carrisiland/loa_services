@@ -53,6 +53,12 @@
         {{post.views}} views
       </div>
       <br>
+      {% for tag in post.tags %}
+      {% if tag %}
+        <a class="ui red label" href="/feed/{{ tag }}">#{{ tag }}</a>
+      {% endif %}
+      {% endfor %}
+      <br>
       <a class="ui label" style="margin-top: .5em">
         <i class="calendar icon"></i>{{ post.dateCreated.slice(4, 21) }}
       </a>
