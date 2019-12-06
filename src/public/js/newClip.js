@@ -9,7 +9,7 @@ let urlConstraints;
 
 function onYouTubeIframeAPIReady() {
   const player = new Player();
-//  $submit.attr('disabled', true);
+  //  $submit.attr('disabled', true);
   checkVideo();
 
   function clearVideo() {
@@ -18,35 +18,43 @@ function onYouTubeIframeAPIReady() {
     $('#player').replaceWith($('#player-placeholder').html());
   }
 
+  function setThumbnail(imgSrc) {
+    console.log(imgSrc);
+    $('#player').replaceWith(`<img id="player" width="100%" height="100%"
+      src="${imgSrc}">`);
+  }
+
   function checkVideo() {
-    const start = parseTime($start.val());
-    const end = parseTime($end.val());
-
-    if ((start !== 0 && !start) || !end || start >= end) {
-      clearVideo();
-      return;
-    }
-
-//    $submit.add('disabled', true);
-    let match;
+    let match, type;
     if (match = youtubeRegex.exec($link.val())) {
-      player.play('youtube', match[1], start, end).then(e => {
-        if (end > e.duration) {
-          clearVideo();
-        } else {
-//          $submit.attr('disabled', false);
-        }
-
-        urlConstraints = e;
-      });
+      type = 'youtube';
+      setThumbnail(`http://i3.ytimg.com/vi/${match[1]}/hqdefault.jpg`);
     } else if (match = vimeoRegex.exec($link.val())) {
-      player.play('vimeo', match[match.length - 1], start, end).then(e => {
-        urlConstraints = e;
-      });
+      type = 'vimeo';
+      fetch(`http://vimeo.com/api/v2/video/${match.pop()}.json`)
+        .then(r => r.json())
+        .then(infoJson => setThumbnail(infoJson[0].thumbnail_large))
+        .catch(console.error);
     } else {
       console.log('none', $link.val());
       clearVideo();
     }
+
+    const start = parseTime($start.val());
+    const end = parseTime($end.val());
+
+    if ((start !== 0 && !start) || !end || start >= end) {
+      return;
+    }
+
+    //    $submit.add('disabled', true);
+    player(type, match[1], start, end).then(e => {
+      if (end > e.duration) {
+        clearVideo();
+      } else {
+        //          $submit.attr('disabled', false);
+      }
+    });
   }
 
   $link.on('keyup', checkVideo);
