@@ -43,15 +43,23 @@ router.get('/', async (req, res) => {
     // });
 })
 router.get('/:tag', async (req, res) => {
-    const tag = req.params.tag;
-    let posts = await Post.find({});
-    console.log("posts: ", posts);
-    const postsWithTag = posts.filter(item => item.tags.includes(tag));
-    console.log("found: ", postsWithTag);
-    if(posts) {
-        res.status(200);
-        res.render('searchResult.html' , {found: posts});
-        res.end();
+    try {
+        const tag = req.params.tag;
+        let posts = await Post.find({}).populate('video');
+        console.log("posts: ", posts);
+        const postsWithTag = posts.filter(item => item.tags.includes(tag));
+        
+        console.log("found: ", postsWithTag);
+        if(postsWithTag) {
+            res.status(200);
+            console.log("rendering");
+            res.render('gallery.html' , {'posts': postsWithTag});
+            return;
+        }
+    } catch(e) {
+        console.error(e);
+        res.flash('error', e.toString());
+        res.status(500).render('gallery.html');
     }
 }); 
 
