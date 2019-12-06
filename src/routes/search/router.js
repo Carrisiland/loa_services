@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
     let input = req.query.searchBar;
     console.log("input:", input);
     const users = await User.find({username: input});
-    const posts = await Post.find({title : input});
+    const posts = await Post.find({title : input}).populate('video');
     const allPosts = await Post.find({}).populate('video');
     const postsWithTag = allPosts.filter(item => item.tags.includes(input));
 
@@ -25,33 +25,13 @@ router.get('/', async (req, res) => {
     found.users = users;
     found.posts = posts;
     found.postsWithTag = postsWithTag;
-
-    console.log("found: ", found);
     
-    // if (users) {
-    //     res.status(200);
-    //     res.render('searchResult.html' , {found: users});
-    //     // console.log("CISOXS")
-    //     res.end();
-    // } else if (posts) {
-    //     res.status(200);
-    //     res.render('searchResult.html' , {found: users});
-    //     // console.log("CISOXS")
-    //     res.end();
-    // }
-    //how do we show both users and posts?? :(
-
-    // User.find({username: input}).then((found) => {
-    //     console.log(found)
-    //         if (found.length == 1) {
-    //             res.status(200);
-    //             res.render('searchResult.html' , {users: found});
-    //             res.end();
-    //         }
-    //     }).catch((err) => {
-    //     res.status(500).redirect('/post/gallery');
-    // });
+    console.log("found: ", found);
+    res.status(200);
+    res.render('searchResult.html', {posts: found.posts, users: found.users, tagPosts : found.postsWithTag })
+    return;
 })
+
 router.get('/:tag', async (req, res) => {
     try {
         const tag = req.params.tag;
@@ -60,7 +40,7 @@ router.get('/:tag', async (req, res) => {
         
         if(postsWithTag) {
             res.status(200);
-            res.render('gallery.html' , {'posts': postsWithTag});
+            res.render('gallery.html' , {posts: postsWithTag});
             return;
         }
     } catch(e) {
