@@ -10,13 +10,15 @@ class Player {
   destroyer = {};
 
   play(type, id, start, end, repeat = true) {
-    if (this.type) {
-      this.destroyer[this.type]();
-    }
+    const waitDestroy = this.type ? this.destroyer[this.type]() :
+      Promise.resolve();
 
-    this.service = type;
-
-    return this.playCode[type](id, start, end, repeat);
+    return waitDestroy.then(() => {
+      console.dir('player: destroyed');
+      this.service = type;
+      $('#player').replaceWith('<div id="player" class="ui icon header">');
+      return this.playCode[type](id, start, end, repeat);
+    });
   }
 
   constructor() {
@@ -24,10 +26,13 @@ class Player {
       if (this.player.getVolume)
         this.volume = this.player.getVolume();
       this.player.destroy();
+
+      return Promise.resolve();
     };
 
     this.destroyer['vimeo'] = () => {
-      this.player.destroy();
+      console.log('player: destroying');
+      return this.player.destroy();
     };
 
     this.playCode['youtube'] = (videoId, startTime, endTime, repeat) => {
@@ -81,7 +86,7 @@ class Player {
     this.playCode['vimeo'] = (videoId, startTime, endTime, repeat) => {
       return new Promise((resolve, reject) => {
         $(`#${this.domId}`).html('');
-        this.player = new Vimeo.Player('player', {
+        this.player = new Vimeo.Player(this.domId, {
           id: videoId
         });
 

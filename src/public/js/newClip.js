@@ -20,25 +20,33 @@ function onYouTubeIframeAPIReady() {
 
   function setThumbnail(imgSrc) {
     console.log(imgSrc);
-    $('#player').replaceWith(`<img id="player" width="100%" height="100%"
-      src="${imgSrc}">`);
+    $('#player').replaceWith(`<div id="player">
+      <img src="${imgSrc}">
+    </div>`);
   }
 
   function checkVideo() {
-    let match, type;
+    let match, type, cancel = false;
     if (match = youtubeRegex.exec($link.val())) {
       type = 'youtube';
-      setThumbnail(`http://i3.ytimg.com/vi/${match[1]}/hqdefault.jpg`);
+      match = match[1];
+      setThumbnail(`http://i3.ytimg.com/vi/${match}/hqdefault.jpg`);
     } else if (match = vimeoRegex.exec($link.val())) {
       type = 'vimeo';
-      fetch(`http://vimeo.com/api/v2/video/${match.pop()}.json`)
+      match = match.pop();
+      fetch(`http://vimeo.com/api/v2/video/${match}.json`)
         .then(r => r.json())
-        .then(infoJson => setThumbnail(infoJson[0].thumbnail_large))
-        .catch(console.error);
+        .then(infoJson => {
+          if (cancel) return;
+          setThumbnail(infoJson[0].thumbnail_large)
+        }).catch(console.error);
     } else {
       console.log('none', $link.val());
       clearVideo();
+      return;
     }
+
+    console.log(type, match);
 
     const start = parseTime($start.val());
     const end = parseTime($end.val());
@@ -48,7 +56,8 @@ function onYouTubeIframeAPIReady() {
     }
 
     $submit.add('disabled', true);
-    player.play(type, match[1], start, end).then(e => {
+    cancel = true;
+    player.play(type, match, start, end).then(e => {
       if (end > e.duration) {
         clearVideo();
       } else {
