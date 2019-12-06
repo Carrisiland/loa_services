@@ -16,15 +16,14 @@ const fetch = require('node-fetch');
 router.get('/', async (req, res) => {
     let input = req.query.searchBar;
     console.log("input:", input);
-    const users = await User.find({username: input});
-    const posts = await Post.find({title : input, visibility : "public" }).populate('video');
-    const allPosts = await Post.find({tags: input, visibility : "public"}).populate('video');
-    
+    const users = await User.find({username: new RegExp(input, "i")});
+    const posts = await Post.find({title :  new RegExp(input, "i") , visibility : "public" }).populate('video');
+    const allPosts = await Post.find({tags: new RegExp(input, "i"), visibility : "public"}).populate('video');
     let found = {};
     found.users = users;
     found.posts = posts;
     found.postsWithTag = allPosts;
-    
+    console.log("found =", found)
     res.status(200);
     res.render('searchResult.html', {posts: found.posts, users: found.users, tagPosts : found.postsWithTag })
     return;
