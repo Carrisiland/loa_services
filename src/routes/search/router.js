@@ -17,16 +17,14 @@ router.get('/', async (req, res) => {
     let input = req.query.searchBar;
     console.log("input:", input);
     const users = await User.find({username: input});
-    const posts = await Post.find({title : input}).populate('video');
-    const allPosts = await Post.find({}).populate('video');
-    const postsWithTag = allPosts.filter(item => item.tags.includes(input));
-
+    const posts = await Post.find({title : input, visibility : "public" }).populate('video');
+    const allPosts = await Post.find({tags: input, visibility : "public"}).populate('video');
+    
     let found = {};
     found.users = users;
     found.posts = posts;
-    found.postsWithTag = postsWithTag;
+    found.postsWithTag = allPosts;
     
-    console.log("found: ", found);
     res.status(200);
     res.render('searchResult.html', {posts: found.posts, users: found.users, tagPosts : found.postsWithTag })
     return;
