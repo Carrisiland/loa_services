@@ -17,8 +17,8 @@ router.get('/', async (req, res) => {
     let input = req.query.searchBar;
     console.log("input:", input);
     const users = await User.find({username: new RegExp(input, "i")});
-    const posts = await Post.find({title :  new RegExp(input, "i") , visibility : "public" }).populate('video');
-    const allPosts = await Post.find({tags: new RegExp(input, "i"), visibility : "public"}).populate('video');
+    const posts = await Post.find({title :  new RegExp(input, "i") , visibility : "public" }).populate('video').populate("user");
+    const allPosts = await Post.find({tags: new RegExp(input, "i"), visibility : "public"}).populate('video').populate("user");
     let found = {};
     found.users = users;
     found.posts = posts;
@@ -32,12 +32,12 @@ router.get('/', async (req, res) => {
 router.get('/:tag', async (req, res) => {
     try {
         const tag = req.params.tag;
-        let posts = await Post.find({}).populate('video');
-        const postsWithTag = posts.filter(item => item.tags.includes(tag));
+        const postsWithTag = await Post.find({tags: new RegExp(tag, "i"), visibility : "public"}).populate('video').populate("user");
+        // const postsWithTag = posts.filter(item => item.tags.includes(tag));
         
         if(postsWithTag) {
             res.status(200);
-            res.render('gallery.html' , {posts: postsWithTag});
+            res.render('searchResult.html' , {tagPosts: postsWithTag});
             return;
         }
     } catch(e) {

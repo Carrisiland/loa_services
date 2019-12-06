@@ -3,7 +3,9 @@
 {% block title %}Reasult{% endblock %}
 {% block body %}
 <h1 class="ui header">Result</h1>
+
 {% block users %}
+{% if  users %}
 <div>
     <h2 class="ui header">Users</h2>
     <ul>
@@ -12,10 +14,18 @@
     {% endfor %}
     </ul>
 </div>
+{% endif %}
 {% endblock %}
+
+{% if  posts %}
 <h2 class="ui header">Posts</h2>
 {% include "post/list.html" %}
+{% endif %}
+
+{% if  tagPosts %}
 <h2 class="ui header">tags</h2>
 {% include "post/tagList.html" %}
+{% endif %}
+
 {% endblock %}
 
