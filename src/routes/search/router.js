@@ -16,19 +16,29 @@ const fetch = require('node-fetch');
 router.get('/', async (req, res) => {
     let input = req.query.searchBar;
     console.log("input:", input);
-    let users = await User.find({username: input});
-    let posts = await Post.find({title : input});
-    if (users) {
-        res.status(200);
-        res.render('searchResult.html' , {found: users});
-        // console.log("CISOXS")
-        res.end();
-    } else if (posts) {
-        res.status(200);
-        res.render('searchResult.html' , {found: users});
-        // console.log("CISOXS")
-        res.end();
-    }
+    const users = await User.find({username: input});
+    const posts = await Post.find({title : input});
+    const allPosts = await Post.find({}).populate('video');
+    const postsWithTag = allPosts.filter(item => item.tags.includes(input));
+
+    let found = {};
+    found.users = users;
+    found.posts = posts;
+    found.postsWithTag = postsWithTag;
+
+    console.log("found: ", found);
+    
+    // if (users) {
+    //     res.status(200);
+    //     res.render('searchResult.html' , {found: users});
+    //     // console.log("CISOXS")
+    //     res.end();
+    // } else if (posts) {
+    //     res.status(200);
+    //     res.render('searchResult.html' , {found: users});
+    //     // console.log("CISOXS")
+    //     res.end();
+    // }
     //how do we show both users and posts?? :(
 
     // User.find({username: input}).then((found) => {
@@ -43,15 +53,20 @@ router.get('/', async (req, res) => {
     // });
 })
 router.get('/:tag', async (req, res) => {
-    const tag = req.params.tag;
-    let posts = await Post.find({});
-    console.log("posts: ", posts);
-    const postsWithTag = posts.filter(item => item.tags.includes(tag));
-    console.log("found: ", postsWithTag);
-    if(posts) {
-        res.status(200);
-        res.render('searchResult.html' , {found: posts});
-        res.end();
+    try {
+        const tag = req.params.tag;
+        let posts = await Post.find({}).populate('video');
+        const postsWithTag = posts.filter(item => item.tags.includes(tag));
+        
+        if(postsWithTag) {
+            res.status(200);
+            res.render('gallery.html' , {'posts': postsWithTag});
+            return;
+        }
+    } catch(e) {
+        console.error(e);
+        res.flash('error', e.toString());
+        res.status(500).render('gallery.html');
     }
 }); 
 
