@@ -4,15 +4,46 @@ const router = require('express').Router();
 const User = mongoose.model('User');
 const Post = mongoose.model('Post');
 
+router.get('/all', (req, res) => {
+
+  User.findById(req.user._id).populate({
+    path: "posts",
+    populate: [{
+      path: "video",
+      model: "Video",
+    }, {
+      path: 'user',
+      model: 'User',
+    }]
+  })
+  .then((user) => {
+
+    res.status(200).json(user.posts);
+
+  }).catch(err => {
+    console.error(err);
+    req.flash('error', err.toString());
+    res.render('profile/profile.html');
+  });
+});
 
 router.get('/public', (req, res) => {
 
-  User.findById({id: req.user.id}).populate('posts').populate('video')
+  User.findById(req.user._id).populate({
+    path: "posts",
+    populate: [{
+      path: "video",
+      model: "Video",
+    }, {
+      path: 'user',
+      model: 'User',
+    }]
+  })
   .then((user) => {
     let ps = user.posts.filter((post) => {
       return post.visibility == "public";
     });
-    res.render('profile/profile.html', {profileUser: req.user, posts: ps});
+      res.status(200).json(ps);
   }).catch(err => {
     console.error(err);
     req.flash('error', err.toString());
@@ -21,12 +52,22 @@ router.get('/public', (req, res) => {
 });
 
 router.get('/private', (req, res) => {
-  User.findById({id: req.user.id}).populate('posts').populate('video')
+  User.findById(req.user._id).populate({
+    path: "posts",
+    populate: [{
+      path: "video",
+      model: "Video",
+    }, {
+      path: 'user',
+      model: 'User',
+    }]
+  })
   .then((user) => {
     let ps = user.posts.filter((post) => {
       return post.visibility == "private";
     });
-    res.render('profile/profile.html', { profileUser: req.user, posts: ps});
+      res.status(200).json(ps);
+
   }).catch(err => {
     console.error(err);
     req.flash('error', err.toString());
