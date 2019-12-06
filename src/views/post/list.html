@@ -2,7 +2,7 @@
 
 <div class="ui three stackable cards">
   {% for post in posts %}
-  <div class="card">
+  <div id="{{post.id}}card" class="card">
     <img width="100%" height="56.25%" src="{{ post.video.thumbnailLink }}"
                                       onclick="window.location='/post/{{post.id }}'">
     <div class="content">
@@ -15,7 +15,7 @@
               <i class="edit icon"></i>
               Edit
             </div>
-            <div class="item del">
+            <div id="{{post.id}}deleteId"class="item del">
               <i class="trash icon"></i>
               Delete
             </div>
@@ -90,6 +90,7 @@
 {% block scripts %}
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"> </script>
   <script src="/js/like.js"></script><script> likeStart(); </script>
+  <script src="/js/delete.js"></script><script> deleteStart(); </script>
   <script src="https://mozilla.github.io/nunjucks/files/nunjucks.js"> </script>
   <script src="/js/visibility.js"></script><script> visibilityStart(); </script>
 

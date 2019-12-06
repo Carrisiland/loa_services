@@ -307,7 +307,7 @@ router.delete('/delete/:id', (req, res) => {
 
     return found.remove();
   }).then((removed) => {
-    res.status(204).render('gallery.html');
+    res.status(204).end();
   }).catch((err) => {
     if(err.name == "CastError") {
       res.status(404).render('/profile/profile.html');
