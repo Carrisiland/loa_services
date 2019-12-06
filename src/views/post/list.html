@@ -55,7 +55,7 @@
       <br>
       {% for tag in post.tags %}
       {% if tag %}
-        <a class="ui red label" href="/feed/{{ tag }}">#{{ tag }}</a>
+        <a class="ui red label" href="/search/{{ tag }}">#{{ tag }}</a>
       {% endif %}
       {% endfor %}
       <br>
@@ -98,4 +98,5 @@
 {% block scripts %}
   <script> src="https://code.jquery.com/jquery-3.1.1.min.js" </script>
   <script src="/js/like.js"></script><script> likeStart(); </script>
+  <script src="/js/visibility.js"></script><script> visibilityStart(); </script>
 {% endblock %}

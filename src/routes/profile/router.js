@@ -5,14 +5,14 @@ const User = mongoose.model('User');
 const Post = mongoose.model('Post');
 
 
-router.get('/public/:id', (req, res) => {
-  Post.find({user: req.params.id}).populate('video').populate('user')
-  .then((posts) => {
-    let ps = posts.filter((post) => {
+router.get('/public', (req, res) => {
+
+  User.findById({id: req.user.id}).populate('posts').populate('video')
+  .then((user) => {
+    let ps = user.posts.filter((post) => {
       return post.visibility == "public";
     });
-    console.log(ps);
-    res.render('profile/profile.html', { profileUser: req.user, posts: ps});
+    res.render('profile/profile.html', {profileUser: req.user, posts: ps});
   }).catch(err => {
     console.error(err);
     req.flash('error', err.toString());
@@ -20,11 +20,10 @@ router.get('/public/:id', (req, res) => {
   });
 });
 
-
-router.get('/private/:id', (req, res) => {
-  Post.find({user: req.params.id}).populate('video').populate('user')
-  .then((posts) => {
-    let ps = posts.filter((post) => {
+router.get('/private', (req, res) => {
+  User.findById({id: req.user.id}).populate('posts').populate('video')
+  .then((user) => {
+    let ps = user.posts.filter((post) => {
       return post.visibility == "private";
     });
     res.render('profile/profile.html', { profileUser: req.user, posts: ps});
