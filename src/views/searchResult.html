@@ -5,7 +5,7 @@
 <h1 class="ui header">Result</h1>
 
 {% block users %}
-{% if  users %}
+{% if users %}
 <div>
     <h2 class="ui header">Users</h2>
     <ul>
@@ -15,6 +15,17 @@
     </ul>
 </div>
 {% endif %}
+{% if not users %}
+<p>Oops! No user found</p>
+<div class="ui card" style="width: 100%">
+        <div class="ui placeholder segment">
+          <div class="ui icon header">
+            <i class="user icon"></i>
+            <h4><em>Oops! No user found.</em></h4>
+          </div>
+        </div>
+      </div>
+{% endif %}
 {% endblock %}
 
 {% if  posts %}
@@ -23,7 +34,7 @@
 {% endif %}
 
 {% if  tagPosts %}
-<h2 class="ui header">tags</h2>
+<h2 class="ui header">Tags</h2>
 {% include "post/tagList.html" %}
 {% endif %}
 
