@@ -24,29 +24,42 @@ function onYouTubeIframeAPIReady() {
     </div>`);
   }
 
+  function fetchThumbnail(type, url, getCancel = () => false) {
+    switch (type) {
+      case 'youtube':
+        setThumbnail(`http://i3.ytimg.com/vi/${url}/hqdefault.jpg`);
+        break;
+      case 'vimeo':
+        fetch(`http://vimeo.com/api/v2/video/${url}.json`)
+          .then(r => r.json())
+          .then(infoJson => {
+            if (getCancel()) return;
+            setThumbnail(infoJson[0].thumbnail_large)
+          }).catch(e => {
+            console.error(e);
+            clearVideo();
+          });
+        break;
+      default:
+        console.warn(`no way to fetch thumbnail for type ${type}`);
+    }
+  }
+
   function checkVideo() {
     let match, type, cancel = false;
     if (match = youtubeRegex.exec($link.val())) {
       type = 'youtube';
       match = match[1];
-      setThumbnail(`http://i3.ytimg.com/vi/${match}/hqdefault.jpg`);
     } else if (match = vimeoRegex.exec($link.val())) {
       type = 'vimeo';
       match = match.pop();
-      fetch(`http://vimeo.com/api/v2/video/${match}.json`)
-        .then(r => r.json())
-        .then(infoJson => {
-          if (cancel) return;
-          setThumbnail(infoJson[0].thumbnail_large)
-        }).catch(e => {
-          console.error(e);
-          clearVideo();
-        });
     } else {
       console.log('none', $link.val());
       clearVideo();
       return;
     }
+
+    fetchThumbnail(type, match, () => cancel);
 
     console.log(type, match);
 
@@ -62,7 +75,7 @@ function onYouTubeIframeAPIReady() {
       console.log('duration resolved', e);
       urlConstraints = e;
       if (end > e.duration) {
-        clearVideo();
+        fetchThumbnail(type, match);
       }
       $('.ui.form').form('validate field', 'end');
     });
