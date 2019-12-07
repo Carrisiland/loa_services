@@ -11,14 +11,14 @@
       <div class="ui dropdown" style="float: right;">
         <i class="dropdown icon"></i>
         <div class="menu">
-            <div class="item edit"onclick="window.location='/post/edit/{{post.id }}'">
-              <i class="edit icon"></i>
-              Edit
-            </div>
-            <div id="{{post.id}}deleteId"class="item del">
-              <i class="trash icon"></i>
-              Delete
-            </div>
+          <div class="item edit"onclick="window.location='/post/edit/{{post.id }}'">
+            <i class="edit icon"></i>
+            Edit
+          </div>
+          <div id="{{post.id}}deleteId"class="item del">
+            <i class="trash icon"></i>
+            Delete
+          </div>
           <div class="divider"></div>
           <form class="item" method="GET" action="/post/gallery">
             <button>
@@ -47,7 +47,7 @@
       <br>
       {% for tag in post.tags %}
       {% if tag %}
-        <a class="ui red label" href="/search/{{ tag }}">#{{ tag }}</a>
+      <a class="ui red label" href="/search/{{ tag }}">#{{ tag }}</a>
       {% endif %}
       {% endfor %}
       <br>
@@ -57,30 +57,28 @@
     </div>
     <div class="extra content">
       <span class="right floated">
-          <button id="{{post.id}}likeup" class="ui tiny blue button likeUp">
-            <i class="thumbs up icon"></i>
-            <span class='num'>
-              {{post.upvotes}}
-            </span>
-          </button>
-          <button  id="{{post.id}}likedown" class="ui tiny red button likeDown">
-            <i class="thumbs down icon"></i>
-            <span class='num'>
-              {{post.downvotes}}
-            </span>
-          </button>
+        <button id="{{post.id}}likeup" class="ui tiny blue button likeUp">
+          <i class="thumbs up icon"></i>
+          <span class='num'>
+            {{post.upvotes}}
+          </span>
+        </button>
+        <button  id="{{post.id}}likedown" class="ui tiny red button likeDown">
+          <i class="thumbs down icon"></i>
+          <span class='num'>
+            {{post.downvotes}}
+          </span>
+        </button>
       </span>
     </div>
   </div>
 
   {% else %}
-  <div class="ui sixteen wide column">
-    <div class="ui card" style="width: 70vw">
-      <div class="ui placeholder segment">
-        <div class="ui icon header">
-          <i class="video icon"></i>
-          <h4><em>Oops! No post found.</em></h4>
-        </div>
+  <div class="ui card" style="width: 100%">
+    <div class="ui placeholder segment">
+      <div class="ui icon header">
+        <i class="video icon"></i>
+        <h4><em>Oops! No post found.</em></h4>
       </div>
     </div>
   </div>
@@ -88,10 +86,10 @@
 </div>
 
 {% block scripts %}
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"> </script>
-  <script src="/js/like.js"></script><script> likeStart(); </script>
-  <script src="/js/delete.js"></script><script> deleteStart(); </script>
-  <script src="https://mozilla.github.io/nunjucks/files/nunjucks.js"> </script>
-  <script src="/js/visibility.js"></script><script> visibilityStart(); </script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"> </script>
+<script src="/js/like.js"></script><script> likeStart(); </script>
+<script src="/js/delete.js"></script><script> deleteStart(); </script>
+<script src="https://mozilla.github.io/nunjucks/files/nunjucks.js"> </script>
+<script src="/js/visibility.js"></script><script> visibilityStart(); </script>
 
 {% endblock %}
