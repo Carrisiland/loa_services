@@ -108,6 +108,21 @@ body {
   margin: -1rem 0 0 0;
 }
 
+.new-video-player {
+  text-align: center;
+  height: 60vw;
+  max-height: 40rem;
+}
+
+.new-video-player #player {
+  margin: 0;
+}
+
+.new-video-player iframe#player,
+.new-video-player #player[data-vimeo-initialized=true] {
+  height: 100%;
+}
+
 main .ui.link.cards {
   margin-top: 0;
   margin-bottom: 0;
@@ -132,11 +147,6 @@ main .ui.link.cards {
 
 .ui.comments.center-margin {
   margin-bottom: 3vh;
-}
-
-#player[data-vimeo-initialized=true] {
-    min-height: 300px;
-    max-height: 25em;
 }
 
 .ui.inverted.header.segment .right.item {
