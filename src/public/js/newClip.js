@@ -39,7 +39,10 @@ function onYouTubeIframeAPIReady() {
         .then(infoJson => {
           if (cancel) return;
           setThumbnail(infoJson[0].thumbnail_large)
-        }).catch(console.error);
+        }).catch(e => {
+          console.error(e);
+          clearVideo();
+        });
     } else {
       console.log('none', $link.val());
       clearVideo();
@@ -58,6 +61,7 @@ function onYouTubeIframeAPIReady() {
     $submit.add('disabled', true);
     cancel = true;
     player.play(type, match, start, end).then(e => {
+      console.log('duration resolved', e);
       if (end > e.duration) {
         clearVideo();
       } else {

@@ -37,9 +37,7 @@ class Player {
 
     this.playCode['youtube'] = (videoId, startTime, endTime, repeat) => {
       return new Promise((resolve, reject) => {
-        let firstPlay = true;
         let firstOnReady = true;
-
         const onReady = () => {
           if (!firstOnReady) return;
 
@@ -60,14 +58,13 @@ class Player {
           firstOnReady = false;
         };
 
-        // The API will call this function when the video player is ready.
+        let firstPlay = true;
         const onStateChange = e => {
           if (e.data == YT.PlayerState.PLAYING &&
-            player.getDuration && firstPlay) {
-
+            this.player.getDuration && firstPlay) {
             firstPlay = false;
             resolve({
-              duration: player.getDuration()
+              duration: this.player.getDuration()
             });
           }
 
