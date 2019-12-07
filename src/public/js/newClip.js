@@ -20,7 +20,7 @@ function onYouTubeIframeAPIReady() {
 
   function setThumbnail(imgSrc) {
     console.log(imgSrc);
-    $('#player').replaceWith(`<div id="player">
+    $('#player').replaceWith(`<div id="player" class="img">
       <img src="${imgSrc}">
     </div>`);
   }

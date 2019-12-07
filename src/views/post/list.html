@@ -3,15 +3,15 @@
 <div class="ui three stackable cards">
   {% for post in posts %}
   <div id="{{post.id}}card" class="card">
-    <img width="100%" height="56.25%" src="{{ post.video.thumbnailLink }}"
-                                      onclick="window.location='/post/{{post.id }}'">
+    <img width="100%" src="{{ post.video.thumbnailLink }}"
+                      onclick="window.location='/post/{{post.id }}'">
     <div class="content">
       {% if post.user %}
       {% if user.id == post.user.id %}
       <div class="ui dropdown" style="float: right;">
         <i class="dropdown icon"></i>
         <div class="menu">
-          <div class="item edit"onclick="window.location='/post/edit/{{post.id }}'">
+          <div class="item edit" onclick="window.location='/post/edit/{{post.id }}'">
             <i class="edit icon"></i>
             Edit
           </div>

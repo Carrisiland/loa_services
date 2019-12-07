@@ -119,7 +119,12 @@ body {
 }
 
 .new-video-player iframe#player,
+.new-video-player #player.img,
 .new-video-player #player[data-vimeo-initialized=true] {
+  height: 100%;
+}
+
+.new-video-player #player.img img {
   height: 100%;
 }
 
