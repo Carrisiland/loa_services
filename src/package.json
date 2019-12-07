@@ -4,8 +4,8 @@
   "description": "Imgur but for videoclips",
   "main": "app.js",
   "scripts": {
-    "dustc": "cd ./views; dustc *.dust partials/*.dust -o ../public/js/views.js",
-    "start": "DEBUG='vimtok' nodemon -e js,html,nj ./bin/www"
+    "nunjucks": "nunjucks-precompile views > public/js/templates.js",
+    "start": "yarn run nunjucks && DEBUG='vimtok' nodemon -e js,html,nj ./bin/www"
   },
   "keywords": [
     "Node.js",
