@@ -5,11 +5,10 @@ const $start = $('input[name=start]');
 const $end = $('input[name=end]');
 const $submit = $('button[type=submit]');
 
-let urlConstraints;
+let urlConstraints = {};
 
 function onYouTubeIframeAPIReady() {
   const player = new Player();
-  $submit.attr('disabled', true);
   checkVideo();
 
   function clearVideo() {
@@ -58,15 +57,14 @@ function onYouTubeIframeAPIReady() {
       return;
     }
 
-    $submit.add('disabled', true);
     cancel = true;
     player.play(type, match, start, end).then(e => {
       console.log('duration resolved', e);
+      urlConstraints = e;
       if (end > e.duration) {
         clearVideo();
-      } else {
-        $submit.attr('disabled', false);
       }
+      $('.ui.form').form('validate field', 'end');
     });
   }
 
@@ -80,7 +78,11 @@ $.fn.form.settings.rules.videoRe = function(value) {
 };
 
 $.fn.form.settings.rules.urlDuration = function(value) {
-  return (value = parseTime(value)) || !urlConstraints ||
+  if (!(value = parseTime(value))) {
+    return false;
+  }
+  console.log('urlDuration validation', value, urlConstraints.duration);
+  return !urlConstraints ||
     (value > 0 && value < urlConstraints.duration);
 };
 
