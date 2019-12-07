@@ -1,20 +1,3 @@
-// const $search = $('input[name=searchBar]');
+// vim: set ts=2 sw=2 et tw=80:
 
-// function search(){
-//     console.log("search")
-//     let input = $search.val();
-//     console.log("input= ", input)
-    
-
-
-// }
-
-// function searchInit(){
-//     console.log("ciao")
-// $search.on('keypress', function(e){
-//     if(e.which == 13){
-//         search();
-//     }
-// });
-// console.log("ciao2")
-// }
+$(".search-form .ui.icon.input").click(() => $(".search-form").submit());
