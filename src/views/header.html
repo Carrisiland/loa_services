@@ -7,7 +7,11 @@
       <div class="ui logo shape">
         <div class="sides">
           <div class="active ui side">
+              {% if not user %}
             <a href="/" class="vimtok">Vimtok</a>
+            {% else %}
+            <a href="/post/gallery" class="vimtok">Vimtok</a>
+            {% endif %}
           </div>
         </div>
       </div>
