@@ -1,5 +1,4 @@
 {# vim: set ts=2 sw=2 et tw=120: #}
-
 <div class="ui three stackable cards">
   {% for post in posts %}
   <div id="{{post.id}}card" class="card">
@@ -71,7 +70,7 @@
         </button>
       </span>
       <span class="left floated">
-        {{post.video.duration}} sec
+          {{post.video.duration //60}} : {{post.video.duration %60}}
       </span>
     </div>
   </div>
