@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
     found.users = users;
     found.posts = posts;
     found.postsWithTag = allPosts;
-    console.log("found =", found)
+    console.log("found =", found.users)
     res.status(200);
     res.render('searchResult.html', {posts: found.posts, users: found.users, tagPosts : found.postsWithTag })
     return;
