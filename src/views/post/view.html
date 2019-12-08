@@ -91,44 +91,11 @@
   </div>
   {% endif %}
   {% endif %}
-  <h3 class="ui dividing header">Comments</h3>
-  {% for comment in post.comments %}
-  <div class="comment">
-    <div class="content">
-      {% if comment.user %}
-      <a class="author" href="/profile/{{ comment.user._id }}">@{{ comment.user.username }}</a>
-      {% else %}
-      <a class="author">Anonymous</a>
-      {% endif %}
-      <div class="metadata">
-        <span class="date">{{ comment.dateCreated }}</span>
-      </div>
-      <div class="text">
-        {{ comment.text }}
-      </div>
-      <div class="actions">
-        <a class="reply">Reply</a>
 
-          <button id="{{comment.id}}likeup" class="ui blue tiny button likeUpComment">
-            <i class="thumbs up icon"></i>
-            <span class='num'>
-              {{post.upvotes}}
-            </span>
-          </button>
-
-          <button id="{{comment.id}}likedown" class="ui red tiny button likeDownComment">
-            <i class="thumbs down icon"></i>
-            <span class='num'>
-                {{post.downvotes}}
-            </span>
-          </button>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
+  {% include "./comment.html" %}
 
   <form class="ui reply form" method="POST" action="/post/comment/{{ post.id }}">
-    <div class="field">
+    <div class="field reply">
       <textarea name="reply"></textarea>
     </div>
     <button class="ui blue labeled submit icon button">
