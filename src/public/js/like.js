@@ -75,7 +75,6 @@ async function likeUpComment(id) {
   let likeDownId = realId + "likedown";
   let res = await doJSONRequest('PATCH', '/like/comment/up/'+realId, undefined, {});
 
-  // console.log(res);
 
   let buttonUp = document.getElementById(id);
   let numUp = buttonUp.querySelector('.num');

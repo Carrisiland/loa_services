@@ -16,19 +16,56 @@
       {{ comment.text }}
     </div>
     <div class="actions">
-      <a class="replyComment">Reply</a>
+      <a id="{{comment._id}}replyButton" class="replyComment">Reply</a>
         <button id="{{comment._id}}likeup" class="ui blue tiny button likeUpComment">
           <i class="thumbs up icon"></i>
           <span class='num'>
-            {{post.upvotes}}
+            {{comment.upvotes}}
           </span>
         </button>
         <button id="{{comment._id}}likedown" class="ui red tiny button likeDownComment">
           <i class="thumbs down icon"></i>
           <span class='num'>
-              {{post.downvotes}}
+              {{comment.downvotes}}
           </span>
         </button>
+      </div>
+
+      <div id="{{comment._id}}commentReplies" class="comments">
+        {% for commentReply in post.comments.replies %}
+          <div class="comment">
+            <div class="content">
+              {% if commentReply.user %}
+              <a class="author" href="/profile/{{ comment.user._id }}">@{{ commentReply.user.username }}</a>
+              {% else %}
+              <a class="author">Anonymous</a>
+              {% endif %}
+              <div class="metadata">
+                <span class="date">{{ commentReply.dateCreated }}</span>
+              </div>
+              <div class="text">
+                {{ commentReply.text }}
+              </div>
+              <div class="actions">
+                  <button id="{{comment._id}}likeup" class="ui blue tiny button likeUpComment">
+                    <i class="thumbs up icon"></i>
+                    <span class='num'>
+                      {{commentReply.upvotes}}
+                    </span>
+                  </button>
+                  <button id="{{comment._id}}likedown" class="ui red tiny button likeDownComment">
+                    <i class="thumbs down icon"></i>
+                    <span class='num'>
+                        {{commentReply.downvotes}}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+
+      <div id="{{comment._id}}replyArea" class="replyArea">
       </div>
     </div>
   </div>

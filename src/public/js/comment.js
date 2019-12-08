@@ -17,7 +17,7 @@ async function comment(id) {
   const reply = document.getElementsByName("reply")[0].value;
   document.getElementsByName("reply")[0].value = "";
 
-  const res = await doJSONRequest('POST', '/post/comment/'+realId, undefined, {reply});
+  const res = await doJSONRequest('PATCH', '/post/comment/'+realId, {Accept: "application/json"}, {reply});
   let obj = {};
   obj.post = res;
 

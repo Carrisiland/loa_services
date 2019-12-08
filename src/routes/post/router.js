@@ -200,6 +200,9 @@ router.get('/:id', (req, res) => {
     populate: [{
       path: 'user',
       model: 'User'
+    }, {
+      path: 'replies',
+      model: 'Comment',
     }],
   })
     .then(post => {
@@ -331,5 +334,31 @@ router.delete('/delete/:id', (req, res) => {
     }
   });
 });
+
+
+router.patch('/commentReply/:id', async (req, res) => {
+
+  const comment_id = req.params.id;
+
+  const comment = new Comment ({
+    user: req.user,
+    text: req.reply
+  })
+
+  if (req.user) {
+    comment.likersUp.push(req.user);
+  }
+
+  comment.dateCreated = comment.dateCreated.slice(4, 21);
+  await comment.save();
+  let rootComment = await Comment.findById(comment_id);
+  rootComment.replies.push(comment);
+  await rootComment.save();
+
+  res.status(200).json(comment);
+});
+
+
+
 
 module.exports = router;
