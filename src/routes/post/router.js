@@ -199,10 +199,14 @@ router.get('/:id', (req, res) => {
     path: 'comments',
     populate: [{
       path: 'user',
-      model: 'User'
+      model: 'User',
     }, {
       path: 'replies',
       model: 'Comment',
+      populate: [{
+        path: 'user',
+        model: 'User',
+      }]
     }],
   })
     .then(post => {
@@ -342,7 +346,7 @@ router.patch('/commentReply/:id', async (req, res) => {
 
   const comment = new Comment ({
     user: req.user,
-    text: req.reply
+    text: req.body.reply
   })
 
   if (req.user) {
@@ -352,8 +356,10 @@ router.patch('/commentReply/:id', async (req, res) => {
   comment.dateCreated = comment.dateCreated.slice(4, 21);
   await comment.save();
   let rootComment = await Comment.findById(comment_id);
+
   rootComment.replies.push(comment);
   await rootComment.save();
+
 
   res.status(200).json(comment);
 });

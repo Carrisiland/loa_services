@@ -13,13 +13,13 @@
         {{ commentReply.text }}
       </div>
       <div class="actions">
-          <button id="{{comment._id}}likeup" class="ui blue tiny button likeUpComment">
+          <button id="{{commentReply._id}}likeup" class="ui blue tiny button likeUpComment">
             <i class="thumbs up icon"></i>
             <span class='num'>
               {{commentReply.upvotes}}
             </span>
           </button>
-          <button id="{{comment._id}}likedown" class="ui red tiny button likeDownComment">
+          <button id="{{commentReply._id}}likedown" class="ui red tiny button likeDownComment">
             <i class="thumbs down icon"></i>
             <span class='num'>
                 {{commentReply.downvotes}}
