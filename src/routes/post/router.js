@@ -228,7 +228,16 @@ router.post('/comment/:id', async (req, res) => {
   }
   comment.dateCreated = comment.dateCreated.slice(4, 21);
   await comment.save();
-  let post = await Post.findById(post_id).populate('comments');
+  let post = await Post.findById(post_id).populate({
+    path: 'comments',
+    populate: [{
+      path: 'user',
+      model: 'User',
+    }, {
+      path: 'replies',
+      model: 'Comment',
+    }]
+  });
   post.comments.push(comment);
   await post.save();
 

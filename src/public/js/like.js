@@ -69,12 +69,13 @@ async function likeDown(id) {
 
 async function likeUpComment(id) {
 
-  console.log("OOOOOOPOIOIOIOIOIO")
+  console.log(id);
+
   let realId = id.substr(0, id.length - 6)
   let likeDownId = realId + "likedown";
   let res = await doJSONRequest('PATCH', '/like/comment/up/'+realId, undefined, {});
 
-  console.log(res);
+  // console.log(res);
 
   let buttonUp = document.getElementById(id);
   let numUp = buttonUp.querySelector('.num');

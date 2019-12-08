@@ -23,6 +23,8 @@ async function comment(id) {
 
 
   nunjucks.render('post/comment.html', obj, (err, cont) => {
-    document.getElementsByClassName("comments")[0].innerHTML = cont;
+    document.getElementsByClassName("commentList")[0].innerHTML = cont;
   });
+
+  likeStart();
 }
