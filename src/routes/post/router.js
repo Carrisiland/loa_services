@@ -100,7 +100,12 @@ router.get('/new', (req, res) => {
 router.get('/gallery', (req, res) => {
   Post.find({ visibility: 'public' }).populate('user').populate('video')
     .then(posts => {
-      res.render('gallery.html', { posts }) })
+      if (req.accepts("html")) {
+          res.status(200).render('gallery.html', {posts})
+      } else {
+          res.status(200).json({posts});
+      }
+    })
     .catch(err => {
       res.flash('error', err.toString());
       res.status(500).render('gallery.html');

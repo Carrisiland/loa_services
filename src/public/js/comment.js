@@ -21,10 +21,8 @@ async function comment(id) {
   let obj = {};
   obj.post = res;
 
-  console.log(obj);
 
   nunjucks.render('post/comment.html', obj, (err, cont) => {
-    console.log(cont);
     document.getElementsByClassName("comments")[0].innerHTML = cont;
   });
 }

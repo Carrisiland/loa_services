@@ -56,21 +56,13 @@
         <a class="ui orange button" href="/post/{{ post.id }}/gif" target="_blank">GIF it</a>
         {% if post.user %}
         {% if user.id == post.user.id %}
-        <div class="ui dropdown">
+        <div class="ui dropdown" style="float: right;">
           <i class="dropdown icon"></i>
           <div class="menu">
-            <form class="item" method="GET" action="/post/edit/{{ post.id }}">
-              <button>
-                <i class="edit icon"></i>
-                Edit
-              </button>
-            </form>
-            <form class="item" method="POST" action="/post/delete/{{ post.id }}?_method=DELETE">
-              <button>
-                <i class="trash icon"></i>
-                Delete
-              </button>
-            </form>
+            <div class="item edit" onclick="window.location='/post/edit/{{post.id }}'">
+              <i class="edit icon"></i>
+              Edit
+            </div>
             <div class="divider"></div>
             <form class="item" method="GET" action="/post/gallery">
               <button>
@@ -94,6 +86,7 @@
 {% block scripts %}
 <script> src="https://code.jquery.com/jquery-3.1.1.min.js" </script>
 <script src="/js/like.js"></script><script> likeStart(); </script>
+<script src="/js/delete.js"></script><script> deleteStart(); </script>
 <script src="/js/comment.js"></script><script> commentStart(); </script>
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
