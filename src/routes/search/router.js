@@ -15,6 +15,11 @@ const fetch = require('node-fetch');
 
 router.get('/', async (req, res) => {
     let input = req.query.searchBar;
+    if (input == ""){
+        res.status(200);
+        res.render('searchResult.html', {posts: {}, users: {}, tagPosts : {} })
+        return;
+    }
     console.log("input:", input); 
     const users = await User.find({username: new RegExp(input, "i")});
     const posts = await Post.find({title :  new RegExp(input, "i") , visibility : "public" }).populate('video').populate("user");
