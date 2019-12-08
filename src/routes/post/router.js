@@ -223,10 +223,11 @@ router.post('/comment/:id', async (req, res) => {
   }
   comment.dateCreated = comment.dateCreated.slice(4, 21);
   await comment.save();
-  let post = await Post.findById(post_id);
+  let post = await Post.findById(post_id).populate('comments');
   post.comments.push(comment);
   await post.save();
-  res.redirect('/post/'+post_id);
+
+  res.status(200).json(post);
 });
 
 

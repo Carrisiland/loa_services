@@ -1,8 +1,9 @@
 
+{% block comments %}
+<div class="ui comments center-margin">
 
-<h3 class="ui dividing header">Comments</h3>
-{% for comment in post.comments %}
-<div class="comment">
+  {% for comment in post.comments %}
+  <div class="comment" </div>
   <div class="content">
     {% if comment.user %}
     <a class="author" href="/profile/{{ comment.user._id }}">@{{ comment.user.username }}</a>
@@ -17,7 +18,6 @@
     </div>
     <div class="actions">
       <a class="reply">Reply</a>
-
         <button id="{{comment.id}}likeup" class="ui blue tiny button likeUpComment">
           <i class="thumbs up icon"></i>
           <span class='num'>
@@ -35,3 +35,15 @@
   </div>
 </div>
 {% endfor %}
+  <form class="ui reply form" method="POST" action="/post/comment/{{ post.id }}">
+    <div class="field reply">
+      <textarea name="reply"></textarea>
+    </div>
+    <button id='{{post.id}}comment' class="ui blue labeled submit icon button">
+      <i class="icon edit"></i> Add Reply
+    </button>
+  </form>
+</div>
+
+
+{% endblock%}
