@@ -13,7 +13,7 @@
     </h1>
     {% if user.id != profileUser.id %}
     <form method='POST' action='/follow/{{profileUser.id}}' style='display: inline;'>
-      <button class="ui button"><i class="thumbs up outline icon"></i>Follow</button>
+      <button id="{{profileUser._id}}" class="ui followButton button"><i class="thumbs up outline icon"></i><span id="followContent">Follow</span></button>
     </form>
     <br>
     {%endif%}
@@ -36,5 +36,10 @@
   {% include "post/list.html" %}
   </div>
 </main>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/follow.js"></script> <script>followStart();</script>
 
 {% endblock %}
