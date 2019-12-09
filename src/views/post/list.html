@@ -1,20 +1,20 @@
 {# vim: set ts=2 sw=2 et tw=120: #}
 <div class="ui three stackable cards">
   {% for post in posts %}
-  <div id="{{post.id}}card" class="card">
+  <div id="{{post._id}}card" class="card">
     <img width="100%" src="{{ post.video.thumbnailLink }}"
-                      onclick="window.location='/post/{{post.id }}'">
+                      onclick="window.location='/post/{{post._id }}'">
     <div class="content">
       {% if post.user %}
       {% if user.id == post.user.id %}
       <div class="ui dropdown" style="float: right;">
         <i class="dropdown icon"></i>
         <div class="menu">
-          <div class="item edit" onclick="window.location='/post/edit/{{post.id }}'">
+          <div class="item edit" onclick="window.location='/post/edit/{{post._id }}'">
             <i class="edit icon"></i>
             Edit
           </div>
-          <div id="{{post.id}}deleteId"class="item del">
+          <div id="{{post._id}}deleteId"class="item del">
             <i class="trash icon"></i>
             Delete
           </div>

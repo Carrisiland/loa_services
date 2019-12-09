@@ -31,6 +31,8 @@ async function all() {
   nunjucks.render('post/list.html', obj, (err, cont) => {
     document.getElementsByClassName("cont_iterator")[0].innerHTML = cont;
   });
+
+  eventHandler();
 }
 
 async function public() {
@@ -42,10 +44,10 @@ async function public() {
   obj.posts = res;
 
   nunjucks.render('post/list.html', obj, (err, cont) => {
-
     document.getElementsByClassName("cont_iterator")[0].innerHTML = cont;
   });
 
+  eventHandler();
 
 }
 
@@ -63,4 +65,12 @@ async function private() {
     document.getElementsByClassName("cont_iterator")[0].innerHTML = cont;
   });
 
+  eventHandler();
+}
+
+function eventHandler() {
+  $(document).ready(() => {
+    $('select.dropdown').dropdown();
+    $('div.dropdown').dropdown();
+  });
 }
