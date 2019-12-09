@@ -19,9 +19,7 @@ router.get('/', (req, res) => {
 
 
 
-// router.get('/feed', (req, res) => {
-//   res.render('feed.html');
-// });
+
 
       
     

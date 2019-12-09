@@ -97,19 +97,76 @@ router.get('/new', (req, res) => {
   res.render('newVideoForm.html');
 });
 
-router.get('/gallery', (req, res) => {
+router.get('/gallery', (req, res) =>{
   Post.find({ visibility: 'public' }).populate('user').populate('video')
-    .then(posts => {
-      if (req.accepts("html")) {
-          res.status(200).render('gallery.html', {posts})
-      } else {
-          res.status(200).json({posts});
-      }
-    })
-    .catch(err => {
-      res.flash('error', err.toString());
-      res.status(500).render('gallery.html');
+  .then(posts => {
+    posts.sort(function(a,b){
+      return Date.parse(b.dateCreated) - Date.parse(a.dateCreated);
     });
+    if (req.accepts("html")) {
+        res.status(200).render('gallery.html', {posts})
+    } else {
+        res.status(200).json({posts});
+    }
+  })
+  .catch(err => {
+    res.flash('error', err.toString());
+    res.status(500).render('gallery.html');
+  });
+});
+
+router.get('/gallery/likesort', (req, res) =>{
+  Post.find({ visibility: 'public' }).populate('user').populate('video')
+  .then(posts => {
+    posts.sort(function(a,b){
+      return (b.upvotes)- (a.upvotes);
+    });
+    if (req.accepts("html")) {
+        res.status(200).render('gallery.html', {posts})
+    } else {
+        res.status(200).json({posts});
+    }
+  })
+  .catch(err => {
+    res.flash('error', err.toString());
+    res.status(500).render('gallery.html');
+  });
+});
+
+router.get('/gallery/dislikesort', (req, res) =>{
+  Post.find({ visibility: 'public' }).populate('user').populate('video')
+  .then(posts => {
+    posts.sort(function(a,b){
+      return (b.downvotes)- (a.downvotes);
+    });
+    if (req.accepts("html")) {
+        res.status(200).render('gallery.html', {posts})
+    } else {
+        res.status(200).json({posts});
+    }
+  })
+  .catch(err => {
+    res.flash('error', err.toString());
+    res.status(500).render('gallery.html');
+  });
+});
+
+router.get('/gallery/viewsort', (req, res) =>{
+  Post.find({ visibility: 'public' }).populate('user').populate('video')
+  .then(posts => {
+    posts.sort(function(a,b){
+      return (b.views)- (a.views);
+    });
+    if (req.accepts("html")) {
+        res.status(200).render('gallery.html', {posts})
+    } else {
+        res.status(200).json({posts});
+    }
+  })
+  .catch(err => {
+    res.flash('error', err.toString());
+    res.status(500).render('gallery.html');
+  });
 });
 
 router.post('/', [

@@ -2,6 +2,23 @@
 {% extends "skel.html" %}
 {% block title %}Gallery{% endblock %}
 {% block body %}
+<div class="ui dropdown" style="float: right;">
+     <h3>Sort</h3>
+    <div class="menu">
+      <div class="item edit" onclick="window.location='/post/gallery/viewsort'">
+        Most viewed
+      </div>
+      <div class="item edit" onclick="window.location='/post/gallery/likesort'">
+        Most liked
+      </div>
+      <div class="item edit" onclick="window.location='/post/gallery/dislikesort'">
+        Most disliked
+      </div>
+      <div class="item edit" onclick="window.location='/post/gallery'">
+        Most recent
+      </div>
+    </div>
+  </div>
 <h1 class="ui header">Gallery</h1>
 {% include "post/list.html" %}
 {% endblock %}
