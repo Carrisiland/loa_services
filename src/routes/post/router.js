@@ -133,6 +133,24 @@ router.get('/gallery/likesort', (req, res) =>{
   });
 });
 
+router.get('/gallery/dislikesort', (req, res) =>{
+  Post.find({ visibility: 'public' }).populate('user').populate('video')
+  .then(posts => {
+    posts.sort(function(a,b){
+      return (b.downvotes)- (a.downvotes);
+    });
+    if (req.accepts("html")) {
+        res.status(200).render('gallery.html', {posts})
+    } else {
+        res.status(200).json({posts});
+    }
+  })
+  .catch(err => {
+    res.flash('error', err.toString());
+    res.status(500).render('gallery.html');
+  });
+});
+
 router.get('/gallery/viewsort', (req, res) =>{
   Post.find({ visibility: 'public' }).populate('user').populate('video')
   .then(posts => {
