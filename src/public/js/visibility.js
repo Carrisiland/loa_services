@@ -72,5 +72,7 @@ function eventHandler() {
   $(document).ready(() => {
     $('select.dropdown').dropdown();
     $('div.dropdown').dropdown();
+    likeStart();
   });
+
 }

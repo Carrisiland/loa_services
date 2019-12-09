@@ -37,7 +37,7 @@
       <div class="ui grey label" href="#">{{ post.views }} views</div>
     </div>
     <div class="ui sixteen wide column center-margin">
-        <button id="{{post.id}}likeup" class="ui labeled button likeUp" tabindex="0">
+        <button id="{{post._id}}likeup" class="ui labeled button likeUp" tabindex="0">
           <div class="ui blue icon button">
             <i class="thumbs up icon"></i>
           </div>
@@ -45,7 +45,7 @@
             {{ post.upvotes }}
           </a>
         </button>
-        <button id="{{post.id}}likedown" class="ui labeled button likeDown" tabindex="0">
+        <button id="{{post._id}}likedown" class="ui labeled button likeDown" tabindex="0">
           <div class="ui red icon button">
             <i class="thumbs down icon"></i>
           </div>
