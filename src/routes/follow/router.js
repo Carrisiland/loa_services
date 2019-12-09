@@ -32,6 +32,11 @@ router.get('/feed', (req, res) => {
           postArr.push(user.following[i].posts[j])
         }
       }
+      console.log ("arr= ", postArr)
+      postArr.sort(function(a,b){
+        return (b.views)- (a.views);
+      });
+      console.log ("arr 1= ", postArr)
       res.render('feed.html', {posts: postArr});
       });
     });
