@@ -6,6 +6,18 @@
 {% block rootbody %}
 <div id="my">
   {% include "header.html" %}
+  {% set alreadyFollow = 2 %}
+
+{% for follower in profileUser.followers %}
+  {%if follower == user.id}
+    {% set alreadyFollow = 1 %}
+  {%endif%}
+{% endfor %}
+
+{%if alreadyFollow == 2}
+  {% set alreadyFollow = 0 %}
+{%endif%}
+
 
   <div class="ui text container user-top">
     <h1 class="ui inverted header">
@@ -19,7 +31,9 @@
     {%endif%}
     <br>
   </div>
+  
 
+  
   <div id='menus'>
     <div class="ui four item menu">
       <a id="all" class="item">All</a>

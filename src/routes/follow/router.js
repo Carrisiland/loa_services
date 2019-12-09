@@ -56,9 +56,6 @@ router.post("/:id",  (req, res)=>{
                 return follower.id != userId;
               });
             user.following = user.following.filter((followingUser)=>{
-              console.log("following = ", followingUser.id )
-              console.log("followed = ", followedUser.id )
-              console.log("remove=", followingUser.id != followedUser.id)
                 return followingUser.id != followedUser.id;
             });
         }
