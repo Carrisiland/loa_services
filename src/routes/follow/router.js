@@ -65,6 +65,32 @@ router.get('/feed/viewsort', (req, res) => {
     });
 });
 
+router.get('/feed/dislikesort', (req, res) => {
+  let user = req.user;
+  User.findById(user.id).populate({
+    path : "following", 
+    populate: [{
+      path: "posts",
+      populate: [{
+        path: "video",
+      },
+        {path: "user"
+      }]
+    }]
+  }).then(user =>{
+    let postArr = [];
+    for (i in user.following){
+      for(j in user.following[i].posts){
+        postArr.push(user.following[i].posts[j])
+      }
+    }
+    postArr.sort(function(a,b){
+      return (b.downvotes)- (a.downvotes);
+    });
+    res.render('feed.html', {posts: postArr});
+    });
+});
+
 router.get('/feed/likesort', (req, res) => {
   let user = req.user;
   User.findById(user.id).populate({
