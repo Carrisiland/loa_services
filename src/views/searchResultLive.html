@@ -1,0 +1,32 @@
+{# vim: set ts=2 sw=2 et tw=120 ft=htmldjango: #}
+
+{% block results %}
+<div class="ui dropdown" style="float: right;">
+  <div class="menu">
+
+    {% if users | length > 0  %}
+    <div>
+        {% for user in users %}
+        <div class="item"> <a href="/profile/{{ user._id }}">{{user.username}}</a> </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if  posts %}
+      <div class="divider"></div>
+      {% for post in posts %}
+      <div class="item"> <a href="/post/{{ post._id }}">{{post.title}}</a></div>
+      {% endfor %}
+    {% endif %}
+
+    {% if tagPosts %}
+      <div class="divider"></div>
+      {% for post in tagPosts %}
+        <div class="item"> <a href="/post/{{ post._id }}">{{post.title}}</a></div>
+      {% endfor %}
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

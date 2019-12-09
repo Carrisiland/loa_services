@@ -1,6 +1,4 @@
 // var env = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
-
-
 function visibilityStart() {
 
   $(document).ready(function(){

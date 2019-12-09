@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
         res.status(200);
         res.render('searchResult.html', {posts: {}, users: {}, tagPosts : {} })
         return;
-    } 
+    }
     const users = await User.find({username: new RegExp(input, "i")});
     const posts = await Post.find({title :  new RegExp(input, "i") , visibility : "public" }).populate('video').populate("user");
     const allPosts = await Post.find({tags: new RegExp(input, "i"), visibility : "public"}).populate('video').populate("user");
@@ -27,9 +27,12 @@ router.get('/', async (req, res) => {
     found.users = users;
     found.posts = posts;
     found.postsWithTag = allPosts;
-    res.status(200);
-    res.render('searchResult.html', {posts: found.posts, users: found.users, tagPosts : found.postsWithTag })
-    return;
+
+    if (req.accepts("html")) {
+        res.render('searchResult.html', {posts: found.posts, users: found.users, tagPosts : found.postsWithTag })
+    } else {
+        res.status(200).json({posts: found.posts, users: found.users, tagPosts : found.postsWithTag });
+    }
 })
 
 router.get('/:tag', async (req, res) => {
@@ -37,7 +40,7 @@ router.get('/:tag', async (req, res) => {
         const tag = req.params.tag;
         const postsWithTag = await Post.find({tags: new RegExp(tag, "i"), visibility : "public"}).populate('video').populate("user");
         // const postsWithTag = posts.filter(item => item.tags.includes(tag));
-        
+
         if(postsWithTag) {
             res.status(200);
             res.render('searchResult.html' , {tagPosts: postsWithTag});
@@ -48,6 +51,6 @@ router.get('/:tag', async (req, res) => {
         res.flash('error', e.toString());
         res.status(500).render('gallery.html');
     }
-}); 
+});
 
 module.exports = router;
