@@ -2,6 +2,20 @@
 {% extends "skel.html" %}
 {% block title %}Feed{% endblock %}
 {% block body %}
+<div class="ui dropdown" style="float: right;">
+    <h3>Sort</h3>
+   <div class="menu">
+     <div class="item edit" onclick="window.location='/follow/feed/viewsort'">
+       Most viewed
+     </div>
+     <div class="item edit" onclick="window.location='/follow/feed/likesort'">
+       Most liked
+     </div>
+     <div class="item edit" onclick="window.location='/follow/feed'">
+       Most recent
+     </div>
+   </div>
+ </div>
 <h1 class="ui header">Feed</h1>
 {% include "post/list.html" %}
 {% endblock %}

@@ -97,7 +97,7 @@ router.get('/new', (req, res) => {
   res.render('newVideoForm.html');
 });
 
-router.get('/gallery/datesort', (req, res) =>{
+router.get('/gallery', (req, res) =>{
   Post.find({ visibility: 'public' }).populate('user').populate('video')
   .then(posts => {
     posts.sort(function(a,b){
@@ -149,22 +149,6 @@ router.get('/gallery/viewsort', (req, res) =>{
     res.flash('error', err.toString());
     res.status(500).render('gallery.html');
   });
-});
-
-
-router.get('/gallery', (req, res) => {
-  Post.find({ visibility: 'public' }).populate('user').populate('video')
-    .then(posts => {
-      if (req.accepts("html")) {
-          res.status(200).render('gallery.html', {posts})
-      } else {
-          res.status(200).json({posts});
-      }
-    })
-    .catch(err => {
-      res.flash('error', err.toString());
-      res.status(500).render('gallery.html');
-    });
 });
 
 router.post('/', [

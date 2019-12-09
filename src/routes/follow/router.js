@@ -14,32 +14,84 @@ const fetch = require('node-fetch');
 
 
 router.get('/feed', (req, res) => {
-    let user = req.user;
-    User.findById(user.id).populate({
-      path : "following", 
+  let user = req.user;
+  User.findById(user.id).populate({
+    path : "following", 
+    populate: [{
+      path: "posts",
       populate: [{
-        path: "posts",
-        populate: [{
-          path: "video",
-        },
-         {path: "user"
-        }]
+        path: "video",
+      },
+        {path: "user"
       }]
-    }).then(user =>{
-      let postArr = [];
-      for (i in user.following){
-        for(j in user.following[i].posts){
-          postArr.push(user.following[i].posts[j])
-        }
+    }]
+  }).then(user =>{
+    let postArr = [];
+    for (i in user.following){
+      for(j in user.following[i].posts){
+        postArr.push(user.following[i].posts[j])
       }
-      console.log ("arr= ", postArr)
-      postArr.sort(function(a,b){
-        return (b.views)- (a.views);
-      });
-      console.log ("arr 1= ", postArr)
-      res.render('feed.html', {posts: postArr});
-      });
+    }
+    postArr.sort(function(a,b){
+      return Date.parse(b.dateCreated) - Date.parse(a.dateCreated);
     });
+    res.render('feed.html', {posts: postArr});
+    });
+});
+
+router.get('/feed/viewsort', (req, res) => {
+  let user = req.user;
+  User.findById(user.id).populate({
+    path : "following", 
+    populate: [{
+      path: "posts",
+      populate: [{
+        path: "video",
+      },
+        {path: "user"
+      }]
+    }]
+  }).then(user =>{
+    let postArr = [];
+    for (i in user.following){
+      for(j in user.following[i].posts){
+        postArr.push(user.following[i].posts[j])
+      }
+    }
+    postArr.sort(function(a,b){
+      return (b.views)- (a.views);
+    });
+    res.render('feed.html', {posts: postArr});
+    });
+});
+
+router.get('/feed/likesort', (req, res) => {
+  let user = req.user;
+  User.findById(user.id).populate({
+    path : "following", 
+    populate: [{
+      path: "posts",
+      populate: [{
+        path: "video",
+      },
+        {path: "user"
+      }]
+    }]
+  }).then(user =>{
+    let postArr = [];
+    for (i in user.following){
+      for(j in user.following[i].posts){
+        postArr.push(user.following[i].posts[j])
+      }
+    }
+    postArr.sort(function(a,b){
+      return (b.upvotes)- (a.upvotes);
+    });
+    res.render('feed.html', {posts: postArr});
+    });
+});
+
+
 
 router.post("/:id",  (req, res)=>{
   
