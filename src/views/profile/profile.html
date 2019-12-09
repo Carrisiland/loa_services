@@ -4,30 +4,39 @@
 
 {% block title %}@{{ profileUser.username }}{% endblock %}
 {% block rootbody %}
-<div id="my">
-  {% include "header.html" %}
-  {% set alreadyFollow = 2 %}
+
+{% set alreadyFollow = 2 %}
 
 {% for follower in profileUser.followers %}
-  {%if follower == user.id}
-    {% set alreadyFollow = 1 %}
+  {% if follower == user.id %}
+  {% set alreadyFollow = 1 %}
   {%endif%}
 {% endfor %}
 
-{%if alreadyFollow == 2}
+{% if alreadyFollow == 2 %}
   {% set alreadyFollow = 0 %}
 {%endif%}
 
+<div id="my">
+
+  {% include "header.html" %}
 
   <div class="ui text container user-top">
     <h1 class="ui inverted header">
       @{{ profileUser.username }}
     </h1>
     {% if user.id != profileUser.id %}
+    {% if alreadyFollow == 0 %}
+      <form method='POST' action='/follow/{{profileUser.id}}' style='display: inline;'>
+        <button id="{{profileUser._id}}" class="ui followButton button"><i class="thumbs up outline icon"></i><span id="followContent">Follow</span></button>
+      </form>
+      <br>
+    {% elif alreadyFollow == 1 %}
     <form method='POST' action='/follow/{{profileUser.id}}' style='display: inline;'>
-      <button id="{{profileUser._id}}" class="ui followButton button"><i class="thumbs up outline icon"></i><span id="followContent">Follow</span></button>
+      <button id="{{profileUser._id}}" class="ui followButton button"><i class="thumbs up outline icon"></i><span id="followContent">Unfollow</span></button>
     </form>
     <br>
+    {%endif%}
     {%endif%}
     <br>
   </div>

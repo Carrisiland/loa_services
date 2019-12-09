@@ -26,20 +26,22 @@ router.get('/feed', (req, res) => {
         }]
       }]
     }).then(user =>{
-      console.log ("user= ", user.following)
       let postArr = [];
       for (i in user.following){
         for(j in user.following[i].posts){
           postArr.push(user.following[i].posts[j])
         }
       }
-      console.log('arr = ', postArr)
       res.render('feed.html', {posts: postArr});
       });
     });
 
 router.post("/:id",  (req, res)=>{
+  
     User.findById(req.params.id).populate("followers").then(async (followedUser)=>{
+      if(req.user == undefined){
+        throw new Error;
+      }
         const userId = req.user.id;
         const user = await User.findById(req.user.id).populate("following");
         let found = undefined;
@@ -67,8 +69,8 @@ router.post("/:id",  (req, res)=>{
         res.end();
       }).catch((err) => {
         console.log('error = ',err)
-        // res.flash('error', err.toString());
-        res.status(500).render('feed.html');
+        //res.flash('error', err.toString());
+        res.status(500).render('gallery.html');
     });
 
 });

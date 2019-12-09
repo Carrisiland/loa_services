@@ -19,8 +19,7 @@ router.get('/', async (req, res) => {
         res.status(200);
         res.render('searchResult.html', {posts: {}, users: {}, tagPosts : {} })
         return;
-    }
-    console.log("input:", input); 
+    } 
     const users = await User.find({username: new RegExp(input, "i")});
     const posts = await Post.find({title :  new RegExp(input, "i") , visibility : "public" }).populate('video').populate("user");
     const allPosts = await Post.find({tags: new RegExp(input, "i"), visibility : "public"}).populate('video').populate("user");
@@ -28,7 +27,6 @@ router.get('/', async (req, res) => {
     found.users = users;
     found.posts = posts;
     found.postsWithTag = allPosts;
-    console.log("found =", found.users)
     res.status(200);
     res.render('searchResult.html', {posts: found.posts, users: found.users, tagPosts : found.postsWithTag })
     return;
