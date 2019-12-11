@@ -278,3 +278,5 @@ TSWLatexianTemp*
 *.lpz
 
 **/.DS_Store
+
+**/node_modules/**
