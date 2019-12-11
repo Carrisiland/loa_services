@@ -43,6 +43,22 @@
         <i class="user icon"></i> {{ user.username }}
       </a>
       <a href="/auth/logout" class="ui inverted button">Logout</a>
+      <div class="ui inverted button dropdown" style="float: right;">
+          <i class="settings icon"></i>
+          <div class="menu">
+            <div class="item edit" onclick="window.location='/profile/edit/{{user.username}}'">
+              <i class="edit icon"></i>
+              Change username
+            </div>
+            <div class="divider"></div>
+            <form class="item" method="GET" action="/profile/edit/{{user.image}}">
+              <button>
+                <i class="image icon"></i>
+                Change profile picture
+              </button>
+            </form>
+          </div>
+        </div>
     </div>
     {% endif %}
   </div>
