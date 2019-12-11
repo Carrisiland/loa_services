@@ -94,6 +94,24 @@ router.get('/:id', (req, res) => {
       res.render('profile/profile.html');
     });
 });
+router.get('/edit/:id', async (req, res) => {
+  const user = await User.findById(req.params.id).populate('following').populate('followers');
+  console.log("user: ", user);
+  
+  res.render('profile/editProfileForm.html', {user});
+});
+
+router.patch('/edit/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    user.username = req.body.username;
+    await user.save();
+    res.redirect('/profile/' + user.id);
+  } catch(e) {
+    console.error(e);
+    res.status(500).render('/profile/' + user.id);
+  }
 
 
+});
 module.exports = router;

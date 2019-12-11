@@ -1,0 +1,19 @@
+{# vim: set ts=2 sw=2 et tw=120 ft=htmldjango: #}
+
+{% extends "../skel.html" %}
+
+{% block title %}Edit profile{% endblock %}
+
+{% block body %}
+<h2>Edit profile</h2>
+
+<form class="ui large form" method="post" action='/profile/edit/{{user.id}}?_method=PATCH'>
+  <div class="field required">
+    <label>Username:</label>
+    <input required type="text" name="username" placeholder="{{user.username}}">
+  </div>
+  <div class="field">
+    <button class="ui button" type="submit">Update</button>
+  </div>
+</form>
+{% endblock %}
