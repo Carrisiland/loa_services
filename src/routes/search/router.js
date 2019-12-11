@@ -43,7 +43,7 @@ router.get('/:tag', async (req, res) => {
 
         if(postsWithTag) {
             res.status(200);
-            res.render('searchResult.html' , {tagPosts: postsWithTag});
+            res.render('gallery.html' , {posts: postsWithTag, tag: tag});
             return;
         }
     } catch(e) {

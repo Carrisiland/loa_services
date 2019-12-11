@@ -19,7 +19,11 @@
       </div>
     </div>
   </div>
-<h1 class="ui header">Gallery</h1>
+  {% if tag %}
+    <h1 class="ui header">#{{tag}}</h1>
+  {% else %}
+    <h1 class="ui header">Gallery</h1>
+    {% endif %}
 {% include "post/list.html" %}
 {% endblock %}
 
