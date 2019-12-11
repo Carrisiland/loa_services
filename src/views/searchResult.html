@@ -8,11 +8,21 @@
 {% if users|length > 0  %}
 <div>
     <h2 class="ui header">Users</h2>
-    <ul>
+    {% for user in users %}
+    <div class="ui list">
+      <div class="item">
+        <img class="ui avatar image" src="/img/elon_musk.jpg">
+        <div class="content">
+          <a class="header" href="/profile/{{ user._id }}">{{user.username}}</a>
+      </div>
+      </div>
+      </div>
+      {% endfor %}
+    <!-- <ul>
     {% for user in users %}
     <a href="/profile/{{ user._id }}"><li> {{user.username}} </li></a>
     {% endfor %}
-    </ul>
+    </ul> -->
 </div>
 {% else %}
 <div class="ui card" style="width: 100%">

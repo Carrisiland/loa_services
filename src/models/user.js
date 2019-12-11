@@ -31,7 +31,8 @@ const userSchema = mongoose.Schema({
   followers: [{type: Schema.Types.ObjectId, ref: 'User', default: []}],
   following: [{type: Schema.Types.ObjectId, ref: 'User', default: []}],
   posts: [{type: Schema.Types.ObjectId, ref: 'Post', default: []}],
-  likedPosts: [{type: Schema.Types.ObjectId, ref: 'Post', default: []}]
+  likedPosts: [{type: Schema.Types.ObjectId, ref: 'Post', default: []}],
+  image: String
 });
 
 userSchema.statics.validateSignup = function() {
