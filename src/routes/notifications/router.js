@@ -3,6 +3,7 @@
 const webPush = require('web-push');
 const express = require('express');
 const mongoose = require('mongoose');
+const PromisesAll = require('promises-all');
 const { check, validationResult, sanitize } = require('express-validator');
 const router = express.Router();
 require('../../models/subscription');
@@ -26,31 +27,51 @@ router.get('/vapidPublicKey', function(req, res) {
 let subscription = null;
 
 router.post('/register', [
-  check('endpoint').not().isEmpty(),
-  check('keys.auth').not().isEmpty().
-  check('keys.p256dh').not().isEmpty()
+  check('subscription.endpoint').not().isEmpty(),
+  check('subscription.keys.p256dh').not().isEmpty(),
+  check('subscription.keys.auth').not().isEmpty()
 ], async (req, res) => {
-  subscription = req.body.subscription;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.error('/notifications/register validation errors',
+      ...errors.array());
+    res.status(400).json({ errors: errors.array() });
+    return;
+  }
+
+  const subscription = new Subscription({
+    endpoint: req.body.subscription.endpoint,
+    keys: { p256dh: req.body.subscription.keys.p256dh,
+    auth: req.body.subscription.keys.auth }
+  });
+
+  try {
+    await subscription.save();
+  } catch (e) {
+    console.error('/notifications/register save error', e);
+    res.status(500).json({ errors: [e] });
+  }
+
   res.sendStatus(201);
 });
 
-router.get('/sendNotification', function(req, res) {
+router.get('/sendNotification', async (req, res) => {
   const payload = 'test';
   const options = {
     TTL: 0
   };
 
-  console.log(subscription);
-
-  // send to client previously stored in subscription
-  webPush.sendNotification(subscription, payload, options)
-    .then(() => {
-      res.sendStatus(201);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.sendStatus(500);
-    });
+  try {
+    const subscriptions = await Subscription.find({});
+    await PromisesAll.all(subscriptions.map(s => {
+      console.log(s);
+      return webPush.sendNotification(s, payload, options)
+    }));
+    res.sendStatus(201);
+  } catch(e) {
+    console.error('/notifications/sendNotification error', e);
+    res.status(500).json({ error: e });
+  }
 });
 
 module.exports = router;
