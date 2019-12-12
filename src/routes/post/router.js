@@ -154,9 +154,7 @@ router.get('/gallery/dislikesort', (req, res) =>{
 router.get('/gallery/viewsort', (req, res) =>{
   Post.find({ visibility: 'public' }).populate('user').populate('video')
   .then(posts => {
-    posts.sort(function(a,b){
-      return (b.views)- (a.views);
-    });
+    posts.sort((a, b) => b.views - a.views);
     if (req.accepts("html")) {
         res.status(200).render('gallery.html', {posts})
     } else {

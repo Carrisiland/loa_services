@@ -2,7 +2,11 @@
 
 const webPush = require('web-push');
 const express = require('express');
+const mongoose = require('mongoose');
+const { check, validationResult, sanitize } = require('express-validator');
 const router = express.Router();
+require('../../models/subscription');
+const Subscription = mongoose.model('Subscription');
 
 const VAPID_PUBLIC_KEY = 'BKaOrp9mnKVDGtPvsobCWJ2-KhNiZfZ9UdaedsjW9FzFgvl9Xpm21CY4ogbxS_-fU2-cqhiiMYt0ZTgjeO3W5I4';
 const VAPID_PRIVATE_KEY = 'YZraPi0vHmn9Rtp4YGFIdRbJLToWdKE-xe7MUPxswrA';
@@ -21,7 +25,11 @@ router.get('/vapidPublicKey', function(req, res) {
 // Object to store to reach client (sort of a socket handle)
 let subscription = null;
 
-router.post('/register', function(req, res) {
+router.post('/register', [
+  check('endpoint').not().isEmpty(),
+  check('keys.auth').not().isEmpty().
+  check('keys.p256dh').not().isEmpty()
+], async (req, res) => {
   subscription = req.body.subscription;
   res.sendStatus(201);
 });
