@@ -23,7 +23,17 @@ async function search(value) {
   // console.log(res);
 
   nunjucks.render('searchResultLive.html', res, (err, cont) => {
-    // console.log(cont);
+    console.log(cont);
     document.getElementById("results").innerHTML = cont;
+  });
+
+  $(".searchResultsPosts").on("click", function() {
+    console.log("ciaoiaoiaoiaoiao")
+    window.location = "/posts/" + jQuery(this).attr('id')
+  });
+
+  $(".searchResultsUsers").on("click", function() {
+    console.log("ciaoiaoiaoiaoiao")
+    window.location = "/profile/" + jQuery(this).attr('id')
   });
 }
