@@ -205,8 +205,7 @@ router.post('/', [
     });
 
     if (match.videoType == 'youtube') {
-      video.thumbnailLink = 'http://i3.ytimg.com/vi/' + match[1] +
-        '/hqdefault.jpg';
+      video.thumbnailLink = `http://i3.ytimg.com/vi/${match[1]}/hqdefault.jpg`;
     } else {
       const info = await
         fetch(`http://vimeo.com/api/v2/video/${match.pop()}.json`)
@@ -242,8 +241,10 @@ router.post('/', [
       await req.user.save();
     }
 
-    sendNotification({ text: `New post ${post.title}` })
-      .catch(console.error);
+    sendNotification({
+      text: `New post: "${post.title}"`,
+      badge: video.thumbnailLink
+    }).catch(console.error);
 
     res.redirect('/post/gallery');
   } catch(e) {

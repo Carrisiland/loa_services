@@ -50,13 +50,4 @@ router.post('/register', [
   res.sendStatus(201);
 });
 
-router.get('/sendNotification', async (req, res) => {
-  try {
-    await sendNotification('test ciao mamma');
-    res.sendStatus(201);
-  } catch(e) {
-    res.status(500).json({ error: e });
-  }
-});
-
 module.exports = router;

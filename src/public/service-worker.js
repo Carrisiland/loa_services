@@ -30,11 +30,14 @@ self.addEventListener('push', (event) => {
 
   if (!event.data) return;
   const payload = event.data.json();
-
+  console.log('notification payload', payload);
 
   // Keep the service worker alive until the notification is created.
   event.waitUntil(
     self.registration.showNotification('VimTok', {
+      badge: payload.badge,
+      image: payload.badge,
+      icon: payload.badge,
       body: payload.text,
     })
   );
