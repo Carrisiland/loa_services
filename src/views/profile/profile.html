@@ -38,12 +38,12 @@
     <br>
     {%endif%}
     {%endif%}
-    <img class="ui medium circular image center" src="/img/elon_musk.jpg">
+    <img class="ui medium circular image center" src="/img/elon_musk.jpg" style="margin:auto; width: 35%; margin-top:1.5em;">
     <br>
   </div>
-  
 
-  
+
+{% if user.id == profileUser.id %}
   <div id='menus'>
     <div class="ui four item menu">
       <a id="all" class="item">All</a>
@@ -52,6 +52,7 @@
       <a class="item">Albums</a>
     </div>
   </div>
+  {% endif %}
 </div>
 
 <main class="ui container">
