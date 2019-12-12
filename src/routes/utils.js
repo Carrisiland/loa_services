@@ -25,7 +25,9 @@ function authenticated(req, res, next) {
   }
 }
 
-async function sendNotification(payload, criteria = {}) {
+async function sendNotification(req, payload, criteria = {}) {
+  payload.userId = req.user._id;
+  console.log(payload);
   const options = { TTL: 0 };
 
   try {

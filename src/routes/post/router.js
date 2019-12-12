@@ -241,7 +241,7 @@ router.post('/', [
       await req.user.save();
     }
 
-    sendNotification({
+    sendNotification(req, {
       text: `New post: "${post.title}"`,
       badge: video.thumbnailLink
     }).catch(console.error);

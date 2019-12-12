@@ -15,11 +15,11 @@ self.onmessage = (event) => {
 };
 
 self.addEventListener('install', function(event) {
-    event.waitUntil(self.skipWaiting()); // Activate worker immediately
+  event.waitUntil(self.skipWaiting()); // Activate worker immediately
 });
 
 self.addEventListener('activate', function(event) {
-    event.waitUntil(self.clients.claim()); // Become available to all pages
+  event.waitUntil(self.clients.claim()); // Become available to all pages
 });
 
 // Register event listener for the 'push' event.
@@ -32,14 +32,16 @@ self.addEventListener('push', (event) => {
   const payload = event.data.json();
   console.log('notification payload', payload);
 
-  // Keep the service worker alive until the notification is created.
-  event.waitUntil(
-    self.registration.showNotification('VimTok', {
-      badge: payload.badge,
-      image: payload.badge,
-      icon: payload.badge,
-      body: payload.text,
-    })
-  );
+  if (user && user.followers && user.followers.indexOf(payload.userId) !== -1) {
+    // Keep the service worker alive until the notification is created.
+    event.waitUntil(
+      self.registration.showNotification('VimTok', {
+        badge: payload.badge,
+        image: payload.badge,
+        icon: payload.badge,
+        body: payload.text,
+      })
+    );
+  }
 });
 
