@@ -1,30 +1,16 @@
 // vim: set ts=2 sw=2 et tw=80:
 
-const webPush = require('web-push');
 const express = require('express');
 const mongoose = require('mongoose');
-const PromisesAll = require('promises-all');
 const { check, validationResult, sanitize } = require('express-validator');
 const router = express.Router();
+const { sendNotification, VAPID_SHRKEY, VAPID_KEY } = require('../utils');
 require('../../models/subscription');
 const Subscription = mongoose.model('Subscription');
 
-const VAPID_PUBLIC_KEY = 'BKaOrp9mnKVDGtPvsobCWJ2-KhNiZfZ9UdaedsjW9FzFgvl9Xpm21CY4ogbxS_-fU2-cqhiiMYt0ZTgjeO3W5I4';
-const VAPID_PRIVATE_KEY = 'YZraPi0vHmn9Rtp4YGFIdRbJLToWdKE-xe7MUPxswrA';
-
-// Set the keys used for encrypting the push messages.
-webPush.setVapidDetails(
-  'https://github.com/Carrisiland/vimtok',
-  VAPID_PUBLIC_KEY,
-  VAPID_PRIVATE_KEY
-);
-
 router.get('/vapidPublicKey', function(req, res) {
-  res.send(VAPID_PUBLIC_KEY);
+  res.send(VAPID_SHRKEY);
 });
-
-// Object to store to reach client (sort of a socket handle)
-let subscription = null;
 
 router.post('/register', [
   check('subscription.endpoint').not().isEmpty(),
@@ -39,10 +25,23 @@ router.post('/register', [
     return;
   }
 
+  try {
+    const same =
+      await Subscription.findOne({ endpoint: req.body.subscription.endpoint });
+
+    if (same) {
+      res.status(200).json({ success: true, alreadyRegistered: true });
+      return;
+    }
+  } catch (e) {
+    console.error('/notifications/register find same error', e);
+    res.status(500).json({ errors: [e] });
+  }
+
   const subscription = new Subscription({
     endpoint: req.body.subscription.endpoint,
     keys: { p256dh: req.body.subscription.keys.p256dh,
-    auth: req.body.subscription.keys.auth }
+      auth: req.body.subscription.keys.auth }
   });
 
   try {
@@ -56,20 +55,10 @@ router.post('/register', [
 });
 
 router.get('/sendNotification', async (req, res) => {
-  const payload = 'test';
-  const options = {
-    TTL: 0
-  };
-
   try {
-    const subscriptions = await Subscription.find({});
-    await PromisesAll.all(subscriptions.map(s => {
-      console.log(s);
-      return webPush.sendNotification(s, payload, options)
-    }));
+    await sendNotification('test ciao mamma');
     res.sendStatus(201);
   } catch(e) {
-    console.error('/notifications/sendNotification error', e);
     res.status(500).json({ error: e });
   }
 });
