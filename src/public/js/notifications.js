@@ -19,6 +19,10 @@ const urlBase64ToUint8Array = base64String => {
 
 navigator.serviceWorker.ready
   .then((registration) => {
+  navigator.serviceWorker.controller.postMessage({
+    type: 'user',
+    data: window.USER
+  });
     // Use the PushManager to get the user's subscription to the push service.
     return registration.pushManager.getSubscription()
       .then(async function(subscription) {

@@ -14,6 +14,7 @@ const fetch = require('node-fetch');
 const youtubedl = require('youtube-dl');
 const ffmpeg = require('fluent-ffmpeg');
 const { Base64Encode } = require('base64-stream');
+const { sendNotification } = require('../utils');
 
 const youtubeRegex =
   new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\' +
@@ -240,6 +241,10 @@ router.post('/', [
       req.user.posts.push(saved);
       await req.user.save();
     }
+
+    sendNotification({ text: `New post ${post.title}` })
+      .catch(console.error);
+
     res.redirect('/post/gallery');
   } catch(e) {
     console.error(e);

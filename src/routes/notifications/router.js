@@ -38,11 +38,7 @@ router.post('/register', [
     res.status(500).json({ errors: [e] });
   }
 
-  const subscription = new Subscription({
-    endpoint: req.body.subscription.endpoint,
-    keys: { p256dh: req.body.subscription.keys.p256dh,
-      auth: req.body.subscription.keys.auth }
-  });
+  const subscription = new Subscription(req.body.subscription);
 
   try {
     await subscription.save();

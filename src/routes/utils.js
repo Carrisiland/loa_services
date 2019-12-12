@@ -8,6 +8,8 @@ const Subscription = mongoose.model('Subscription');
 const VAPID_PUBLIC_KEY = 'BKaOrp9mnKVDGtPvsobCWJ2-KhNiZfZ9UdaedsjW9FzFgvl9Xpm21CY4ogbxS_-fU2-cqhiiMYt0ZTgjeO3W5I4';
 const VAPID_PRIVATE_KEY = 'YZraPi0vHmn9Rtp4YGFIdRbJLToWdKE-xe7MUPxswrA';
 
+console.log(VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
+
 // Set the keys used for encrypting the push messages.
 webPush.setVapidDetails(
   'https://github.com/Carrisiland/vimtok',
@@ -30,10 +32,10 @@ async function sendNotification(payload, criteria = {}) {
     const subscriptions = await Subscription.find(criteria);
     if (subscriptions.length > 0) {
       await PromisesAll.all(subscriptions.map(s => {
-        console.log('sending notification to', s.endpoint);
-        return webPush.sendNotification(s, payload, options)
+        console.log('sending notification to', s);
+        return webPush.sendNotification(s, JSON.stringify(payload), options)
           .catch(async e => {
-            const json = await e.json();
+            const json = JSON.parse(e.body);
             console.log('cannot send, deleting', s._id, json);
             await Subscription.deleteOne({ _id: s._id });
           });
