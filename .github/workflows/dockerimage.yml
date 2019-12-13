@@ -1,14 +1,19 @@
+# vim: set ts=2 sw=2 et tw=80:
+
 name: Docker Image CI
 
 on: [push]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Build the Docker image
-      run: docker build src --file src/Dockerfile --tag vimtok:$(date +%s)
+      - uses: actions/checkout@master
+      - name: Build and publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: vimtok/vimtok
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          dockerfile: src/Dockerfile
+          context: src/
