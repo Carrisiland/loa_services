@@ -28,7 +28,7 @@
       <form class="search-form" method="GET" action="/search">
         <div class="ui icon input" style="margin-left: 1em;">
           <i class="inverted circular search link icon"></i>
-          <input list="results" type="text" name="searchBar" placeholder="Search for posts or users">
+          <input list="results" id="searchBar" type="text" name="searchBar" placeholder="Search for posts or users">
             <datalist id="results">
 
             </datalist>
@@ -46,22 +46,9 @@
         <i class="user icon"></i> {{ user.username }}
       </a>
       <a href="/auth/logout" class="ui inverted button">Logout</a>
-      <div class="ui inverted button dropdown" style="margin-left: 1em; float: right;">
-          <i class="settings icon"></i>
-          <div class="menu">
-            <div class="item edit" onclick="window.location='/profile/edit/{{user.id}}'">
-              <i class="edit icon"></i>
-              Change username
-            </div>
-            <div class="divider"></div>
-            <form class="item" method="GET" action="/profile/edit/{{user.image}}">
-              <button>
-                <i class="image icon"></i>
-                Change profile picture
-              </button>
-            </form>
-          </div>
-        </div>
+      <a href="/profile/edit/{{ user.id }}" class="ui inverted button user-btn">
+        <i class="settings icon"></i>
+      </a>
     </div>
     {% endif %}
   </div>

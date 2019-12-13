@@ -3,6 +3,7 @@
 const LocalStrategy = require('passport-local');
 const passport = require('passport');
 const User = require('../models/user');
+// var url  = require('url');
 const { validationResult } = require('express-validator');
 
 passport.serializeUser(function(user, done) {
@@ -46,7 +47,9 @@ passport.use('local-signup', new LocalStrategy({
         newUser.username = username;
         newUser.password = newUser.generateHash(password);
         newUser.email = req.body.email;
-
+        // newUser.url = "profile/" + newUser.id;
+        // newUser.image = req.body.file;
+        
         newUser.save((err) => {
           if (err) {
             return done(err, null);

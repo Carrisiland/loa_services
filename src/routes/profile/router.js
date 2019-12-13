@@ -3,6 +3,7 @@ const passport = require('passport');
 const router = require('express').Router();
 const User = mongoose.model('User');
 const Post = mongoose.model('Post');
+const Schema = mongoose.Schema;
 
 router.get('/all', (req, res) => {
 
@@ -105,11 +106,12 @@ router.patch('/edit/:id', async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     user.username = req.body.username;
+    // user._id = mongoose.Types.ObjectId(req.body.new_id);
     await user.save();
     res.redirect('/profile/' + user.id);
   } catch(e) {
     console.error(e);
-    res.status(500).render('/profile/' + user.id);
+    res.status(500).render('/profile/' + user._id);
   }
 
 
