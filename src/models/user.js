@@ -3,7 +3,7 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
 
 const userSchema = mongoose.Schema({

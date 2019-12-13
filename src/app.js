@@ -15,9 +15,17 @@ const mongoose = require('mongoose');
 require('./models/user.js');
 require('./config/passport');
 
-mongoose.connect('mongodb://127.0.0.1/vimtok', {
+if (!process.env.MONGOURL) {
+  console.error(`MongoDB credentials not provided. Specify them as enviroment
+    variables: MONGOURL, MONGOUSER and MONGOPASS`);
+  process.exit();
+}
+
+mongoose.connect(process.env.MONGOURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  user: process.env.MONGOUSER,
+  pass: process.env.MONGOPASS
 });
 
 

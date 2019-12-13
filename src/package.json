@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "nunjucks": "nunjucks-precompile views > public/js/templates.js",
-    "start": "yarn run nunjucks && DEBUG='vimtok' nodemon -e js,html,nj ./bin/www"
+    "start": "yarn run nunjucks && DEBUG='vimtok' MONGOURL='mongodb://127.0.0.1/vimtok' nodemon -e js,html,nj ./bin/www"
   },
   "keywords": [
     "Node.js",
@@ -18,11 +18,10 @@
   "license": "GPL-3.0",
   "dependencies": {
     "base64-stream": "^1.0.0",
-    "bcrypt-nodejs": "^0.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "debug": "^4.1.1",
     "express": "^4.16.2",
     "express-flash-messages": "^0.1.1",
