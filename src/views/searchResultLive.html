@@ -4,19 +4,19 @@
 
 {% if users | length > 0  %}
     {% for user in users %}
-    <option id="{{user._id}}" class="searchResultsUsers" value="{{user.username}}"></option>
+    <option id="{{user._id}}" class="user" name="user" value="Ⓤ {{user.username}}"></option>
     {% endfor %}
 {% endif %}
 
 {% if  posts %}
   {% for post in posts %}
-  <option id="{{post._id}}" class="searchResultsPosts" value="{{post.title}}"> </option>
+  <option id="{{post._id}}" class="post" name="post" value="Ⓟ {{post.title}}"> </option>
   {% endfor %}
 {% endif %}
 
 {% if tagPosts %}
   {% for post in tagPosts %}
-  <option id="{{post._id}}" class="searchResultsPosts" value="{{post.title}}"></option>
+  <option id="{{post._id}}" class="searchResultsPosts" name="post" value="Ⓟ {{post.title}}"></option>
   {% endfor %}
 {% endif %}
 
