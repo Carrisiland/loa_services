@@ -4,7 +4,7 @@ MAINTAINER info@vimtok.com
 
 RUN mkdir /app && adduser vimtok -h /app -s /sbin/nologin -D
 RUN apk update && apk add ffmpeg
-COPY src/ /app
+COPY . /app
 RUN cd /app \
   && chown -R vimtok . \
   && npm install \
