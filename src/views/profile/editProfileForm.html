@@ -8,9 +8,13 @@
 <h2>Edit profile</h2>
 
 <form class="ui large form" method="post" action='/profile/edit/{{user.id}}?_method=PATCH'>
-  <div class="field required">
+  <div class="field">
     <label>Username:</label>
-    <input required type="text" name="username" placeholder="{{user.username}}">
+    <input required type="text" name="username" value="{{user.username}}">
+  </div>
+  <div class="field">
+    <label>URL:</label>
+    <input required type="text" name="new_id" value="{{user.id}}">
   </div>
   <div class="field">
     <button class="ui button" type="submit">Update</button>

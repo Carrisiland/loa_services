@@ -7,6 +7,7 @@
 {% block body %}
 <h2>Signup</h2>
 
+<!-- add enctype="multipart/form-data" to form for image upload -->
 <form class="ui large form" method="post">
   <div class="field required">
     <label>Username:</label>
@@ -24,6 +25,10 @@
     <label>Password (again):</label>
     <input required type="password" name="password2">
   </div>
+  <!-- <div class="field">
+    <label>Upload image:</label>
+    <input type="file" name="file">
+  </div> -->
   <div class="field">
     <button class="ui button" type="submit">Register</button>
   </div>
