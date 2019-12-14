@@ -35,7 +35,7 @@ const secret = 'luciano-malusa-in-pensione';
 //configure app
 app.use(logger('dev'));
 
-const engine = nunjucks.configure(__dirname + 'views', {
+const engine = nunjucks.configure(__dirname + '/views', {
     autoescape: true,
     express: app
 });
