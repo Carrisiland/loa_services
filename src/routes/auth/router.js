@@ -15,20 +15,32 @@ router.post('/login', passport.authenticate('local', {
   failureFlash: true
 }));
 
-router.get('/signup', (req, res) => {
-  res.render('auth/signup.html');
-});
+if (!process.env.PUBLISH_MODE === "true") {
+  router.get('/signup', (req, res) => {
+    res.render('auth/signup.html');
+  });
+} else {
+  router.get('/signup', (req, res) => {
+    res.status(403).end('Registration disabled');
+  });
+};
 
 router.get('/profile', authenticated, (req, res) => {
   res.redirect('/profile/' + req.user.id);
 });
 
-router.post('/signup', User.validateSignup(),
-  passport.authenticate('local-signup', {
-    successRedirect: '/auth/profile',
-    failureRedirect: '/auth/signup',
-    failureFlash: true
-  }));
+if (!process.env.PUBLISH_MODE === "true") {
+  router.post('/signup', User.validateSignup(),
+    passport.authenticate('local-signup', {
+      successRedirect: '/auth/profile',
+      failureRedirect: '/auth/signup',
+      failureFlash: true
+    }));
+} else {
+  router.post('/signup', (req, res) => {
+    res.status(403).end('Registration disabled');
+  });
+};
 
 router.get('/logout', (req, res) => {
   req.logout();

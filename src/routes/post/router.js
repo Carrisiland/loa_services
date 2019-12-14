@@ -169,6 +169,8 @@ router.get('/gallery/viewsort', (req, res) =>{
   });
 });
 
+const DISABLE_ANON_POST = process.env.PUBLISH_MODE === "true";
+
 router.post('/', [
   sanitize('link').customSanitizer((v, re) => {
     if (re = youtubeRegex.exec(v)) {
@@ -186,6 +188,12 @@ router.post('/', [
   check('title').not().isEmpty(),
   check('title').isLength({max: 20})
 ], async (req, res) => {
+
+  if (DISABLE_ANON_POST && !req.user) {
+    res.status(403).end("Anonymous posting is disabled");
+    return;
+  }
+
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
