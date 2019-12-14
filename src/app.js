@@ -47,7 +47,7 @@ app.use(cors());
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
 app.use(bodyParser.json({ limit: '50mb' }));
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 app.use(session({ secret, resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
