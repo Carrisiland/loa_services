@@ -14,12 +14,14 @@ const fetch = require('node-fetch');
 
 
 router.get('/', async (req, res) => {
-    let input = req.query.searchBar;
+    let input =  req.query.searchBar.replace(/ +$/, "");
     if (input == ""){
         res.status(200);
         res.render('searchResult.html', {posts: {}, users: {}, tagPosts : {} })
         return;
     }
+    
+    console.log(input)
     const users = await User.find({username: new RegExp(input, "i")});
     const posts = await Post.find({title :  new RegExp(input, "i") , visibility : "public" }).populate('video').populate("user");
     const allPosts = await Post.find({tags: new RegExp(input, "i"), visibility : "public"}).populate('video').populate("user");
