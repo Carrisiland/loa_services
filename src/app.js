@@ -99,4 +99,12 @@ io.on('connection', (socket) => {
 
 const eventBus = require('./pubsub');
 
+eventBus.on('new.post', function(event){
+  io.emit('new.post', event);
+});
+
+eventBus.on('delete.post', function(event){
+  io.emit('delete.post', event);
+});
+
 module.exports = app;

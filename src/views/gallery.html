@@ -24,9 +24,12 @@
   {% else %}
     <h1 class="ui header">Gallery</h1>
     {% endif %}
+  <div id="posts">
 {% include "post/list.html" %}
+  </div>
 {% endblock %}
 
 
 {% block scripts %}
+<script src="/js/gallery.js"></script><script>galleryStart();</script>
 {% endblock %}

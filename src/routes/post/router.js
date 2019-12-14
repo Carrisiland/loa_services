@@ -15,6 +15,7 @@ const youtubedl = require('youtube-dl');
 const ffmpeg = require('fluent-ffmpeg');
 const { Base64Encode } = require('base64-stream');
 const { sendNotification } = require('../utils');
+const eventBus = require('../../pubsub.js');
 
 const youtubeRegex =
   new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\' +
@@ -246,6 +247,8 @@ router.post('/', [
       badge: video.thumbnailLink
     }).catch(console.error);
 
+    eventBus.emit('new.post');
+
     res.redirect('/post/gallery');
   } catch(e) {
     console.error(e);
@@ -387,6 +390,7 @@ router.delete('/delete/:id', (req, res) => {
     });
 
     await user.save();
+    eventBus.emit('delete.post');
 
     return found.remove();
   }).then((removed) => {
