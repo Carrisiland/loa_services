@@ -206,10 +206,10 @@ router.post('/', [
     });
 
     if (match.videoType == 'youtube') {
-      video.thumbnailLink = `http://i3.ytimg.com/vi/${match[1]}/hqdefault.jpg`;
+      video.thumbnailLink = `https://i3.ytimg.com/vi/${match[1]}/hqdefault.jpg`;
     } else {
       const info = await
-        fetch(`http://vimeo.com/api/v2/video/${match.pop()}.json`)
+        fetch(`https://vimeo.com/api/v2/video/${match.pop()}.json`)
       const infoJson = await info.json();
       video.thumbnailLink = infoJson[0].thumbnail_large;
     }

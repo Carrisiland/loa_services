@@ -27,10 +27,10 @@ function onYouTubeIframeAPIReady() {
   function fetchThumbnail(type, url, getCancel = () => false) {
     switch (type) {
       case 'youtube':
-        setThumbnail(`http://i3.ytimg.com/vi/${url}/hqdefault.jpg`);
+        setThumbnail(`https://i3.ytimg.com/vi/${url}/hqdefault.jpg`);
         break;
       case 'vimeo':
-        fetch(`http://vimeo.com/api/v2/video/${url}.json`)
+        fetch(`https://vimeo.com/api/v2/video/${url}.json`)
           .then(r => r.json())
           .then(infoJson => {
             if (getCancel()) return;
