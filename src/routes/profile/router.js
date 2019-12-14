@@ -76,6 +76,24 @@ router.get('/private', (req, res) => {
   });
 });
 
+router.get('/album', (req, res) => {
+
+  User.findById(req.user._id).populate({
+    path: "albums",
+    populate: [{
+      path: 'user',
+      model: 'User',
+    }]
+  })
+  .then((user) => {
+      res.status(200).json(user.albums);
+  }).catch(err => {
+    console.error(err);
+    req.flash('error', err.toString());
+    res.render('profile/profile.html');
+  });
+});
+
 
 router.get('/:id', (req, res) => {
   User.findById(req.params.id).populate({
