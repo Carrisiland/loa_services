@@ -17,7 +17,6 @@ function searchStart() {
 
 
     function checkExists(inputValue) {
-      // console.log(inputValue);
 
       var x = document.getElementById("results");
       var i;
@@ -44,7 +43,6 @@ async function search(value) {
     document.getElementById("results").innerHTML = cont;
 
     $("#searchBar").bind('input', function () {
-      // console.log("OOOOOO")
       let d = checkExists( $('#searchBar').val());
       if(d != undefined) {
         let k = d.id;
