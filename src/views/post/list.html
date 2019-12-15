@@ -1,5 +1,5 @@
 {# vim: set ts=2 sw=2 et tw=120: #}
-<div class="ui three stackable cards">
+<div class="ui three stackable cards res">
   {% for post in posts %}
   <div id="{{post._id}}card" class="card">
     <img width="100%" src="{{ post.video.thumbnailLink }}"
@@ -19,12 +19,13 @@
             Delete
           </div>
           <div class="divider"></div>
-          <div class="item addAlbum">
+          <div id="{{post._id}}Album" class="item addAlbum">
               <i class="folder icon"></i>
               Add to Album
-              </div>
-            </div>
+
+          </div>
         </div>
+      </div>
       {% endif %}
       {% endif %}
       <div class="header">{{ post.title }}</div>
