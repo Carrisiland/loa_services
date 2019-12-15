@@ -22,8 +22,6 @@ router.post('/', async (req, res)=>{
     let album = new Album({
         user: req.user,
         title: req.body.title,
-        visibility: req.body.visibility,
-        posts:[],
         postNumbers:0
     })
 
@@ -56,6 +54,8 @@ router.get('/user/', (req, res)=>{
         res.status(200).json({albums : albumArr});
     });
 });
+
+
 router.put('/', (req, res)=>{
     Post.findById(req.params.id).then(async (found)=>{
         if (!req.user){

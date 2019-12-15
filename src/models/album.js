@@ -6,8 +6,6 @@ const albumSchema = mongoose.Schema({
   user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
   title: { type: String, required: true },
   dateCreated: { type: String, required: true, default: new Date().toString()},
-  visibility: {type: String},
-  thumbnail: String,
   posts: [{type: Schema.Types.ObjectId, ref: 'Post', default: []}],
   postNumbers: {type: Number}
 });
