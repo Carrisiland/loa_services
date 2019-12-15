@@ -42,7 +42,7 @@ class Player {
           if (!firstOnReady) return;
 
           if (!this.player.loadVideoById) {
-            setTimeout(onReady, 2000);
+            setTimeout(onReady, 1500);
             return;
           }
 
