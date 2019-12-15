@@ -14,6 +14,10 @@ const Comment = mongoose.model('Comment');
 const { check, validationResult, sanitize } = require('express-validator');
 const fetch = require('node-fetch');
 
+router.get('/new', (req, res) => {
+    res.render('newAlbum.html');
+  });
+  
 router.post('/', async (req, res)=>{
     let album = new Album({
         user: req.user,
@@ -36,6 +40,9 @@ router.put('/', (req, res)=>{
     Post.findById(req.params.id).then(async (found)=>{
         if (!req.user){
             throw new Error("You need to login to add the post to the album ");
+        }
+        if (found.visibility == "private"){
+            throw new Error("You need to use a public post to add the post to the album ");
         }
         const user = await User.findById(req.user.id).populate("albums");
         let album = user.albums.filter( (album) =>{
@@ -61,6 +68,35 @@ router.get('/:id',  (req,res)=>{
     res.render('album.html', { posts: postArr, album: found.title });
     });
 });
+
+router.delete('/delete/:id', (req,res)=>{
+    Album.findById(req.params.id).populate('user').then( async found =>{
+        let user = req.user;
+        if (user) {
+            if (user.id != found.user.id) {
+              throw new Error('You are not the owner of this post');
+            }
+          } else {
+            throw new Error("You need to login to delete posts");
+          }
+
+          user.albums = user.albums.filter((album) => {
+            return album.id != found.id;
+          });
+
+          await user.save();
+
+          return found.remove();
+    }).then(removed => {
+        res.status(204).end();
+    }).catch((err) => {
+      if(err.name == "CastError") {
+        res.status(404).render('/profile/profile.html');
+      } else {
+        res.status(500).render("/profile/profile.html");
+      }
+    });
+})
 
 
 
