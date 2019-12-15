@@ -25,7 +25,8 @@ async function addAlbum(id) {
     $(".albumNames").on('click', function(e) {
       console.log("OOOOOjbnchjbdhjcde c");
       let albumId = jQuery(this).attr('id');
-      doJSONRequest('PUT', '/album/', undefined, {id: postId, album: albumId})
+      doJSONRequest('PUT', '/album/', undefined, {id: postId, album: albumId});
+      window.location.href = '/post/gallery'
     });
   });
 }
