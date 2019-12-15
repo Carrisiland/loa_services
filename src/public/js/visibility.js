@@ -63,7 +63,6 @@ async function private() {
 
 
   nunjucks.render('post/list.html', obj, (err, cont) => {
-    console.log(document.getElementsByClassName("cont_iterator")[0].innerHTML);
     document.getElementsByClassName("cont_iterator")[0].innerHTML = cont;
   });
 
@@ -71,13 +70,13 @@ async function private() {
 }
 
 async function album(id) {
-  let res = await doJSONRequest('GET', '/profile/album'+id, undefined, undefined);
 
+  console.log("OOOOO");
+  let res = await doJSONRequest('GET', '/album/user/'+id, undefined, undefined);
 
-  let obj = {};
-  obj.posts = res;
+  console.log(res);
 
-  nunjucks.render('post/list.html', obj, (err, cont) => {
+  nunjucks.render('profile/albumViews.html', res, (err, cont) => {
     document.getElementsByClassName("cont_iterator")[0].innerHTML = cont;
   });
 

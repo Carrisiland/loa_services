@@ -1,0 +1,11 @@
+{% block results %}
+<div class="ui horizontal list">
+  {% for album in albums %}
+  <div class="item">
+    <div class="content" onclick="window.location='/album/{{album._id}}';">
+      <div class="header">{{album.title}}</div>
+      {{album.postNumbers}}
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}
