@@ -84,9 +84,6 @@ async function album(id) {
   eventHandler();
 }
 
-
-
-
 function eventHandler() {
   $(document).ready(() => {
     $('select.dropdown').dropdown();
