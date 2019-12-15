@@ -57,27 +57,36 @@ router.get('/user/', (req, res)=>{
 
 
 router.put('/', (req, res)=>{
-    Post.findById(req.params.id).then(async (found)=>{
+    console.log("post id = ", req.body.id)
+    Post.findById(req.body.id).then(async (found)=>{
         if (!req.user){
             throw new Error("You need to login to add the post to the album ");
         }
-        if (found.visibility == "private"){
-            throw new Error("You need to use a public post to add the post to the album ");
-        }
         const user = await User.findById(req.user.id).populate("albums");
+        console.log("album id = ", req.body.album)
         let album = user.albums.filter( (album) =>{
-            return album.id == req.params.album;
+            return album.id == req.body.album;
         })
-        album.posts.push(found);
-        album.postNumbers += 1;
+        console.log("albunm = ", album[0])
+        album[0].posts.push(found);
+        album[0].postNumbers += 1;
         await user.save();
+        await album[0].save()
+        console.log("albunm = ", album[0])
+        console.log("porcodiooo")
         res.status(200).redirect('/post/gallery');
     })
 
 })
 
 router.get('/:id',  (req,res)=>{
-    Album.findById(req.params.id).populate("posts").then( found =>{
+    Album.findById(req.params.id).populate({
+        path : "posts",
+          populate: [{
+            path: "video",
+          }, {path: "user"
+        }]
+    }).then( found =>{
     let postArr = [];
     for (i in found.posts){
         postArr.push(found.posts[i]);
