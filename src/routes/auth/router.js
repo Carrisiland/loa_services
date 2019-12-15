@@ -29,7 +29,7 @@ router.get('/profile', authenticated, (req, res) => {
   res.redirect('/profile/' + req.user.id);
 });
 
-if (!process.env.PUBLISH_MODE === "true") {
+if (process.env.PUBLISH_MODE !== "true") {
   router.post('/signup', User.validateSignup(),
     passport.authenticate('local-signup', {
       successRedirect: '/auth/profile',
