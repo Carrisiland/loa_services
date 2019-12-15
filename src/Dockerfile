@@ -3,7 +3,9 @@ FROM node:carbon-alpine
 MAINTAINER info@vimtok.com
 
 RUN mkdir /app && adduser vimtok -h /app -s /sbin/nologin -D
-RUN apk update && apk add ffmpeg
+RUN apk update \
+  && apk add --no-cache ffmpeg python3 \
+  && ln -s /usr/bin/python3 /usr/bin/python
 COPY . /app
 RUN cd /app \
   && chown -R vimtok . \
