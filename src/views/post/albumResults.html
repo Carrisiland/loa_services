@@ -1,0 +1,16 @@
+{% block results %}
+{% for album in albums %}
+  <div class="ui list">
+    <div class="item">
+      <div class="content">
+        <div id="{{album._id}]" class="item albumNames" id="">
+          {{album.title}}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
+
+
+{% endblock %}
