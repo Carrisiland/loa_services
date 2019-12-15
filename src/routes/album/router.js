@@ -17,7 +17,7 @@ const fetch = require('node-fetch');
 router.get('/new', (req, res) => {
     res.render('newAlbum.html');
   });
-  
+
 router.post('/', async (req, res)=>{
     let album = new Album({
         user: req.user,
@@ -36,6 +36,26 @@ router.post('/', async (req, res)=>{
       res.redirect('/profile/albums');
 })
 
+
+router.get('/user/:id', (req, res)=>{
+    User.findById(req.params.id).populate('albums').then( found =>{
+        let albumArr = [];
+        for (i in found.albums){
+            albumArr.push(found.albums[i]);
+        }
+        res.status(200).json({albums : albumArr});
+    });
+});
+
+router.get('/user/', (req, res)=>{
+    User.findById(req.user.id).populate('albums').then( found =>{
+        let albumArr = [];
+        for (i in found.albums){
+            albumArr.push(found.albums[i]);
+        }
+        res.status(200).json({albums : albumArr});
+    });
+});
 router.put('/', (req, res)=>{
     Post.findById(req.params.id).then(async (found)=>{
         if (!req.user){

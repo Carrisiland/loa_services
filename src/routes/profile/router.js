@@ -77,7 +77,6 @@ router.get('/private', (req, res) => {
 });
 
 router.get('/album', (req, res) => {
-
   User.findById(req.user._id).populate({
     path: "albums",
     populate: [{
