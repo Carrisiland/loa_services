@@ -15,6 +15,10 @@ function visibilityStart() {
       private();
     });
 
+    $(".album").on('click', function(e) {
+      album(jQuery(this).attr('id'));
+    });
+
   })
 }
 
@@ -65,6 +69,23 @@ async function private() {
 
   eventHandler();
 }
+
+async function album(id) {
+  let res = await doJSONRequest('GET', '/profile/album'+id, undefined, undefined);
+
+
+  let obj = {};
+  obj.posts = res;
+
+  nunjucks.render('post/list.html', obj, (err, cont) => {
+    document.getElementsByClassName("cont_iterator")[0].innerHTML = cont;
+  });
+
+  eventHandler();
+}
+
+
+
 
 function eventHandler() {
   $(document).ready(() => {
