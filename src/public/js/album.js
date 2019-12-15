@@ -3,6 +3,7 @@ function albumStart() {
   $(document).ready(function(){
 
     $(".addAlbum").on('click', function(e) {
+      console.log("vis");
       addAlbum(jQuery(this).attr('id'));
     });
 
@@ -23,7 +24,6 @@ async function addAlbum(id) {
     document.getElementsByClassName("res")[0].innerHTML = cont;
 
     $(".albumNames").on('click', function(e) {
-      console.log("OOOOOjbnchjbdhjcde c");
       let albumId = jQuery(this).attr('id');
       doJSONRequest('PUT', '/album/', undefined, {id: postId, album: albumId});
       window.location.href = '/post/gallery'

@@ -1,11 +1,13 @@
 {% block results %}
-<div class="ui horizontal list">
-  {% for album in albums %}
-  <div class="item">
-    <div class="content" onclick="window.location='/album/{{album._id}}';">
-      <div class="header">{{album.title}}</div>
-      {{album.postNumbers}}
+<div class="ui inverted segment" style="width: 90%; margin: auto; margin-top:2vh; cursor: pointer;">
+  <div class="ui inverted relaxed divided list">
+    {% for album in albums %}
+    <div class="item" onclick="window.location='/album/{{album._id}}';" style="padding-top:1.3vh; padding-bottom: 1.3vh; font-size: 1.2em;">
+          <div id="{{album._id}}" class="item albumNames content">
+            <i class="folder outline icon"></i>: {{album.title}}
+          </div>
     </div>
+      {% endfor %}
   </div>
-{% endfor %}
+</div>
 {% endblock %}

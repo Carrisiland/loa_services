@@ -88,6 +88,8 @@ function eventHandler() {
     $('select.dropdown').dropdown();
     $('div.dropdown').dropdown();
     likeStart();
+    deleteStart();
+    albumStart();
   });
 
 }
