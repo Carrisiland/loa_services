@@ -15,7 +15,7 @@ router.post('/login', passport.authenticate('local', {
   failureFlash: true
 }));
 
-if (!process.env.PUBLISH_MODE === "true") {
+if (process.env.PUBLISH_MODE !== "true") {
   router.get('/signup', (req, res) => {
     res.render('auth/signup.html');
   });
