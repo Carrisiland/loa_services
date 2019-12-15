@@ -71,7 +71,7 @@ router.put('/', (req, res)=>{
         album.posts.push(found);
         album.postNumbers += 1;
         await user.save();
-        res.status(200).render('/profile/albums');
+        res.status(200).redirect('/post/gallery');
     })
 
 })
