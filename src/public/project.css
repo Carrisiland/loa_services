@@ -167,7 +167,7 @@ main .ui.link.cards {
   margin-left: 0 !important;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1024px) {
   .ui.inverted.header.segment .ui.menu > .item {
     margin: 0 !important;
   }
