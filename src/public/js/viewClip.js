@@ -1,26 +1,15 @@
 // vim: set ts=2 sw=2 et tw=80:
 
-function loadVideo(link, startTime, ednTime){
-  const match = youtubeRegex.exec(link);
-  const vmatch = vimeoRegex.exec(link);
-  const start = parseTime(startTime);
-  const end = parseTime(ednTime);
-  console.log("entrato")
+function onYouTubeIframeAPIReady() {
+  const post = JSON.parse($("#selected-video").html());
+  const match = youtubeRegex.exec(post.link);
+  const vmatch = vimeoRegex.exec(post.link);
+  const start = parseTime(post.startTime);
+  const end = parseTime(post.endTime);
   if (match) {
-    new Player().play('youtube', match[1], start, end);
+    new Player().play('youtube', match[1], post.start, post.end);
   } else {
-    new Player().play('vimeo', vmatch.pop(), start, end);
+    new Player().play('vimeo', vmatch.pop(), post.start, post.end);
   }
 }
 
-function onYouTubeIframeAPIReady() {
-  console.log('api is ready');
-  $(document).ready(() => {
-    console.log('document is ready');
-    setTimeout(() => {
-      console.log('log');
-      const post = JSON.parse($("#selected-video").html());
-      loadVideo(post.video.link, post.video.start, post.video.end);
-    }, 300);
-  });
-}
