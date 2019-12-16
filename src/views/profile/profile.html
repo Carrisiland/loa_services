@@ -8,14 +8,14 @@
 {% set alreadyFollow = 2 %}
 
 {% for follower in profileUser.followers %}
-  {% if follower == user.id %}
-  {% set alreadyFollow = 1 %}
-  {%endif%}
+{% if follower == user.id %}
+{% set alreadyFollow = 1 %}
+{% endif %}
 {% endfor %}
 
 {% if alreadyFollow == 2 %}
-  {% set alreadyFollow = 0 %}
-{%endif%}
+{% set alreadyFollow = 0 %}
+{% endif %}
 
 <div id="my">
 
@@ -25,24 +25,24 @@
     <h1 class="ui inverted header">
       @{{ profileUser.username }}
     </h1>
-    {% if user.id != profileUser.id %}
+    {% if user.id != profileUser.id and user %}
     {% if alreadyFollow == 0 %}
-      <form method='POST' action='/follow/{{profileUser.id}}' style='display: inline;'>
-        <button id="{{profileUser._id}}" class="ui followButton button"><i class="thumbs up outline icon"></i><span id="followContent">Follow</span></button>
-      </form>
-      <br>
+    <form method='POST' action='/follow/{{profileUser.id}}' style='display: inline;'>
+      <button id="{{profileUser._id}}" class="ui followButton button"><i class="thumbs up outline icon"></i><span id="followContent">Follow</span></button>
+    </form>
+    <br>
     {% elif alreadyFollow == 1 %}
     <form method='POST' action='/follow/{{profileUser.id}}' style='display: inline;'>
       <button id="{{profileUser._id}}" class="ui followButton button"><i class="thumbs up outline icon"></i><span id="followContent">Unfollow</span></button>
     </form>
     <br>
-    {%endif%}
-    {%endif%}
+    {% endif %}
+    {% endif %}
     <br>
   </div>
 
 
-{% if user.id == profileUser.id %}
+  {% if user.id == profileUser.id %}
   <div id='menus'>
     <div class="ui four item menu">
       <a id="all" class="item">All</a>
@@ -65,7 +65,7 @@
 <main class="ui container">
   <h1 class="ui header">My Clips</h1>
   <div class="cont_iterator">
-  {% include "post/list.html" %}
+    {% include "post/list.html" %}
   </div>
 </main>
 
