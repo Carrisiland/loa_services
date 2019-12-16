@@ -33,7 +33,7 @@ self.addEventListener('push', (event) => {
   console.log('notification payload', payload);
   console.log('user', user);
 
-  if (user && user.followers && user.followers.indexOf(payload.userId) !== -1) {
+ // if (user && user.followers && user.followers.indexOf(payload.userId) !== -1) {
     // Keep the service worker alive until the notification is created.
     event.waitUntil(
       self.registration.showNotification('VimTok', {
@@ -43,6 +43,6 @@ self.addEventListener('push', (event) => {
         body: payload.text,
       })
     );
-  }
+  //}
 });
 
