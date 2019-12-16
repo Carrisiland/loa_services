@@ -68,7 +68,7 @@
         </button>
       </span>
       <span class="left floated">
-          {{post.video.duration //60}} : {{post.video.duration %60}}
+      {{ post.video.duration // 60 }}:{% if post.video.duration % 60 < 10 %}0{% endif %}{{ post.video.duration % 60 }}
       </span>
     </div>
   </div>
