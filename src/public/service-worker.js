@@ -31,6 +31,7 @@ self.addEventListener('push', (event) => {
   if (!event.data) return;
   const payload = event.data.json();
   console.log('notification payload', payload);
+  console.log('user', user);
 
   if (user && user.followers && user.followers.indexOf(payload.userId) !== -1) {
     // Keep the service worker alive until the notification is created.
