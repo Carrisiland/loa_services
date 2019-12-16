@@ -14,8 +14,11 @@ function loadVideo(link, startTime, ednTime){
 }
 
 function onYouTubeIframeAPIReady() {
+  console.log('api is ready');
   $(document).ready(() => {
+    console.log('document is ready');
     setTimeout(() => {
+      console.log('log');
       const post = JSON.parse($("#selected-video").html());
       loadVideo(post.video.link, post.video.start, post.video.end);
     }, 300);
