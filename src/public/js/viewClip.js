@@ -2,10 +2,10 @@
 
 function onYouTubeIframeAPIReady() {
   const post = JSON.parse($("#selected-video").html());
-  const match = youtubeRegex.exec(post.link);
-  const vmatch = vimeoRegex.exec(post.link);
-  const start = parseTime(post.startTime);
-  const end = parseTime(post.endTime);
+  const match = youtubeRegex.exec(post.video.thumbnailLink);
+  const vmatch = vimeoRegex.exec(post.video.thumbnailLink);
+  const start = parseTime(post.video.start);
+  const end = parseTime(post.video.end);
   if (match) {
     new Player().play('youtube', match[1], post.start, post.end);
   } else {
