@@ -14,6 +14,10 @@ function loadVideo(link, startTime, ednTime){
 }
 
 function onYouTubeIframeAPIReady() {
-  const post = JSON.parse($("#selected-video").html());
-  loadVideo(post.video.link, post.video.start, post.video.end);
+  $(document).ready(() => {
+    setTimeout(() => {
+      const post = JSON.parse($("#selected-video").html());
+      loadVideo(post.video.link, post.video.start, post.video.end);
+    }, 300);
+  });
 }
