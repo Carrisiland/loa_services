@@ -2,8 +2,8 @@
 
 function onYouTubeIframeAPIReady() {
   const post = JSON.parse($("#selected-video").html());
-  const match = youtubeRegex.exec(post.video.thumbnailLink);
-  const vmatch = vimeoRegex.exec(post.video.thumbnailLink);
+  const match = youtubeRegex.exec(post.video.link);
+  const vmatch = vimeoRegex.exec(post.video.link);
   const start = parseTime(post.video.start);
   const end = parseTime(post.video.end);
   if (match) {
