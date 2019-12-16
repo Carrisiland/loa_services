@@ -7,9 +7,9 @@ function onYouTubeIframeAPIReady() {
   const start = parseTime(post.video.start);
   const end = parseTime(post.video.end);
   if (match) {
-    new Player().play('youtube', match[1], post.start, post.end);
+    new Player().play('youtube', match[1], start, end);
   } else {
-    new Player().play('vimeo', vmatch.pop(), post.start, post.end);
+    new Player().play('vimeo', vmatch.pop(), start, end);
   }
 }
 
