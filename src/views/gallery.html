@@ -3,31 +3,31 @@
 {% block title %}Gallery{% endblock %}
 {% block body %}
 <div class="ui dropdown" style="float: right;">
-     <h3 style="display: inline">Sort</h3>
-     <i class="dropdown icon"></i>
-    <div class="menu">
-      <div class="item edit" onclick="window.location='/post/gallery/viewsort'">
-        Most viewed
-      </div>
-      <div class="item edit" onclick="window.location='/post/gallery/likesort'">
-        Most liked
-      </div>
-      <div class="item edit" onclick="window.location='/post/gallery/dislikesort'">
-        Most disliked
-      </div>
-      <div class="item edit" onclick="window.location='/post/gallery'">
-        Most recent
-      </div>
+  <h3 style="display: inline">Sort</h3>
+  <i class="dropdown icon"></i>
+  <div class="menu">
+    <div class="item edit" onclick="window.location='/post/gallery/viewsort'">
+      Most viewed
+    </div>
+    <div class="item edit" onclick="window.location='/post/gallery/likesort'">
+      Most liked
+    </div>
+    <div class="item edit" onclick="window.location='/post/gallery/dislikesort'">
+      Most disliked
+    </div>
+    <div class="item edit" onclick="window.location='/post/gallery'">
+      Most recent
     </div>
   </div>
-  {% if tag %}
-    <h1 class="ui header">#{{tag}}</h1>
-  {% else %}
-    <h1 class="ui header">Gallery</h1>
-    {% endif %}
-  <div id="posts">
-{% include "post/list.html" %}
-  </div>
+</div>
+{% if tag %}
+<h1 class="ui header">#{{tag}}</h1>
+{% else %}
+<h1 class="ui header">Gallery</h1>
+{% endif %}
+<div id="posts">
+  {% include "post/list.html" %}
+</div>
 {% endblock %}
 
 

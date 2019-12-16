@@ -7,18 +7,18 @@
 {% block users %}
 {% if users|length > 0  %}
 <div>
-    <h2 class="ui header">Users</h2>
-    {% for user in users %}
-    <div class="ui list">
-      <div class="item">
-        <img class="ui avatar image" src="/img/user.jpg">
-        <div class="content">
-          <a class="header" href="/profile/{{ user._id }}">{{user.username}}</a>
+  <h2 class="ui header">Users</h2>
+  {% for user in users %}
+  <div class="ui list">
+    <div class="item">
+      <img class="ui avatar image" src="/img/user.jpg">
+      <div class="content">
+        <a class="header" href="/profile/{{ user._id }}">{{user.username}}</a>
       </div>
-      </div>
-      </div>
-      {% endfor %}
-    <!-- <ul>
+    </div>
+  </div>
+  {% endfor %}
+  <!-- <ul>
     {% for user in users %}
     <a href="/profile/{{ user._id }}"><li> {{user.username}} </li></a>
     {% endfor %}
@@ -26,13 +26,13 @@
 </div>
 {% else %}
 <div class="ui card" style="width: 100%">
-        <div class="ui placeholder segment">
-          <div class="ui icon header">
-            <i class="user icon"></i>
-            <h4><em>Oops! No user found.</em></h4>
-          </div>
-        </div>
-      </div>
+  <div class="ui placeholder segment">
+    <div class="ui icon header">
+      <i class="user icon"></i>
+      <h4><em>Oops! No user found.</em></h4>
+    </div>
+  </div>
+</div>
 {% endif %}
 {% endblock %}
 
