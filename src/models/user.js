@@ -7,45 +7,56 @@ const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
 
 const userSchema = mongoose.Schema({
-  username: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-  facebook: {
-    id: String,
-    token: String,
-    name: String,
-    email: String
+  username: {
+    type: String,
+    required: true
   },
-  twitter: {
-    id: String,
-    token: String,
-    displayName: String,
-    username: String
+  email: {
+    type: String,
+    required: true
   },
-  google: {
-    id: String,
-    token: String,
-    email: String,
-    name: String
+  password: {
+    type: String,
+    required: true
   },
-  followers: [{type: Schema.Types.ObjectId, ref: 'User', default: []}],
-  following: [{type: Schema.Types.ObjectId, ref: 'User', default: []}],
-  posts: [{type: Schema.Types.ObjectId, ref: 'Post', default: []}],
-  albums: [{type: Schema.Types.ObjectId, ref: 'Album', default: []}],
-  likedPosts: [{type: Schema.Types.ObjectId, ref: 'Post', default: []}]
+  followers: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    default: () => []
+  }],
+  following: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    default: () => []
+  }],
+  posts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post',
+    default: () => []
+  }],
+  albums: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Album',
+    default: () => []
+  }],
+  likedPosts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post',
+    default: () => []
+  }]
 });
 
 userSchema.statics.validateSignup = function() {
   return [
     check('username', 'The username should be 3 to 50 alphanumeric characters')
-      .isAlphanumeric()
-      .isLength({ min: 3, max: 50 }),
+    .isAlphanumeric()
+    .isLength({ min: 3, max: 50 }),
     check('password', 'The password should be 8 to 50 alphanumeric characters')
-      .isAlphanumeric()
-      .isLength({ min: 8, max: 50 }),
+    .isAlphanumeric()
+    .isLength({ min: 8, max: 50 }),
     check('email', 'The email should be a valid email')
-      .isLength({ max: 100 })
-      .isEmail(),
+    .isLength({ max: 100 })
+    .isEmail(),
   ];
 };
 
