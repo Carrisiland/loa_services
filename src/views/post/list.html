@@ -53,6 +53,7 @@
       </a>
     </div>
     <div class="extra content">
+      {% if user %}
       <span class="right floated">
         <button id="{{post._id}}likeup" class="ui tiny blue button likeUp">
           <i class="thumbs up icon"></i>
@@ -67,6 +68,22 @@
           </span>
         </button>
       </span>
+      {% else %}
+      <span class="right floated">
+        <button class="ui tiny grey disabled button">
+          <i class="thumbs up icon"></i>
+          <span class='num'>
+            {{post.upvotes}}
+          </span>
+        </button>
+        <button class="ui tiny grey disabled button">
+          <i class="thumbs down icon"></i>
+          <span class='num'>
+            {{post.downvotes}}
+          </span>
+        </button>
+      </span>
+      {% endif %}
       <span class="left floated">
       {{ post.video.duration // 60 }}:{% if post.video.duration % 60 < 10 %}0{% endif %}{{ post.video.duration % 60 }}
       </span>
