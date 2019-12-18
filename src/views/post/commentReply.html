@@ -1,31 +1,33 @@
 {% block commentReply %}
-  <div class="comment">
-    <div class="content">
-      {% if commentReply.user %}
-      <a class="author" href="/profile/{{ comment.user._id }}">@{{ commentReply.user.username }}</a>
-      {% else %}
-      <a class="author">Anonymous</a>
-      {% endif %}
-      <div class="metadata">
-        <span class="date">{{ commentReply.dateCreated }}</span>
-      </div>
-      <div class="text">
-        {{ commentReply.text }}
-      </div>
-      <div class="actions">
-          <button id="{{commentReply._id}}likeup" class="ui blue tiny button likeUpComment">
-            <i class="thumbs up icon"></i>
-            <span class='num'>
-              {{commentReply.upvotes}}
-            </span>
-          </button>
-          <button id="{{commentReply._id}}likedown" class="ui red tiny button likeDownComment">
-            <i class="thumbs down icon"></i>
-            <span class='num'>
-                {{commentReply.downvotes}}
-            </span>
-          </button>
-        </div>
-      </div>
+<div class="comment">
+  <div class="content">
+    {% if commentReply.user %}
+    <a class="author" href="/profile/{{ comment.user._id }}">@{{ commentReply.user.username }}</a>
+    {% else %}
+    <a class="author">Anonymous</a>
+    {% endif %}
+    <div class="metadata">
+      <span class="date">{{ commentReply.dateCreated }}</span>
     </div>
+    <div class="text">
+      {{ commentReply.text }}
+    </div>
+    <div class="actions">
+      <button id="{{commentReply._id}}likeup" class="ui blue tiny button likeUpComment"
+                                              {% if not user %}disabled{% endif %}>
+        <i class="thumbs up icon"></i>
+        <span class='num'>
+          {{commentReply.upvotes}}
+        </span>
+      </button>
+      <button id="{{commentReply._id}}likedown" class="ui red tiny button likeDownComment"
+                                                {% if not user %}disabled{% endif %}>
+        <i class="thumbs down icon"></i>
+        <span class='num'>
+          {{commentReply.downvotes}}
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
 {% endblock %}

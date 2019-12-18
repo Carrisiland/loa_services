@@ -3,30 +3,32 @@
 <div class='commentList'>
   {% for comment in post.comments %}
   <div class="comment">
-  <div class="content">
-    {% if comment.user %}
-    <a class="author" href="/profile/{{ comment.user._id }}">@{{ comment.user.username }}</a>
-    {% else %}
-    <a class="author">Anonymous</a>
-    {% endif %}
-    <div class="metadata">
-      <span class="date">{{ comment.dateCreated }}</span>
-    </div>
-    <div class="text">
-      {{ comment.text }}
-    </div>
-    <div class="actions">
-      <a id="{{comment._id}}replyButton" class="replyComment">Reply</a>
-        <button id="{{comment._id}}likeup" class="ui blue tiny button likeUpComment">
+    <div class="content">
+      {% if comment.user %}
+      <a class="author" href="/profile/{{ comment.user._id }}">@{{ comment.user.username }}</a>
+      {% else %}
+      <a class="author">Anonymous</a>
+      {% endif %}
+      <div class="metadata">
+        <span class="date">{{ comment.dateCreated }}</span>
+      </div>
+      <div class="text">
+        {{ comment.text }}
+      </div>
+      <div class="actions">
+        <a id="{{comment._id}}replyButton" class="replyComment">Reply</a>
+        <button id="{{comment._id}}likeup" class="ui blue tiny button likeUpComment"
+                                           {% if not user %}disabled{% endif %}>
           <i class="thumbs up icon"></i>
           <span class='num'>
             {{comment.upvotes}}
           </span>
         </button>
-        <button id="{{comment._id}}likedown" class="ui red tiny button likeDownComment">
+        <button id="{{comment._id}}likedown" class="ui red tiny button likeDownComment"
+                                             {% if not user %}disabled{% endif %}>
           <i class="thumbs down icon"></i>
           <span class='num'>
-              {{comment.downvotes}}
+            {{comment.downvotes}}
           </span>
         </button>
       </div>
@@ -35,36 +37,38 @@
       <div id="{{comment._id}}commentReplies" class="comments">
         {% for commentReply in comment.replies %}
 
-          <div class="comment">
-            <div class="content">
-              {% if commentReply.user %}
-              <a class="author" href="/profile/{{ comment.user._id }}">@{{ commentReply.user.username }}</a>
-              {% else %}
-              <a class="author">Anonymous</a>
-              {% endif %}
-              <div class="metadata">
-                <span class="date">{{ commentReply.dateCreated }}</span>
-              </div>
-              <div class="text">
-                {{ commentReply.text }}
-              </div>
-              <div class="actions">
-                  <button id="{{commentReply._id}}likeup" class="ui blue tiny button likeUpComment">
-                    <i class="thumbs up icon"></i>
-                    <span class='num'>
-                      {{commentReply.upvotes}}
-                    </span>
-                  </button>
-                  <button id="{{commentReply._id}}likedown" class="ui red tiny button likeDownComment">
-                    <i class="thumbs down icon"></i>
-                    <span class='num'>
-                        {{commentReply.downvotes}}
-                    </span>
-                  </button>
-                </div>
-              </div>
+        <div class="comment">
+          <div class="content">
+            {% if commentReply.user %}
+            <a class="author" href="/profile/{{ comment.user._id }}">@{{ commentReply.user.username }}</a>
+            {% else %}
+            <a class="author">Anonymous</a>
+            {% endif %}
+            <div class="metadata">
+              <span class="date">{{ commentReply.dateCreated }}</span>
             </div>
-          {% endfor %}
+            <div class="text">
+              {{ commentReply.text }}
+            </div>
+            <div class="actions">
+              <button id="{{commentReply._id}}likeup" class="ui blue tiny button likeUpComment"
+                                                      {% if not user %}disabled{% endif %}>
+                <i class="thumbs up icon"></i>
+                <span class='num'>
+                  {{commentReply.upvotes}}
+                </span>
+              </button>
+              <button id="{{commentReply._id}}likedown" class="ui red tiny button likeDownComment"
+                                                        {% if not user %}disabled{% endif %}>
+                <i class="thumbs down icon"></i>
+                <span class='num'>
+                  {{commentReply.downvotes}}
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
       </div>
 
       <div id="{{comment._id}}replyArea" class="replyArea">
