@@ -13,27 +13,28 @@ const Album = mongoose.model('Album');
 const Comment = mongoose.model('Comment');
 const { check, validationResult, sanitize } = require('express-validator');
 const fetch = require('node-fetch');
+const { authenticated } = require('../utils');
 
 router.get('/new', (req, res) => {
-    res.render('newAlbum.html');
+  res.render('newAlbum.html');
+});
+
+router.post('/', authenticated, async (req, res) => {
+  let album = new Album({
+    user: req.user,
+    title: req.body.title,
+    postNumbers: 0,
   });
 
-router.post('/', async (req, res)=>{
-    let album = new Album({
-        user: req.user,
-        title: req.body.title,
-        postNumbers:0
-    })
+  console.log("user: ", album);
+  
+  const saved = await album.save();
 
-    const saved = await album.save();
-
-    if (req.user) {
-        req.user.albums.push(saved);
-        await req.user.save();
-      }
-      res.redirect('/profile/albums');
-})
-
+  req.user.albums.push(saved);
+  await req.user.save();
+  
+  res.redirect('/album/' + album._id);
+});
 
 router.get('/user/:id', (req, res)=>{
     User.findById(req.params.id).populate('albums').then( found =>{
@@ -73,7 +74,6 @@ router.put('/', (req, res)=>{
         await user.save();
         await album[0].save()
         console.log("albunm = ", album[0])
-        console.log("porcodiooo")
         res.status(200).redirect('/post/gallery');
     })
 

@@ -312,10 +312,11 @@ router.post('/comment/:id', async (req, res) => {
     user: req.user,
     text: req.body.reply
   })
-
+  
   if (req.user) {
     comment.likersUp.push(req.user);
   }
+  const user = req.user;
   comment.dateCreated = comment.dateCreated.slice(4, 21);
   await comment.save();
   let post = await Post.findById(post_id).populate({
@@ -327,10 +328,10 @@ router.post('/comment/:id', async (req, res) => {
       path: 'replies',
       model: 'Comment',
     }]
-  });
+  }).populate('user');
+  console.log("user: ", post.user);
   post.comments.push(comment);
   await post.save();
-
   res.status(200).json(post);
 });
 
