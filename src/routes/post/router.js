@@ -186,7 +186,7 @@ router.post('/', [
   check('start').matches(timeRegex),
   check('end').matches(timeRegex),
   check('title').not().isEmpty(),
-  check('title').isLength({max: 20})
+  check('title').isLength({max: 200})
 ], async (req, res) => {
 
   if (DISABLE_ANON_POST && !req.user) {

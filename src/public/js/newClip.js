@@ -135,8 +135,8 @@ $('.ui.form').form({
           prompt: 'Please enter a title'
         },
         {
-          type: 'maxLength[20]',
-          prompt: 'Please enter a title shorter than 20 characters'
+          type: 'maxLength[200]',
+          prompt: 'Please enter a title shorter than 200 characters'
         }
       ]
     },

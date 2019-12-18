@@ -159,6 +159,10 @@ main .ui.link.cards {
   text-align: initial;
 }
 
+.ui.label {
+  margin-top: .5rem !important;
+}
+
 .ui.comments.center-margin {
   margin-bottom: 3vh;
 }
