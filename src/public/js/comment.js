@@ -20,6 +20,7 @@ async function comment(id) {
   const res = await doJSONRequest('POST', '/post/comment/'+realId, {Accept: "application/json"}, {reply});
   let obj = {};
   obj.post = res;
+  obj.user = res.user;
 
 
   nunjucks.render('post/comment.html', obj, (err, cont) => {
