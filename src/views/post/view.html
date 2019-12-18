@@ -2,7 +2,7 @@
 
 {% extends "skel.html" %}
 
-{% block title %}New Post{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 {% block body %}
 
 <div class="ui grid segment">
@@ -58,7 +58,15 @@
           {{ post.downvotes }}
         </a>
       </button>
-      <a class="ui orange button" href="/post/{{ post.id }}/gif" target="_blank">GIF it</a>
+      <button type="button" class="ui orange button" data-postid="{{ post.id }}" id="gifit">GIF it</button>
+    </div>
+
+    <div class="ui sixteen wide column center-margin" style="display: none" id="gif-segment">
+      <div class="ui inverted black segment center" style="height: 500px">
+        <div class="ui active dimmer">
+          <div class="ui medium text loader">Loading</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -89,6 +97,7 @@
 <script src="/js/viewClip.js"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="/js/player.js"></script>
+<script src="/js/gif.js"></script>
 <script src="/js/regex.js"></script>
 <script type="application/json" id="selected-video">
   {{ post | json | safe }}

@@ -288,7 +288,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.get('/:id/gif', (req, res) => {
+router.post('/:id/gif', (req, res) => {
   Post.findById(req.params.id).populate('video').then(post => {
     createGif(post.video.link, post.video.start, post.video.end, res);
   });
