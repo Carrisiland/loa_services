@@ -261,6 +261,7 @@ router.post('/', [
     }
 
     sendNotification(req, {
+      url: "https://vimtok.com/post/" + post._id,
       text: `New post: "${post.title}"`,
       badge: video.thumbnailLink
     }).catch(console.error);
