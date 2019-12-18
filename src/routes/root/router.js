@@ -17,14 +17,9 @@ router.get('/', (req, res) => {
   res.render('index.html');
 });
 
-
-
-
-
-      
-    
-
-
+router.get('/authors', (req, res) => {
+  res.render('authors.html');
+});
 
 /** router for /root */
 module.exports = router;
