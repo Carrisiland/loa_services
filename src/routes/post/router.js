@@ -50,16 +50,22 @@ function createGif(url, start, end, res) {
     console.log('title:', info.title);
     console.log('url:', info.url);
 
-    ffmpeg(info.url)
-      .noAudio()
-      .seekInput(start)
-      .duration(end - start)
-      .outputOptions('-pix_fmt rgb8')
-      .fps(10)
-      .outputFormat('gif')
-      .output(res, { end: true })
-      .on('stderr', console.warn)
-      .run()
+    try {
+      ffmpeg(info.url)
+        .noAudio()
+        .seekInput(start)
+        .duration(end - start)
+        .outputOptions('-pix_fmt rgb8')
+        .fps(10)
+        .outputFormat('gif')
+        .output(res, { end: true })
+        .on('stderr', console.warn)
+        .run()
+    } catch (e) {
+      console.error(e);
+      res.status(500).json(err);
+      return;
+    }
   });
 }
 
@@ -78,13 +84,17 @@ function createStill(url, time, video) {
       video.save().catch(console.error);
     });
 
-    ffmpeg(info.url)
-      .noAudio()
-      .seekInput(time)
-      .frames(1)
-      .outputOptions('-pix_fmt rgb8')
-      .outputOptions('-f image2')
-      .pipe(os)
+    try {
+      ffmpeg(info.url)
+        .noAudio()
+        .seekInput(time)
+        .frames(1)
+        .outputOptions('-pix_fmt rgb8')
+        .outputOptions('-f image2')
+        .pipe(os)
+    } catch(e) {
+      console.error(e);
+    }
   });
 }
 
@@ -101,72 +111,72 @@ router.get('/new', (req, res) => {
 
 router.get('/gallery', (req, res) =>{
   Post.find({ visibility: 'public' }).populate('user').populate('video')
-  .then(posts => {
-    posts.sort(function(a,b){
-      return Date.parse(b.dateCreated) - Date.parse(a.dateCreated);
-    });
-    if (req.accepts("html")) {
+    .then(posts => {
+      posts.sort(function(a,b){
+        return Date.parse(b.dateCreated) - Date.parse(a.dateCreated);
+      });
+      if (req.accepts("html")) {
         res.status(200).render('gallery.html', {posts})
-    } else {
+      } else {
         res.status(200).json({posts});
-    }
-  })
-  .catch(err => {
-    res.flash('error', err.toString());
-    res.status(500).render('gallery.html');
-  });
+      }
+    })
+    .catch(err => {
+      res.flash('error', err.toString());
+      res.status(500).render('gallery.html');
+    });
 });
 
 router.get('/gallery/likesort', (req, res) =>{
   Post.find({ visibility: 'public' }).populate('user').populate('video')
-  .then(posts => {
-    posts.sort(function(a,b){
-      return (b.upvotes)- (a.upvotes);
-    });
-    if (req.accepts("html")) {
+    .then(posts => {
+      posts.sort(function(a,b){
+        return (b.upvotes)- (a.upvotes);
+      });
+      if (req.accepts("html")) {
         res.status(200).render('gallery.html', {posts})
-    } else {
+      } else {
         res.status(200).json({posts});
-    }
-  })
-  .catch(err => {
-    res.flash('error', err.toString());
-    res.status(500).render('gallery.html');
-  });
+      }
+    })
+    .catch(err => {
+      res.flash('error', err.toString());
+      res.status(500).render('gallery.html');
+    });
 });
 
 router.get('/gallery/dislikesort', (req, res) =>{
   Post.find({ visibility: 'public' }).populate('user').populate('video')
-  .then(posts => {
-    posts.sort(function(a,b){
-      return (b.downvotes)- (a.downvotes);
-    });
-    if (req.accepts("html")) {
+    .then(posts => {
+      posts.sort(function(a,b){
+        return (b.downvotes)- (a.downvotes);
+      });
+      if (req.accepts("html")) {
         res.status(200).render('gallery.html', {posts})
-    } else {
+      } else {
         res.status(200).json({posts});
-    }
-  })
-  .catch(err => {
-    res.flash('error', err.toString());
-    res.status(500).render('gallery.html');
-  });
+      }
+    })
+    .catch(err => {
+      res.flash('error', err.toString());
+      res.status(500).render('gallery.html');
+    });
 });
 
 router.get('/gallery/viewsort', (req, res) =>{
   Post.find({ visibility: 'public' }).populate('user').populate('video')
-  .then(posts => {
-    posts.sort((a, b) => b.views - a.views);
-    if (req.accepts("html")) {
+    .then(posts => {
+      posts.sort((a, b) => b.views - a.views);
+      if (req.accepts("html")) {
         res.status(200).render('gallery.html', {posts})
-    } else {
+      } else {
         res.status(200).json({posts});
-    }
-  })
-  .catch(err => {
-    res.flash('error', err.toString());
-    res.status(500).render('gallery.html');
-  });
+      }
+    })
+    .catch(err => {
+      res.flash('error', err.toString());
+      res.status(500).render('gallery.html');
+    });
 });
 
 const DISABLE_ANON_POST = process.env.PUBLISH_MODE === "true";
