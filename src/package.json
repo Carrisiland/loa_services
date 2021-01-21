@@ -37,7 +37,7 @@
     "passport-local": "^1.0.0",
     "promises-all": "^1.0.0",
     "request": "^2.88.0",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "web-push": "^3.4.3",
     "youtube-dl": "^2.1.0"
   }
