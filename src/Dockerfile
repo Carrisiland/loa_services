@@ -1,5 +1,5 @@
 # vim: set ts=2 sw=2 et tw=80:
-FROM node:carbon-alpine
+FROM node:current-alpine
 MAINTAINER info@vimtok.com
 
 RUN mkdir /app && adduser vimtok -h /app -s /sbin/nologin -D
