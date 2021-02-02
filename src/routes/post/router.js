@@ -312,10 +312,14 @@ router.post('/comment/:id', async (req, res) => {
     user: req.user,
     text: req.body.reply
   })
-  
+
   if (req.user) {
     comment.likersUp.push(req.user);
+  } else {
+    res.status(403).json({error: "Anonymous comments not allowed"});
+    return;
   }
+
   const user = req.user;
   comment.dateCreated = comment.dateCreated.slice(4, 21);
   await comment.save();

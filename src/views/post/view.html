@@ -83,7 +83,7 @@
   {% include "./comment.html" %}
   <form class="ui reply form" method="POST" action="/post/comment/{{ post.id }}">
     <div class="field reply">
-      <textarea name="reply"></textarea>
+      <textarea name="reply" {% if not user %}disabled{% endif %}></textarea>
     </div>
     <button id='{{post.id}}comment' class="ui blue labeled submit icon button">
       <i class="icon edit"></i> Add Reply
