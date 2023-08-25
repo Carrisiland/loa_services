@@ -29,7 +29,7 @@
     "express-validator": "^6.3.0",
     "fluent-ffmpeg": "^2.1.2",
     "method-override": "^3.0.0",
-    "mongoose": "^5.7.7",
+    "mongoose": "^7.4.5",
     "morgan": "^1.9.0",
     "node-fetch": "^2.6.1",
     "nunjucks": "^3.2.0",
@@ -38,7 +38,6 @@
     "promises-all": "^1.0.0",
     "request": "^2.88.0",
     "socket.io": "^2.4.0",
-    "web-push": "^3.4.3",
-    "youtube-dl": "^2.1.0"
+    "web-push": "^3.4.3"
   }
 }

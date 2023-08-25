@@ -11,11 +11,11 @@ const Video = mongoose.model('Video');
 const Comment = mongoose.model('Comment');
 const { check, validationResult, sanitize } = require('express-validator');
 const fetch = require('node-fetch');
-const youtubedl = require('youtube-dl');
 const ffmpeg = require('fluent-ffmpeg');
 const { Base64Encode } = require('base64-stream');
 const { sendNotification } = require('../utils');
 const eventBus = require('../../pubsub.js');
+const { execFile } = require('child_process');
 
 const youtubeRegex =
   new RegExp('^(?:(?:(?:https?:\\/\\/)?(?:www\\.)?youtube\\.com\\/watch\\' +
@@ -27,16 +27,36 @@ const vimeoRegex =
 
 const timeRegex = /^(?:(?:(1?\d):)?([0-5]?\d):)?([0-5]\d)$/;
 
+function getInfo(url, args, callback) {
+  const options = ['yt-dlp', ...args, '-j', url];
+  execFile('/usr/bin/env', options, function(error, stdout, stderr) {
+    if (error) {
+      callback(error, null);
+      return;
+    }
+
+    let info;
+    try {
+      info = JSON.parse(stdout);
+    } catch(e) {
+      callback(e);
+      return;
+    }
+
+    callback(error, info);
+  });
+};
+
 function createGif(url, start, end, res) {
   let options;
 
   if (url.match('vimeo.com')) {
-    options = ['-f http-240p'];
+    options = ['-f', 'http-240p'];
   } else {
-    options = ['-f worst'];
+    options = ['-f', 'worst'];
   }
 
-  youtubedl.getInfo(url, options, (err, info) => {
+  getInfo(url, options, (err, info) => {
     if (err) {
       console.error(err);
       res.status(500).json(err);
@@ -70,7 +90,7 @@ function createGif(url, start, end, res) {
 }
 
 function createStill(url, time, video) {
-  youtubedl.getInfo(url, ['-f best'], (err, info) => {
+  getInfo(url, ['-f', 'best'], (err, info) => {
     if (err) {
       console.error(err);
       return;
